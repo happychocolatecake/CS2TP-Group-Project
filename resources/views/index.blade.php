@@ -20,10 +20,10 @@
     </p>
 
     <div class="flex gap-4">
-        <a href="/store" class="bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-700">
+        <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700">
             Shop Now
         </a>
-        <a href="/cc" class="bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-600">
+        <a href="/cc" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
             Computer Configurator
         </a>
     </div>
