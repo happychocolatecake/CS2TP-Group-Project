@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             //this table represents the entire order as whole
             $table->id('order_id');
-            $table->timestamps();
             $table->string('order_address');
             $table->dateTime('order_date');
             $table->string('order_status');
