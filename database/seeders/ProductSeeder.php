@@ -1,0 +1,131 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+
+class ProductSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+
+         DB::table('products')->insert([
+            [
+                'product_name' => 'GTX 4080',
+                'product_model' => 'RTX4080-X',
+                'category_id' => 1,
+                'product_price' => 1200,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg',
+            ],
+            [
+                'product_name' => 'Intel i9 14900K',
+                'product_model' => 'i9-14900K',
+                'category_id' => 1,
+                'product_price' => 700,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+
+            ],
+            [
+                'product_name' => 'AMD Ryzen 9 7950X',
+                'product_model' => 'Ryzen9-7950X',
+                'category_id' => 1,
+                'product_price' => 650,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Corsair 32GB DDR5 RAM',
+                'product_model' => 'Vengeance DDR5-32GB',
+                'category_id' => 1,
+                'product_price' => 150,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' => ''
+            ],
+            [
+                'product_name' => 'Samsung 2TB NVMe SSD',
+                'product_model' => '970 Evo Plus',
+                'category_id' => 1,
+                'product_price' => 250,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'ASUS ROG Motherboard',
+                'product_model' => 'ROG Strix Z790',
+                'category_id' => 1,
+                'product_price' => 400,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Cooler Master 750W PSU',
+                'product_model' => 'V750 Gold',
+                'category_id' => 1,
+                'product_price' => 120,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Noctua CPU Cooler',
+                'product_model' => 'NH-D15',
+                'category_id' => 1,
+                'product_price' => 100,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'NZXT H710 Case',
+                'product_model' => 'H710 Matte Black',
+                'category_id' => 1,
+                'product_price' => 200,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Corsair 2x120mm Case Fans',
+                'product_model' => 'AF120',
+                'category_id' => 1,
+                'product_price' => 50,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Intel Wi-Fi 6 Card',
+                'product_model' => 'AX200',
+                'category_id' => 1,
+                'product_price' => 40,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+            [
+                'product_name' => 'Samsung 27" Curved Monitor',
+                'product_model' => 'Odyssey G5',
+                'category_id' => 1,
+                'product_price' => 300,
+                'product_description'=> '',
+                'product_createdate' =>now(),
+                'product_image' =>''
+            ],
+        ]);
+
+    }
+}
