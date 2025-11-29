@@ -24,6 +24,17 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('home');
 
+Route::post('/contact', function (\Illuminate\Http\Request $request) {
+    // Basic validation
+    $request->validate([
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
+
+    // Redirect back with a success message
+    return back()->with('status', 'Message sent successfully!');
+});
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
