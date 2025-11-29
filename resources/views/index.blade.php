@@ -23,7 +23,7 @@
         <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700">
             Shop Now
         </a>
-        <a href="/cc" class="bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-600">
+        <a href="/cc" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
             Computer Configurator
         </a>
     </div>
@@ -50,7 +50,7 @@
                 <h3 class="text-lg font-semibold">Save with Bundles</h3>
             </a>
 
-            <a href="/cc" class="block group">
+            <a href="/store" class="block group">
                 <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
                     <span class="text-gray-500 font-bold text-xl">Pre-Builts</span>
                 </div>
