@@ -30,6 +30,40 @@
     </div>
     </div>
 
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+            <a href="/store" class="block group">
+                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                    <span class="text-gray-500 font-bold text-xl">Components</span>
+                </div>
+
+                <h3 class="text-lg font-semibold">Shop Individual Parts</h3>
+            </a>
+
+            <a href="/store" class="block group">
+                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                    <span class="text-gray-500 font-bold text-xl">Bundles</span>
+                </div>
+
+                <h3 class="text-lg font-semibold">Save with Bundles</h3>
+            </a>
+
+            <a href="/cc" class="block group">
+                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                    <span class="text-gray-500 font-bold text-xl">Pre-Builts</span>
+                </div>
+
+                <h3 class="text-lg font-semibold">Ready to Game</h3>
+            </a>
+        </div>
+
+    </div>
+
+
+
+
 </x-layout>
 
 <x-footer></x-footer>
