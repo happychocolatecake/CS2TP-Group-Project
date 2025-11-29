@@ -3,91 +3,12 @@
     <h1>Hello from the Store Page.</h1>
 </x-layout>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-<x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
+    @foreach(range(1, 16) as $item)
+            <x-product-card 
+                title="Popular Pre-Built #{{ $item }}" 
+                description="High performance gaming rig suitable for 4k gaming." 
+                price="$1200"
+            />
+        @endforeach
 </div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-<x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-<x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-    <x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-
-<x-product-card 
-            title="Popular Pre-Built" 
-            description="High performance gaming rig." 
-            price="$1200"/>
-</div>
-
 <x-footer></x-footer>
