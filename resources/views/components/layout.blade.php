@@ -1,3 +1,4 @@
+<!--The nav bar-->
 <body>
 
     <nav class="bg-gray-800 flex items-center">
