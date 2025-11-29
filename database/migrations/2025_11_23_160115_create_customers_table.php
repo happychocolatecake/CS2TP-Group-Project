@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             //this table stores every customers personal details and account information
             $table->id('customer_id');
-            $table->timestamps();
             $table->string('FirstName');
             $table->string('LastName');
             $table->string('email')->unique();

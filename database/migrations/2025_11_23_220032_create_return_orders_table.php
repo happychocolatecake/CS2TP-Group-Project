@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('return_orders', function (Blueprint $table) {
             //this table stores every return order placed by a user
             $table->id('return_id');
-            $table->timestamps();
             $table->text('return_reason')->nullable();
             $table->string('return_status');
             $table->dateTime('return_date');

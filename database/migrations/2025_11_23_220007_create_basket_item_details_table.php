@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('basket_item_details', function (Blueprint $table) {
             //this table represents every single item stored in the users basket
             $table->id('basket_item_id');
-            $table->timestamps();
             $table->integer('quantity');
 
             $table->foreignId('basket_id')->constrained('basket','basket_id');
