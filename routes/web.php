@@ -31,6 +31,10 @@ Route::get('/temp-pp', function () {
     return view('product-page');
 })->name('home');
 
+Route::get('/basket', function () {
+    return view('basket');
+})->name('home');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
