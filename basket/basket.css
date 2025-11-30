@@ -1,63 +1,63 @@
 
 /* Title of the page */
 h1 {
-    font-weight: bold; 
-    color: #333;
-    margin-bottom: 20px; 
-    text-align: center; 
+  font-weight: bold; 
+  color: #333;
+  margin-bottom: 20px; 
+  text-align: center; 
 }
 
 /* The box for the product */
 .the-box {
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 60px;
-    margin-bottom: 16px;
-    gap: 16px; 
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 60px;
+  margin-bottom: 16px;
+  gap: 16px; 
 }
 
 /* The text for the product */
 .product {
-    margin: 0;
-    flex: 1;
-    font-weight: bold;
-    color: #333; 
+  margin: 0;
+  flex: 1;
+  font-weight: bold;
+  color: #333; 
 }
 
 /* The box for the quantity */
 .quantity {
-    display: flex;
-    align-items: center;   
-    font-weight: bold;
-    color: #333; 
+  display: flex;
+  align-items: center;   
+  font-weight: bold;
+  color: #333; 
 }
 
 /* The button for the quantity */
 .quantity-button {
-    padding: 5px 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    line-height: 1; 
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  line-height: 1; 
 }
 
 /* The number for the quantity */
 .quantity-number {  
-    align-items: center;   
-    min-width: 24px;        
-    text-align: center; 
-    font-weight: bold;   
-    line-height: 2; 
+  align-items: center;   
+  min-width: 24px;        
+  text-align: center; 
+  font-weight: bold;   
+  line-height: 2; 
 }
 /* The gift label */
 .gift {
-    margin: 20px;
-    margin-left: -15px;     
-    font-weight: normal;
+  margin: 20px;
+  margin-left: -15px;     
+  font-weight: normal;
 }
 /* The gift checkbox */
 .gift-checkbox {
@@ -73,13 +73,13 @@ h1 {
 
 /* The Subscirbe label */
 .subscribe {
-    margin-left: -15px;    
-    font-weight: normal;
+  margin-left: -15px;    
+  font-weight: normal;
 }
 
 /* The button for the checkout */
 .checkout-button {
-  background-color: #222;
+  background-color: #374151;
   color: white;
   font-size: 15px;
   padding: 20px;
