@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 700,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://media.very.co.uk/i/very/W1HGC_SQ1_0000000099_N_A_SLf?$pdp_576x768_x2$&fmt=webp'
 
             ],
             [
@@ -42,7 +42,8 @@ class ProductSeeder extends Seeder
                 'product_price' => 650,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/5116zdA9uyL._AC_SL1200_.jpg'
+
             ],
             [
                 'product_name' => 'Corsair 32GB DDR5 RAM',
@@ -51,7 +52,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 150,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' => ''
+                'product_image' => 'https://m.media-amazon.com/images/I/61eNiRqRcXL._AC_UF894,1000_QL80_.jpg'
             ],
             [
                 'product_name' => 'Samsung 2TB NVMe SSD',
@@ -60,7 +61,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 250,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/71ByVZ1x2vL.jpg'
             ],
             [
                 'product_name' => 'ASUS ROG Motherboard',
@@ -69,7 +70,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 400,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://dlcdnwebimgs.asus.com/files/media/B51D103D-2941-412E-8479-AF994957093B/v1/img/kv/ROG-Strix-X670E-E-Gaming.png'
             ],
             [
                 'product_name' => 'Cooler Master 750W PSU',
@@ -78,7 +79,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 120,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/91bdi5kqQGL._AC_UF1000,1000_QL80_.jpg'
             ],
             [
                 'product_name' => 'Noctua CPU Cooler',
@@ -87,7 +88,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 100,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://img.overclockers.co.uk/images/HS-03M-NC/05e4e38b81d0351597f55b71637a424c.jpg'
             ],
             [
                 'product_name' => 'NZXT H710 Case',
@@ -96,7 +97,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 200,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://nzxt.com/cdn/shop/files/h7-emea-hero-2000x2000.png?v=1762528364.'
             ],
             [
                 'product_name' => 'Corsair 2x120mm Case Fans',
@@ -105,7 +106,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 50,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/71Pgp9awWGL.jpg'
             ],
             [
                 'product_name' => 'Intel Wi-Fi 6 Card',
@@ -114,7 +115,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 40,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/61n4OsWtW7L.jpg.'
             ],
             [
                 'product_name' => 'Samsung 27" Curved Monitor',
@@ -123,7 +124,7 @@ class ProductSeeder extends Seeder
                 'product_price' => 300,
                 'product_description'=> '',
                 'product_createdate' =>now(),
-                'product_image' =>''
+                'product_image' =>'https://m.media-amazon.com/images/I/61VO4NO1vHL._AC_UF1000,1000_QL80_.jpg.'
             ],
         ]);
 
