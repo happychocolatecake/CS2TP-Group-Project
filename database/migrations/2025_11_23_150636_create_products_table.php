@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             //this table stores every product with relevant information
             $table->id('product_id');
-            $table->timestamps();
             $table->string('product_name');
             $table->string('product_model')->nullable();
             $table->integer('product_price');

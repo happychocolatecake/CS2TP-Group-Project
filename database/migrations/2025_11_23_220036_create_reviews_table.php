@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             //this table stores every review created by a user
             $table->id('review_id');
-            $table->timestamps();
             $table->integer('rating');
             $table->string('review_image')->nullable();
             $table->text('review_text')->nullable();

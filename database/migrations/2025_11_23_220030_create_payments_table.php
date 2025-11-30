@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             //this table stores the users payment details for the order
             $table->id('payment_id');
-            $table->timestamps();
             $table->string('payment_method');
             $table->string('payment_status');
             $table->dateTime('payment_date');
