@@ -4,7 +4,7 @@
         </div>
     <h3 class="text-xl font-bold mb-2">{{ $title }}</h3>
     <p class="text-gray-500 text-sm mb-6">{{ $description }}</p>
-    <button class="mt-auto bg-gray-800 text-white px-8 py-2 rounded hover:bg-gray-700 transition">
-        Buy now
-    </button>
+    <a href="/temp-pp" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
+        Buy Now
+    </a>
 </div>

@@ -24,6 +24,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('home');
 
+Route::get('/temp-pp', function () {
+    return view('product-page');
+})->name('home');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
