@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-12">
 
 
-    <div class="h-96 overflow-hidden">
+    <div class="h-67 overflow-hidden">
         <img src="/images/cool_pc.jpg" alt="Cool PC" class="w-full h-full object-cover">
     </div>
 
@@ -72,18 +72,21 @@
                     title="Popular Pre-Built"
                     description="Ready to game straight out the box."
                     price="£1300"
+                    image="null"
                     />
 
                 <x-product-card
                     title="Popular CPU"
                     description="High pefformance CPU for gaming and productivity."
                     price="£300"
+                    image="null"
                     />
 
                 <x-product-card
                     title="Popular GPU"
                     description="Next-gen graphics power."
                     price="£600"
+                    image="null"
                     />
 
             </div>

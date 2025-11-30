@@ -10,7 +10,6 @@
         <form action="/contact" method="POST" class="space-y-6">
             @csrf
             
-            <!-- Subject Field -->
             <div>
                 <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
                 <input 
@@ -23,7 +22,6 @@
                 >
             </div>
 
-            <!-- Message Field -->
             <div>
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
                 <textarea 
@@ -36,7 +34,6 @@
                 ></textarea>
             </div>
 
-            <!-- Submit Button -->
             <div>
                 <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     Send Message

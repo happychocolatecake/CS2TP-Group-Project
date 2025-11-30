@@ -2,8 +2,7 @@
 
 <div class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center h-full">
     <div class="w-full bg-gray-200 h-48 rounded mb-6 overflow-hidden">
-        <!-- Use the passed image, or a fallback -->
-        <img src="{{ $image ?? '/images/cool_pc.jpg' }}" alt="{{ $title }}" class="w-full h-full object-cover">
+        <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover">
     </div>
     
     <h3 class="text-xl font-bold mb-2">{{ $title }}</h3>
