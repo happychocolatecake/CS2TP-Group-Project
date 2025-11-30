@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-12">
 
 
-    <div class="h-96 overflow-hidden">
+    <div class="h-67 overflow-hidden">
         <img src="/images/cool_pc.jpg" alt="Cool PC" class="w-full h-full object-cover">
     </div>
 
