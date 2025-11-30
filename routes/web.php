@@ -25,13 +25,12 @@ Route::get('/contact', function () {
 })->name('home');
 
 Route::post('/contact', function (\Illuminate\Http\Request $request) {
-    // Basic validation
+    
     $request->validate([
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
     ]);
 
-    // Redirect back with a success message
     return back()->with('status', 'Message sent successfully!');
 });
 
