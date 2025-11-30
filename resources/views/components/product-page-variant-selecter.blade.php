@@ -2,11 +2,11 @@
     <label class="sr-only">Choose color</label>
     <div class="flex gap-4">
         <button class="w-1/2 md:w-48 py-2 px-4 rounded border border-black text-black bg-white hover:bg-gray-50 transition">
-            Colour 1
+            {{ $variant1 }}
         </button>
         
         <button class="w-1/2 md:w-48 py-2 px-4 rounded border border-gray-300 bg-gray-300 text-black hover:bg-gray-400 transition">
-            Colour 2
+            {{ $variant2 }}
         </button>
     </div>
 </div>
