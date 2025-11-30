@@ -3,13 +3,13 @@
 
     <!--Filter-->
     <div class="container mx-auto p-6">
-            
+
     <h1 class="text-3xl font-bold mb-6">Store</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 
         <aside class="md:col-span-1">
-            
+
             <h2 class="text-2xl font-bold mb-4">Filter</h2>
 
             <!-- 1. Category Group (Open by default) -->
@@ -45,11 +45,19 @@
 
                 {{-- The product cards --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-                    @foreach(range(1, 16) as $item)
-                        <x-product-card 
-                            title="Popular Pre-Built #{{ $item }}" 
-                            description="High performance gaming rig suitable for 4k gaming." 
-                            price="$1200"
+                    @foreach($products as $item)
+                        @php
+                            $title = $item->product_name;
+                            $image = $item->product_image;
+                            $price = $item->product_price;
+                            //this checks if the descriptions empty it will fill it with placeholder data
+                            $description = !empty($item->product_description) ? $item->product_description : 'This item is still in development.';
+                        @endphp
+                        <x-product-card
+                            :title="$title"
+                            :description="$description"
+                            :price="$price"
+                            :image="$image"
                         />
                     @endforeach
             </div>

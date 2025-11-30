@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\StoreController;
 
 Route::get('/', function () {
     return view('index');
@@ -11,6 +12,8 @@ Route::get('/', function () {
 Route::get('/store', function () {
     return view('store');
 })->name('home');
+
+Route::get('/store', [StoreController::class, 'index']);
 
 Route::get('/cc', function () {
     return view('cc');
