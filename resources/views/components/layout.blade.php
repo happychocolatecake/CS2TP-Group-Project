@@ -1,7 +1,7 @@
 <!--The nav bar-->
 <body>
 
-    <nav class="bg-gray-900 text-white p-4 shadow-md">
+    <nav class="bg-gray-800 text-white p-4 shadow-md">
     <div class="max-w-7x1 mx-auto flex justify-between item-center">
 
         <div class="flex items-center space-x-6">
