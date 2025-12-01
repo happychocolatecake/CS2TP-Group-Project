@@ -1,74 +1,147 @@
 <x-header></x-header>
-
 <x-layout>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
-    <nav class="w-full bg-white shadow-sm p-4 mb-8 text-center text-gray-400 border-b border-gray-200">
-        [Navigation Bar Placeholder]
-    </nav>
+    <nav class="w-full bg-white shadow-md p-4 mb-8 text-center border-b border-gray-200">
+        </nav>
 
-    <main class="flex-grow container mx-auto px-4 max-w-4xl">
+    <main class="flex-grow container mx-auto px-4 max-w-6xl">
         
-        <h1 class="text-3xl font-bold text-[#333] mb-8 text-center">
-            My shopping basket
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+            Your Shopping Basket
         </h1>
 
-        <div class="bg-white rounded-[10px] shadow-md p-[60px] mb-6 flex flex-col md:flex-row items-center gap-4 md:gap-8">
-            
-            <div class="flex-1 font-bold text-[#333] text-lg text-center md:text-left">
-                Products in your basket
+        @if (!$basket || $basket->items->isEmpty())
+            <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-6 rounded-lg shadow-inner" role="alert">
+                <p class="font-bold text-xl mb-2">Your Basket is Empty!</p>
+                <p>Click <a href="{{ route('store.index') }}" class="font-semibold underline hover:text-blue-900 transition">here</a> to add components from the store.</p>
             </div>
+        @else
 
-            <div class="flex items-center gap-4">
-                <div class="font-bold text-[#333]">
-                    Select Quantity:
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <div class="lg:col-span-2 space-y-6">
+                    @php $total = 0; @endphp
+                    
+                    @foreach ($basket->items as $item)
+                        @php 
+                            $itemPrice = $item->product->product_price * $item->quantity;
+                            $total += $itemPrice;
+                        @endphp
+
+                        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 border border-gray-200">
+                            
+                            <div class="flex-shrink-0">
+                                <img src="{{ $item->product->product_image }}" alt="{{ $item->product->product_name }}" 
+                                     class="w-24 h-24 object-cover rounded-lg shadow-sm">
+                            </div>
+
+                            <div class="flex-1 min-w-0">
+                                <a href="#" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition truncate block mb-1">
+                                    {{ $item->product->product_name }}
+                                </a>
+                                <p class="text-sm text-gray-500 mb-3">Model: {{ $item->product->product_model }}</p>
+                                
+                                <form method="POST" action="{{ route('basket.remove') }}">
+                                    @csrf
+                                    <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
+                                    
+                                    <button type="submit" class="text-sm text-red-500 hover:text-red-700 font-medium transition">
+                                        Remove Item
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="flex flex-col items-end md:items-center gap-2 md:gap-4 md:w-40">
+                                <div class="font-bold text-lg text-gray-800">
+                                    £{{ number_format($itemPrice, 2) }}
+                                </div>
+                                
+                                <div class="flex items-center gap-2 border border-gray-300 rounded-lg overflow-hidden">
+                                    
+                                    <form method="POST" action="{{ route('basket.update') }}">
+                                        @csrf
+                                        <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
+                                        <input type="hidden" name="action" value="decrement">
+                                        <button type="submit" class="px-3 py-1 text-base bg-gray-50 hover:bg-gray-200 transition leading-none h-full">
+                                            -
+                                        </button>
+                                    </form>
+
+                                    <span class="min-w-[30px] text-center font-semibold text-gray-700">
+                                        {{ $item->quantity }}
+                                    </span>
+
+                                    <form method="POST" action="{{ route('basket.update') }}">
+                                        @csrf
+                                        <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
+                                        <input type="hidden" name="action" value="increment">
+                                        <button type="submit" class="px-3 py-1 text-base bg-gray-50 hover:bg-gray-200 transition leading-none h-full">
+                                            +
+                                        </button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
                 
-                <div class="flex items-center gap-2">
-                    <button class="px-3 py-1 text-base border border-gray-300 rounded bg-[#f9f9f9] hover:bg-gray-200 cursor-pointer transition-colors leading-none">
-                        -
-                    </button>
+                <aside class="lg:col-span-1 space-y-6">
                     
-                    <span class="min-w-[24px] text-center font-bold text-[#333]">
-                        1
-                    </span>
+                    <div class="bg-white p-6 border rounded-xl shadow-lg sticky top-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">Order Summary</h2>
+                        
+                        <div class="flex justify-between text-gray-600 mb-2">
+                            <span>Subtotal ({{ $basket->items->count() }} items):</span>
+                            <span>£{{ number_format($total, 2) }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600 mb-4 border-b pb-4">
+                            <span>Shipping:</span>
+                            <span class="font-semibold">Calculated</span>
+                        </div>
+                        
+                        <div class="flex justify-between text-xl font-extrabold text-gray-800 mb-6">
+                            <span>Order Total:</span>
+                            <span>£{{ number_format($total, 2) }}</span>
+                        </div>
+                        
+                        <a href="/checkout" 
+                           class="block w-full text-center bg-indigo-600 text-white text-lg p-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 font-bold">
+                            Go to Checkout
+                        </a>
+                    </div>
                     
-                    <button class="px-3 py-1 text-base border border-gray-300 rounded bg-[#f9f9f9] hover:bg-gray-200 cursor-pointer transition-colors leading-none">
-                        +
-                    </button>
-                </div>
-            </div>
-        </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="gift" class="w-4 h-4 mr-3 cursor-pointer accent-indigo-600">
+                                <label for="gift" class="text-gray-800 cursor-pointer select-none text-sm">
+                                     Buying as a Gift?
+                                </label>
+                            </div>
 
-        <div class="flex flex-col gap-4 mb-10 px-4">
-            <div class="flex items-center">
-                <input type="checkbox" id="gift" class="w-4 h-4 mr-3 cursor-pointer accent-gray-700">
-                <label for="gift" class="text-gray-800 cursor-pointer select-none">
-                    Buying as a Gift?
-                </label>
-            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="subscribe" class="w-4 h-4 mr-3 cursor-pointer accent-indigo-600">
+                                <label for="subscribe" class="text-gray-800 cursor-pointer select-none text-sm">
+                                     Stay updated with our offers! Subscribe to our newsletter?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="{{ route('store.index') }}" 
+                       class="block w-full text-center bg-white text-gray-700 text-[15px] p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-colors duration-200 font-bold border border-gray-300">
+                        ← Back to Store
+                    </a>
 
-            <div class="flex items-center">
-                <input type="checkbox" id="subscribe" class="w-4 h-4 mr-3 cursor-pointer accent-gray-700">
-                <label for="subscribe" class="text-gray-800 cursor-pointer select-none">
-                    Stay updated with our offers! Subscribe to our newsletter?
-                </label>
+                </aside>
             </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-6 px-2 mb-12">
-            <a href="/checkout" class="flex-1 text-center bg-[#374151] text-white text-[15px] p-5 rounded-[10px] shadow-md hover:bg-gray-500 transition-colors duration-200 no-underline font-sans">
-                Go to checkout
-            </a>
-            
-            <a href="/" class="flex-1 text-center bg-white text-[#222] text-[15px] p-5 rounded-[10px] shadow-sm hover:bg-gray-300 transition-colors duration-200 no-underline font-sans border border-transparent">
-                Back to store
-            </a>
-        </div>
+        @endif
 
     </main>
+</body>
 
 </x-layout>
-
 <x-footer></x-footer>

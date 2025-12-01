@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\StoreController;
-// use App\Http\Controllers\BasketController; going to implement later
+// use App\Http\Controllers\BasketController; 
 // use App\Http\Controllers\CheckoutController; going to implement later
 
 
@@ -41,10 +41,17 @@ Route::get('/temp-pp', function () {
 
 
 
+
 Route::middleware(['auth'])->group(function () {
 
     Route::redirect('settings', 'settings/profile');
-    
+
+    Route::get('/basket', [StoreController::class, 'viewBasket'])->name('basket.view');
+    Route::post('/basket/add', [StoreController::class, 'addToBasket'])->name('basket.add');
+    Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');
+    Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
+    Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
+
     Volt::route('settings/profile', 'initial views.livewire.settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'initial views.livewire.settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'initial views.livewire.settings.appearance')->name('appearance.edit');
