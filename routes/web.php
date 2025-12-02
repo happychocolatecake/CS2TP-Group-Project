@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('index');
@@ -30,6 +31,8 @@ Route::get('/contact', function () {
 Route::get('/temp-pp', function () {
     return view('product-page');
 })->name('home');
+
+Route::get('/temp-pp', [ProductController::class, 'index']);
 
 Route::get('/basket', function () {
     return view('basket');
