@@ -8,7 +8,7 @@
             
             <div class="flex items-center gap-6 text-4xl font-light select-none">
                 <button aria-label="Decrease quantity" class="hover:text-gray-600 pb-1 cursor-pointer">−</button>
-                <input id="quantity" type="number" value={{ $quantity }} class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" readonly />
+                <input id="quantity" type="number" value={{ $stock }} class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" readonly />
                 <button aria-label="Increase quantity" class="hover:text-gray-600 pb-1 cursor-pointer">+</button>
             </div>
 

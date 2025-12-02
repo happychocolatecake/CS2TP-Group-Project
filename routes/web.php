@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\ProductController;
 // use App\Http\Controllers\BasketController; 
 // use App\Http\Controllers\CheckoutController; going to implement later
 
@@ -37,9 +38,13 @@ Route::get('/contact', function () {
 
 Route::get('/temp-pp', function () {
     return view('product-page');
-})->name('product.show'); 
+})->name('home');
 
+Route::get('/temp-pp', [ProductController::class, 'index']);
 
+Route::get('/basket', function () {
+    return view('basket');
+})->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
