@@ -13,7 +13,7 @@
 
     <div class="mt-auto w-full">
         <span class="block text-lg font-bold mb-2">£{{ $price }}</span>
-        <button class="w-full bg-gray-800 text-white px-8 py-2 rounded hover:bg-gray-700 transition">
+        <button type="button" class="w-full bg-gray-800 text-white px-8 py-2 rounded hover:bg-gray-700 transition">
             Buy now
         </button>
     </div>
