@@ -18,9 +18,10 @@
         </button>
     </div>
 
-    <button type="submit" class="w-full mt-2 p-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
-        Add to Basket
-    </button>
-
+    <div class="mt-auto w-full">
+        <button type="submit" class="w-full mt-2 p-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
+            Add to Basket
+        </button>
+    </div>
 
 </div>

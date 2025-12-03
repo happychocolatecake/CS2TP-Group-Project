@@ -62,7 +62,7 @@ class StoreController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('store', compact('products'));
+        return view('store-page', compact('products'));
     }
 
     // Handles adding products to the user's basket
