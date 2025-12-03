@@ -2,11 +2,8 @@
 <x-layout>
     <body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen">
 
-<<<<<<< HEAD
-=======
-    
 
->>>>>>> origin/main
+
     <main class="flex-grow pt-16">
 
         <div class="bg-white">
@@ -16,11 +13,7 @@
                         Your Dream Build. <span class="text-happy-green">Without the Guesswork.</span>
                     </h1>
                     <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
-<<<<<<< HEAD
                         Happy Hardware is an e-commerce platform designed for students, professionals, and gamers who seek high performance on a budget.
-=======
-                        Happy Hardware is an e-commerce platform designed for students, professionals, and gamers who seek high performance on a budget. 
->>>>>>> origin/main
                     </p>
                 </div>
             </div>
@@ -62,15 +55,9 @@
                         The students behind the platform, combining frontend creativity with backend integrity.
                     </p>
                 </div>
-<<<<<<< HEAD
 
                 <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
-=======
-                
-                <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    
->>>>>>> origin/main
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
                             <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>

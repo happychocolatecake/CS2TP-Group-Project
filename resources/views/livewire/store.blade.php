@@ -1,8 +1,26 @@
+    @if (session('success'))
+        <div class="container mx-auto px-6 mt-4">
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
+                <p class="font-bold">Success</p>
+                <p>{{ session('success') }}</p>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="container mx-auto px-6 mt-4">
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
+                <p class="font-bold">Error</p>
+                <p>{{ session('error') }}</p>
+            </div>
+        </div>
+    @endif
+
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Store</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        
+
         <!-- Sidebar Filter -->
         <aside class="md:col-span-1">
             <h2 class="text-2xl font-bold mb-4">Filter</h2>
@@ -28,14 +46,14 @@
 
         <!-- Main Content Area -->
         <main class="md:col-span-3">
-            
+
             <!-- Top Bar: Search & Sort -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <div class="relative w-full md:w-1/2">
-                    <input 
-                        wire:model.live="search" 
-                        type="text" 
-                        placeholder="Search products..." 
+                    <input
+                        wire:model.live="search"
+                        type="text"
+                        placeholder="Search products..."
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
                     >
                 </div>
@@ -48,13 +66,29 @@
             <!-- Product Grid -->
             @if($products->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($products as $product)
-                        <x-product-card
-                            :title="$product->product_name"
-                            :description="$product->product_description"
-                            :price="$product->product_price"
-                            :image="$product->product_image"
-                        />
+                    @foreach($products as $item)
+
+                        <form method="POST" action="{{ route('basket.add') }}">
+                            @csrf
+
+                            <input type="hidden" name="product_id" value="{{ $item->id }}">
+                            <input type="hidden" name="quantity" value="1">
+
+                            @php
+                                $title = $item->product_name;
+                                $image = $item->product_image;
+                                $price = $item->product_price;
+                                $description = !empty($item->product_description) ? $item->product_description : 'This item is still in development.';
+                            @endphp
+
+                            <x-product-card
+                                :title="$title"
+                                :description="$description"
+                                :price="$price"
+                                :image="$image"
+                            />
+
+                        </form>
                     @endforeach
                 </div>
             @else

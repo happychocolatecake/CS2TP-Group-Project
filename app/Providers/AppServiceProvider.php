@@ -17,15 +17,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::anonymousComponentPath(
-            base_path('resources/views/initial views/components'), 
+            base_path('resources/views/components'),
             'components'
         );
 
         Blade::anonymousComponentPath(
-            base_path('resources/views/initial views/components/layouts'),
+            base_path('resources/views/components/layouts'),
             'layouts'
         );
-        
+
 
     }
 }
