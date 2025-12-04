@@ -11,8 +11,8 @@
 
     <div class="p-12 flex flex-col justify-center">
 
-    <h1 class="text-4xl font-bold mb-4 text-gray-900">
-        "Power Your Dreams, One Build at a Time. "
+    <h1 class="text-3xl font-bold mb-4 text-gray-900">
+        "Power Your Dreams, One Build at a Time, With Happy Hardware! "
     </h1>
 
     <p class="text-gray-600 mb-8">
@@ -102,21 +102,30 @@
 
         <div class="flex flex-col item-center">
             <div class="bg-gray-100 p-6 rounded-2xl mb-4 flex items-center justify-center">
-                <img src="/images/box.png" alt="Bundles Icon" class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+
             </div>
             <p class="bg-gray-100 p-2 px-4 rounded text-sm">Purchase Bundles, chosen by our experts</p>
         </div>
 
         <div class="flex flex-col item-center">
             <div class="bg-gray-100 p-6 rounded-2xl mb-4 flex items-center justify-center">
-                <img src="/images/refresh.png" alt="Configurator Icon" class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+
             </div>
             <p class="bg-gray-100 p-2 px-4 rounded text-sm">Configure and check for compactibility to build your dream PC</p>
         </div>
 
         <div class="flex flex-col item-center">
             <div class="bg-gray-100 p-6 rounded-2xl mb-4 flex items-center justify-center">
-                <img src="/images/search.png" alt="Guides Icon" class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+                </svg>
+
             </div>
             <p class="bg-gray-100 p-2 px-4 rounded text-sm">To learn the essentials of building a PC, read our guides.</p>
         </div>
