@@ -1,4 +1,3 @@
-<!--The header-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,4 +8,17 @@
     <title>Home Page</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    @livewireStyles
 </head>
+<body>
+
+    <main>
+        {{ $slot }} 
+    </main> 
+    
+    
+
+    @livewireScripts
+    <livewire:chatbot /> 
+</body>
+</html>
