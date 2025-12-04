@@ -1,18 +1,14 @@
 <!--Quantity, price. add to basket-->
 <div class="purchase-block">
     <hr class="border-black mb-6">
-    
+
     <div class="mb-4">
         <label for="quantity" class="block font-bold text-xl mb-4">Quantity</label>
         <div class="flex justify-between items-end">
-            
+
             <div class="flex items-center gap-6 text-4xl font-light select-none">
                 <button aria-label="Decrease quantity" class="hover:text-gray-600 pb-1 cursor-pointer">−</button>
-<<<<<<< HEAD
-                <input id="quantity" type="number" value={{ $quantity }} class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" readonly />
-=======
                 <input id="quantity" type="number" value={{ $stock }} class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" readonly />
->>>>>>> origin/main
                 <button aria-label="Increase quantity" class="hover:text-gray-600 pb-1 cursor-pointer">+</button>
             </div>
 
