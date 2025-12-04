@@ -12,13 +12,23 @@ class Store extends Component
     public $selectedCategories = [];
     public $minPrice;
     public $maxPrice;
+    public $selectedMaxPrice;
     public $categories;
+
+    public $sortField = 'product_name';
+    public $sortDirection = 'asc';
+    public $showSort = false;
 
     public function mount() {
 
         $this->categories = Category::all();
         $this->minPrice = Product::min('product_price');
         $this->maxPrice = Product::max('product_price');
+        $this->selectedMaxPrice = $this->maxPrice;
+    }
+
+    public function toggleSort() {
+        $this->showSort = !$this->showSort;
     }
 
     public function toggleCategory($categoryId) {
@@ -29,6 +39,12 @@ class Store extends Component
             $this->selectedCategories = array_diff($this->selectedCategories, [$categoryId]);
         }
     }
+
+    public function sortBy($field, $direction) {
+        $this->sortField = $field;
+        $this->sortDirection = $direction;
+    }
+
 
     public function render()
     {
@@ -47,12 +63,11 @@ class Store extends Component
              $query->whereIn('category_id', $this->selectedCategories);
         }
 
-        if (!empty($this->minPrice) && !empty($this->maxPrice)) {
-            $query->whereBetween('product_price', [$this->minPrice, $this->maxPrice]);
-        }
+        $query->whereBetween('product_price', [$this->minPrice, $this->selectedMaxPrice]);
+
 
         return view('livewire.store', [
-            'products' => $query->get(),
+            'products' => $query->orderBy($this->sortField, $this->sortDirection)->get(),
         ]);
     }
 }

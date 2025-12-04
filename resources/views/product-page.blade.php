@@ -57,7 +57,7 @@
 
                     <x-product-page-variant-selecter
                     variant1="Black"
-                    variant2="White" />
+                    variant2="White" /> <!-- not dealing with colour specific stock right now -->
 
                     <x-product-page-purchase-actions
                     :stock=$stock
