@@ -6,7 +6,7 @@
 
 
     <div class="h-67 overflow-hidden">
-        <img src="/images/cool_pc.jpg" alt="Cool PC" class="w-full h-full object-cover">
+        <img src="/images/hero_pc.jpg" alt="Cool PC" class="w-full h-full object-cover">
     </div>
 
     <div class="p-12 flex flex-col justify-center">
