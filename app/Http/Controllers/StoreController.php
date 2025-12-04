@@ -109,11 +109,13 @@ class StoreController extends Controller
             $message = 'Product added to your basket!';
         }
 
-        // Redirect with success message
-        return redirect()->route('store.index')->with('success', $message);
+        // Redirect with success message, back to the page that it came from
+        return redirect()->back()->with('success', $message);
     }
 
-    public function show() {
-        // ill impleement this later to show a single product view
+    //used to fetch a specific product and display it on a single product page
+    public function show($id) {
+        $product = Product::findOrFail($id);
+        return view('product-page', compact('product'));
     }
 }
