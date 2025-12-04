@@ -1,19 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Product;
-
+use App\Models\Product; 
 class ProductController extends Controller
 {
-    //this is not in use
     public function index()
     {
-        //this returns all the products (can shorten it if needed)
         $products = Product::all();
         return view('product-page', compact('products'));
-
     }
 
+    public function show(Product $product)
+    {
+
+        return view('product-page', compact('product'));
+    }
 }
