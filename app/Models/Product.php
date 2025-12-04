@@ -15,6 +15,6 @@ class Product extends Model
 
     //this is for the foreign keys (many to one)
     public function category() {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }

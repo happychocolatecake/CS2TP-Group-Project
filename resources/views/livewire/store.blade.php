@@ -25,11 +25,20 @@
             <!-- Sidebar Filter -->
             <aside class="md:col-span-1">
                 <h2 class="text-2xl font-bold mb-4">Filter</h2>
-
                 <x-filter-group title="Category" open>
-                    <x-filter-item label="Prebuilt PCs" name="category_prebuilt" />
-                    <x-filter-item label="Components" name="category_components" />
-                    <x-filter-item label="Bundles" name="category_bundles" />
+                    @foreach ($categories as $category)
+                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                wire:click="toggleCategory({{ $category->id}})"
+                                @if(in_array($category->id, $selectedCategories)) checked @endif
+                                class="form-checkbox h-4 w-4 text-gray-800 border-gray-300 rounded focus:ring-gray-800">
+                            >
+
+
+                            <span class="text-gray-700">{{ $category->category_name }}</span>
+                        </label>
+                    @endforeach
                 </x-filter-group>
 
                 <x-filter-group title="Price">
