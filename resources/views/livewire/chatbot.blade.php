@@ -17,7 +17,7 @@
          class="absolute bottom-16 right-0 w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col overflow-hidden">
 
         <div class="bg-indigo-600 text-white p-3 flex justify-between items-center">
-            <h3 class="text-lg font-semibold">Support Bot</h3>
+            <h3 class="text-lg font-semibold">HappyBot😁</h3>
             <button wire:click="toggleChat" class="text-white hover:text-indigo-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -35,7 +35,7 @@
                     </div>
                 @else
                     <div class="flex justify-end">
-                        <div class="bg-indigo-500 text-white rounded-lg p-3 max-w-xs text-sm">{{ $message['content'] }}</div>
+                        <div class="bg-indigo-500 text-white rounded-lg p-3 max-w-xs text-sm">{!! $message['content'] !!}</div>
                     </div>
                 @endif
             @endforeach
