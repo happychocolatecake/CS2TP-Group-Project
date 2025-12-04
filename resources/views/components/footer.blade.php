@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
-                <p class="text-base text-gray-400">&copy; 2024 Happy Hardware. Group 27.</p>
+                <p class="text-base text-gray-400">&copy; 2025 Happy Hardware. Group 27.</p>
             </div>
         </div>
     </footer>
