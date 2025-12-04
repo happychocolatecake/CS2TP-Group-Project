@@ -1,5 +1,4 @@
 <x-header></x-header>
-
 <x-layout>
     <div class="max-w-2xl mx-auto px-4 py-12">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
