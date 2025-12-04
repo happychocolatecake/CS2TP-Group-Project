@@ -40,7 +40,7 @@
                     @endforeach
                 </x-filter-group>
 
-                <x-filter-group title="Price">
+                <x-filter-group title="Price" open>
 
                     <div class="px-1">
                         <div class="px-2 space-y-2">
