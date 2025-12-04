@@ -121,13 +121,6 @@
                                      Buying as a Gift?
                                 </label>
                             </div>
-
-                            <div class="flex items-center">
-                                <input type="checkbox" id="subscribe" class="w-4 h-4 mr-3 cursor-pointer accent-indigo-600">
-                                <label for="subscribe" class="text-gray-800 cursor-pointer select-none text-sm">
-                                     Stay updated with our offers! Subscribe to our newsletter?
-                                </label>
-                            </div>
                         </div>
                     </div>
 
@@ -135,7 +128,7 @@
                        class="block w-full text-center bg-white text-gray-700 text-[15px] p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-colors duration-200 font-bold border border-gray-300">
                         ← Back to Store
                     </a>
-
+                    <div></div>
                 </aside>
             </div>
         @endif
