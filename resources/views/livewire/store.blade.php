@@ -25,23 +25,73 @@
             <!-- Sidebar Filter -->
             <aside class="md:col-span-1">
                 <h2 class="text-2xl font-bold mb-4">Filter</h2>
-
                 <x-filter-group title="Category" open>
-                    <x-filter-item label="Prebuilt PCs" name="category_prebuilt" />
-                    <x-filter-item label="Components" name="category_components" />
-                    <x-filter-item label="Bundles" name="category_bundles" />
+                    @foreach ($categories as $category)
+                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                wire:click="toggleCategory({{ $category->id}})"
+                                @if(in_array($category->id, $selectedCategories)) checked @endif
+                                class="form-checkbox h-4 w-4 text-gray-800 border-gray-300 rounded focus:ring-gray-800">
+
+
+                            <span class="text-gray-700">{{ $category->category_name }}</span>
+                        </label>
+                    @endforeach
                 </x-filter-group>
 
-                <x-filter-group title="Price">
+                <x-filter-group title="Price" open>
+
                     <div class="px-1">
-                        <p class="text-sm text-gray-500">Price slider coming soon.</p>
+                        <div class="px-2 space-y-2">
+                                <input type="range" id="price-range" name="max_price" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="£{{ $selectedMaxPrice }}"
+                                wire:model.lazy="selectedMaxPrice"
+                                class="w-full h-2 bg-gray-200 rounded-lh accent-indigo-600" oninput="document.getElementById('price-display').innerText = '£' + this.value">
+
+                                <div class="flex justify-between text-sm text-gray-700 font-semibold">
+
+                                        <span>£{{ $minPrice }}</span>
+                                        <span id="price-display">£{{ $selectedMaxPrice }}</span>
+
+                                </div>
+                        </div>
                     </div>
+
                 </x-filter-group>
 
                 <x-filter-group title="Primary Colour">
                     <x-filter-item label="Black" name="color_black" />
                     <x-filter-item label="White" name="color_white" />
-                    <x-filter-item label="Silver" name="color_silver" />
+                </x-filter-group>
+
+                <h2 class="text-2xl font-bold mb-4">Sort By </h2>
+
+                <x-filter-group title="Filters">
+                        <div class="relative inline-block text-left">
+                        <label>
+
+                                <button wire:click="sortBy('product_name', 'asc')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100
+                                {{$sortField == 'product_name' && $sortDirection == 'asc' ? 'border-2 border-blue-500 rounded-lg' : '' }}">
+                                    Name A-Z
+                                </button>
+
+                                <button wire:click="sortBy('product_name', 'desc')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100
+                                {{$sortField == 'product_name' && $sortDirection == 'desc' ? 'border-2 border-blue-500 rounded-lg' : '' }}">
+                                    Name Z-A
+                                </button>
+
+                                <button wire:click="sortBy('product_price', 'desc')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100
+                                {{$sortField == 'product_price' && $sortDirection == 'desc' ? 'border-2 border-blue-500 rounded-lg' : '' }}">
+                                    Price ↑
+                                </button>
+
+                                <button wire:click="sortBy('product_price', 'asc')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100
+                                {{$sortField == 'product_price' && $sortDirection == 'asc' ? 'border-2 border-blue-500 rounded-lg' : '' }}">
+                                    Price ↓
+                                </button>
+
+                        </label>
+                    </div>
                 </x-filter-group>
             </aside>
 
@@ -59,9 +109,7 @@
                         >
                     </div>
 
-                    <button class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 text-sm font-medium">
-                        Sort By
-                    </button>
+
                 </div>
 
                 <!-- Product Grid -->
@@ -100,7 +148,7 @@
                 @else
                     <div class="text-center py-12">
                         <h3 class="text-lg font-medium text-gray-900">No products found</h3>
-                        <p class="text-gray-500">We couldn't find any products matching "{{ $search }}"</p>
+                        <p class="text-gray-500">We couldn't find any products. Try adjusting your search or checking other categories.</p>
                     </div>
                 @endif
 
