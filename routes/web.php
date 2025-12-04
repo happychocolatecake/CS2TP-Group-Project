@@ -1,13 +1,14 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
-// use App\Http\Controllers\BasketController;
-// use App\Http\Controllers\CheckoutController; going to implement later
+use App\Http\Controllers\CheckoutController; 
+use Illuminate\Http\Request;
 
+// --- Public Routes ---
 
 Route::get('/', function () {
     return view('index');
@@ -31,19 +32,11 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-/*Route::get('/cc', function () {
-    return view('cc');
-})->name('cc.index');
-
-Route::get('/about', function () {
-    return view('about');
-})->name('about.index');  old */
-
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::post('/contact', function (\Illuminate\Http\Request $request) {
+Route::post('/contact', function (Request $request) {
     $request->validate([
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
@@ -51,45 +44,39 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
     return back()->with('status', 'Message sent successfully!');
 });
 
-Route::get('/temp-pp', function () {
-    return view('product-page');
-})->name('home');
-
-Route::get('/temp-pp', [ProductController::class, 'index']);
+Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp');
 
 Route::get('/basket', function () {
-    return view('basket');
-})->name('home');
+    if (request()->user()) {
+        return redirect()->route('basket.view');
+    }
+    
+    return view('basket', ['basket' => null]);
+})->name('basket.guest');
 
-/* Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-})->name('contact.index'); dont think its needed */
+//  Checkout Routes 
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
+Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+// --- Authenticated Routes ---
 
 Route::middleware(['auth'])->group(function () {
 
     Route::redirect('settings', 'settings/profile');
 
-    Route::get('/basket', [StoreController::class, 'viewBasket'])->name('basket.view');
+    // Basket routes for logged in users
+    Route::get('/basket', action: [StoreController::class, 'viewBasket'])->name('basket.view');
     Route::post('/basket/add', [StoreController::class, 'addToBasket'])->name('basket.add');
     Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');
-    Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
     Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
 
     Volt::route('settings/profile', 'initial views.livewire.settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'initial views.livewire.settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'initial views.livewire.settings.appearance')->name('appearance.edit');
 
+
     Volt::route('settings/two-factor', 'initial views.livewire.settings.two-factor')
-        ->middleware(
-            when(
-                Features::canManageTwoFactorAuthentication()
-                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
-                ['password.confirm'],
-                [],
-            ),
-        )
+        ->middleware(['password.confirm']) 
         ->name('two-factor.show');
-
-
 });

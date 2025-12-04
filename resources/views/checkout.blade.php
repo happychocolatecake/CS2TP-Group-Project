@@ -1,0 +1,208 @@
+<x-header></x-header>
+<x-layout>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <nav class="w-full bg-white shadow-md p-4 mb-8 text-center border-b border-gray-200">
+        {{-- Nav content if needed --}}
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 max-w-6xl">
+
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+            Complete Your Order
+        </h1>
+
+        {{-- 
+            KEY CHANGE: The <form> now wraps the entire Grid system. 
+            This allows the inputs to be on the left, and the submit button 
+            to be in the sidebar on the right.
+        --}}
+        <form action="{{ route('checkout.process') }}" method="POST">
+            @csrf
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                {{-- LEFT COLUMN: SHIPPING INFO --}}
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    {{-- Card: Customer Details --}}
+                    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">1. Shipping Information</h2>
+
+                        <div class="grid grid-cols-1 gap-6">
+                            
+                            {{-- Full Name --}}
+                            <div>
+                                <label for="full_name" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" id="full_name" name="full_name" required value="{{ old('full_name') }}"
+                                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                @error('full_name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                            </div>
+
+                            {{-- Email --}}
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                                <input type="email" id="email" name="email" required value="{{ old('email') }}"
+                                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                            </div>
+
+                            {{-- Address Line 1 --}}
+                            <div>
+                                <label for="address_line_1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
+                                <input type="text" id="address_line_1" name="address_line_1" required value="{{ old('address_line_1') }}"
+                                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                            </div>
+
+                            {{-- Address Line 2 --}}
+                            <div>
+                                <label for="address_line_2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+                                <input type="text" id="address_line_2" name="address_line_2" value="{{ old('address_line_2') }}"
+                                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                            </div>
+
+                            {{-- City & Postcode Row --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Town/City *</label>
+                                    <input type="text" id="city" name="city" required value="{{ old('city') }}"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                </div>
+                                <div>
+                                    <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode *</label>
+                                    <input type="text" id="postcode" name="postcode" required value="{{ old('postcode') }}"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- Card: Shipping Method --}}
+                    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">2. Delivery Method</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition">
+                                <input type="radio" id="standard" name="shipping_cost" value="3.95" required checked
+                                    class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                <label for="standard" class="ml-3 flex flex-col cursor-pointer w-full">
+                                    <span class="block text-sm font-bold text-gray-900">Standard Delivery (£3.95)</span>
+                                    <span class="block text-sm text-gray-500">3-5 working days</span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition">
+                                <input type="radio" id="express" name="shipping_cost" value="6.95"
+                                    class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                <label for="express" class="ml-3 flex flex-col cursor-pointer w-full">
+                                    <span class="block text-sm font-bold text-gray-900">Express Delivery (£6.95)</span>
+                                    <span class="block text-sm text-gray-500">1-2 working days</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- RIGHT COLUMN: ORDER SUMMARY (STICKY) --}}
+                <aside class="lg:col-span-1 space-y-6">
+                    <div class="bg-white p-6 border rounded-xl shadow-lg sticky top-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">3. Order Summary</h2>
+
+                        {{-- Item List (Mini) --}}
+                        <div class="max-h-60 overflow-y-auto mb-4 pr-2 space-y-3 custom-scrollbar">
+                            @forelse ($cartItems as $item)
+                                <div class="flex justify-between items-center text-sm">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-800 truncate w-40">{{ $item['name'] }}</div>
+                                        <div class="text-gray-500">Qty: {{ $item['quantity'] }}</div>
+                                    </div>
+                                    <div class="font-semibold text-gray-700">
+                                        £{{ number_format($item['price'] * $item['quantity'], 2) }}
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-sm text-gray-500">Your cart is empty.</p>
+                            @endforelse
+                        </div>
+                        
+                        <hr class="border-gray-200 mb-4">
+
+                        {{-- Totals Calculation --}}
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Subtotal:</span>
+                                <span>£<span id="subtotal">{{ number_format($subtotal, 2) }}</span></span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Shipping:</span>
+                                <span>£<span id="shipping-display">3.95</span></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="flex justify-between text-xl font-extrabold text-gray-800 mb-6">
+                                <span>Total:</span>
+                                <span>£<span id="final-total"></span></span>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full text-center bg-indigo-600 text-white text-lg p-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 font-bold">
+                                Confirm & Pay
+                            </button>
+                            
+                            <p class="text-xs text-center text-gray-500 mt-3">
+                                By clicking Confirm, you agree to our Terms & Conditions.
+                            </p>
+                        </div>
+                    </div>                    
+                        <a href="/basket"
+                        class="block w-full ...">    
+                    </a>
+                </aside>
+
+            </div>
+        </form>
+
+    </main>
+
+    {{-- Script remains mostly the same, just targeting the existing IDs --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const shippingRadios = document.querySelectorAll('input[name="shipping_cost"]');
+            const subtotalElement = document.getElementById('subtotal');
+            const shippingDisplayElement = document.getElementById('shipping-display');
+            const finalTotalElement = document.getElementById('final-total');
+            
+            // Get subtotal from the rendered PHP value (removing commas if present)
+            const initialSubtotal = parseFloat(subtotalElement.textContent.replace(/[£,]/g, ''));
+
+            function updateTotals() {
+                // Get the cost of the currently selected shipping radio button
+                const selectedRadio = document.querySelector('input[name="shipping_cost"]:checked');
+                if(!selectedRadio) return;
+
+                let selectedShippingCost = parseFloat(selectedRadio.value);
+                
+                // Update display values
+                shippingDisplayElement.textContent = selectedShippingCost.toFixed(2);
+                
+                // Calculate Final Total
+                const newTotal = initialSubtotal + selectedShippingCost;
+                finalTotalElement.textContent = newTotal.toFixed(2);
+            }
+
+            // Attach event listener to update totals whenever a shipping option is changed
+            shippingRadios.forEach(radio => {
+                radio.addEventListener('change', updateTotals);
+            });
+
+            // Run once on load
+            updateTotals();
+        });
+    </script>
+</body>
+
+</x-layout>
+<x-footer></x-footer>
