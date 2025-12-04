@@ -62,6 +62,16 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
+    // Basket Functionality 
+    Route::get('/my-basket', [StoreController::class, 'viewBasket'])->name('basket.view');
+    Route::post('/basket/add', [StoreController::class, 'addToBasket'])->name('basket.add');
+    Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');
+    Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
+
+    // Profile Tabs & Actions
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
     Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
     

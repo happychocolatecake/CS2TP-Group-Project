@@ -22,10 +22,12 @@
                     <nav class="flex flex-col">
                         
                         
+                        
                         <a href="{{ route('profile.index') }}" 
                            class="{{ request()->routeIs('profile.index') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-user-circle mr-2"></i> Profile Information
                         </a>
+                        
                         
                         
                         <a href="{{ route('profile.security') }}" 
@@ -34,12 +36,23 @@
                         </a>
                         
                         
+                        
                         <a href="{{ route('profile.orders') }}" 
                            class="{{ request()->routeIs('profile.orders') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-box-open mr-2"></i> Order History
                         </a>
 
                     </nav>
+                </div>
+                
+                <div class="mt-4">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                                class="w-full text-left px-6 py-3 bg-red-600 text-white rounded-xl shadow-md hover:bg-red-700 transition duration-200 font-bold focus:outline-none">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                        </button>
+                    </form>
                 </div>
             </aside>
 
@@ -60,7 +73,7 @@
                     </div>
                 @endif
 
-               
+                
                 @if(request()->routeIs('profile.orders'))
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                         @include('profile.partials.order-history')
