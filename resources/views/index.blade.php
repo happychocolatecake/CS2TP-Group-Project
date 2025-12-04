@@ -127,9 +127,8 @@
         <a href="/cc" class="bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
             Start Now
         </a>
-        <br><br>
     </div>
-
+</div>
 
 
 

@@ -82,14 +82,17 @@
                                     $description = !empty($item->product_description) ? $item->product_description : 'This item is still in development.';
                                 @endphp
 
-                                <x-product-card
-                                    :title="$title"
-                                    :description="$description"
-                                    :price="$price"
-                                    :image="$image"
+                                <div class="transform transition duration-200 hover:scale-105 hover:shadow-lg">
+                                    <a href="{{ route('product.show', $item->id)}}" class="block">
+                                        <x-product-card
+                                            :title="$title"
+                                            :description="$description"
+                                            :price="$price"
+                                            :image="$image"
 
-                                />
-
+                                        />
+                                    </a>
+                                </div>
 
                             </form>
                         @endforeach
