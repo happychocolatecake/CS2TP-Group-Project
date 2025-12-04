@@ -9,11 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             
-            $table->string('order_address');
-            $table->dateTime('order_date');
-            $table->string('order_status');
+            $table->string('order_address'); 
+            
+            $table->decimal('total_price', 10, 2); 
+            
+            $table->dateTime('order_date')->useCurrent();
+            
+            $table->string('order_status')->default('Pending');
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             

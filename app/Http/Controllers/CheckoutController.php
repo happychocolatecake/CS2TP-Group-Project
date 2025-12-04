@@ -4,24 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use App\Models\Order; going to use later to save orders to a database
-
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
+
     //show checkout page
     public function index()
     {
-        // Get users basket from database
         $user = Auth::user();
+        
+        // load items and products
         $basket = $user->basket()->with('items.product')->first();
 
-        // Check if basket existts and it has items
+        // Check if basket exists and has items
         if (!$basket || $basket->items->isEmpty()) {
             return redirect()->route('store.index'); 
         }
 
-        // Add database date to match what View expects
+        // Put the database data into an array for a more suitabe view
         $cartItems = $basket->items->map(function($item) {
             return [
                 'name' => $item->product->product_name,
@@ -30,19 +32,18 @@ class CheckoutController extends Controller
             ];
         });
 
-        //  Calculate price
+        // Calculate subtotal
         $subtotal = $cartItems->sum(function($item) {
             return $item['price'] * $item['quantity'];
         });
 
-        // Return the checkout view
         return view('checkout', compact('cartItems', 'subtotal'));
     }
 
-    //handle submissions
+    //handles orders
     public function processOrder(Request $request)
     {
-        // 1. Validate incoming data
+        // Valid data
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'address_line_1' => 'required|string|max:255',
@@ -53,7 +54,7 @@ class CheckoutController extends Controller
             'shipping_cost' => 'required|numeric|in:3.95,6.95', 
         ]);
 
-        // Get data from database
+        // Get users basket from database
         $user = Auth::user();
         $basket = $user->basket()->with('items.product')->first();
         
@@ -61,7 +62,7 @@ class CheckoutController extends Controller
             return redirect()->route('store.index')->withErrors(['cart' => 'Your cart is empty.']);
         }
 
-        // Calculate the total from the servers side
+        // calculate total cost from the servers side
         $subtotal = 0;
         foreach ($basket->items as $item) {
             $subtotal += $item->product->product_price * $item->quantity;
@@ -70,21 +71,47 @@ class CheckoutController extends Controller
         $shippingCost = $validatedData['shipping_cost'];
         $grandTotal = $subtotal + $shippingCost;
 
-        // Im going to implement saving the order later
+        // Create order in database
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->order_date = now();
+        $order->order_status = 'Placed'; 
+        
+        $fullAddress = $validatedData['address_line_1'] . ', ';
+        if (!empty($validatedData['address_line_2'])) {
+            $fullAddress .= $validatedData['address_line_2'] . ', ';
+        }
+        $fullAddress .= $validatedData['city'] . ', ' . $validatedData['postcode'];
+        
+        $order->order_address = $fullAddress;
+        
+ 
+        $order->total_price = $grandTotal; 
+        
+        $order->save();
 
-        // Empty the cart after success
+        // Moves items from basket to orders
+        foreach ($basket->items as $item) {
+            DB::table('order_details')->insert([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'order_price' => $item->product->product_price,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // empty basket after order has been succesful
         $basket->items()->delete(); 
 
-        // Redirect to success page
         return redirect()->route('checkout.success')->with([
             'success' => 'Thank you for your order!',
             'order_total' => $grandTotal
         ]);
     }
     
-    /**
-     * Show the success page.
-     */
+
     public function success()
     {
         if (!session()->has('success')) {

@@ -55,6 +55,11 @@ class User extends Authenticatable
             ->implode('');
     }
 
+    public function orders()
+    {
+        // A User has many Orders
+        return $this->hasMany(Order::class);
+    }
 
     public function basket()
     {
