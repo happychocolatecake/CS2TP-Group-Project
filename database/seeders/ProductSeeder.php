@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'Ryzen9-7950X',
                 'category_id' => 1,
                 'product_price' => 650,
-                'product_description'=> 'Top-tier AMD processor delivering incredible multi-core performance for gaming and productivity.',
+                'product_description'=> 'Top-tier AMD processor delivering multi-core performance for gaming.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/5116zdA9uyL._AC_SL1200_.jpg'
@@ -79,7 +79,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'V750 Gold',
                 'category_id' => 1,
                 'product_price' => 120,
-                'product_description'=> 'Reliable and efficient power supply.',
+                'product_description'=> 'Reliable and efficient power supply with enough wattage to handle needy components.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/91bdi5kqQGL._AC_UF1000,1000_QL80_.jpg'
@@ -99,7 +99,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'H710 Matte Black',
                 'category_id' => 1,
                 'product_price' => 200,
-                'product_description'=> 'Well-ventilated PC case with sleek design.',
+                'product_description'=> 'Well-ventilated and well-built PC case with sleek design.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://nzxt.com/cdn/shop/files/h7-emea-hero-2000x2000.png?v=1762528364.'

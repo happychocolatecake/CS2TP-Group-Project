@@ -71,7 +71,7 @@ class StoreController extends Controller
 
     public function bestSeller() {
 
-        $bestSellers = Product::whereIn('id', [4, 1, 10])->get();
+        $bestSellers = Product::whereIn('id', [13, 1, 22])->get();
         return view('index', compact('bestSellers'));
 
     }
