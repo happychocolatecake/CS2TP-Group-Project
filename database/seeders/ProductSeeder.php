@@ -13,25 +13,24 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
 
-
         DB::table('products')->insert([
             [
                 'product_name' => 'GTX 4080',
                 'product_model' => 'RTX4080-X',
                 'category_id' => 1,
                 'product_price' => 1200,
-                'product_description'=> '',
-                'product_createdate' =>now(),
+                'product_description'=> 'NVIDIA graphics card with ultra-fast ray tracing for high-end gaming.',
+                'product_createdate' => now(),
                 'product_stock' => 10, // Added default stock
-                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg',
+                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg'
             ],
             [
                 'product_name' => 'Intel i9 14900K',
                 'product_model' => 'i9-14900K',
                 'category_id' => 1,
                 'product_price' => 700,
-                'product_description'=> '',
-                'product_createdate' =>now(),
+                'product_description'=> 'Powerful 14th Gen Intel CPU, perfect for all workloads.',
+                'product_createdate' => now(),
                 'product_stock' => 10,
                 'product_image' =>'https://media.very.co.uk/i/very/W1HGC_SQ1_0000000099_N_A_SLf?$pdp_576x768_x2$&fmt=webp'
             ],
@@ -40,7 +39,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'Ryzen9-7950X',
                 'category_id' => 1,
                 'product_price' => 650,
-                'product_description'=> '',
+                'product_description'=> 'Top-tier AMD processor delivering incredible multi-core performance for gaming and productivity.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/5116zdA9uyL._AC_SL1200_.jpg'
@@ -50,7 +49,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'Vengeance DDR5-32GB',
                 'category_id' => 1,
                 'product_price' => 150,
-                'product_description'=> '',
+                'product_description'=> 'High-speed DDR5 memory kit to maximize system performance and smooth multitasking.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' => 'https://m.media-amazon.com/images/I/61eNiRqRcXL._AC_UF894,1000_QL80_.jpg'
@@ -60,7 +59,7 @@ class ProductSeeder extends Seeder
                 'product_model' => '970 Evo Plus',
                 'category_id' => 1,
                 'product_price' => 250,
-                'product_description'=> '',
+                'product_description'=> 'Ultra-fast NVMe SSD with lightning-fast boot times and application loading.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/71ByVZ1x2vL.jpg'
@@ -70,7 +69,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'ROG Strix Z790',
                 'category_id' => 1,
                 'product_price' => 400,
-                'product_description'=> '',
+                'product_description'=> 'Feature-rich motherboard with high-end gaming features.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://dlcdnwebimgs.asus.com/files/media/B51D103D-2941-412E-8479-AF994957093B/v1/img/kv/ROG-Strix-X670E-E-Gaming.png'
@@ -80,7 +79,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'V750 Gold',
                 'category_id' => 1,
                 'product_price' => 120,
-                'product_description'=> '',
+                'product_description'=> 'Reliable and efficient power supply.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/91bdi5kqQGL._AC_UF1000,1000_QL80_.jpg'
@@ -90,7 +89,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'NH-D15',
                 'category_id' => 1,
                 'product_price' => 100,
-                'product_description'=> '',
+                'product_description'=> 'Premium air cooler for efficient heat management.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://img.overclockers.co.uk/images/HS-03M-NC/05e4e38b81d0351597f55b71637a424c.jpg'
@@ -100,7 +99,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'H710 Matte Black',
                 'category_id' => 1,
                 'product_price' => 200,
-                'product_description'=> '',
+                'product_description'=> 'Well-ventilated PC case with sleek design.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://nzxt.com/cdn/shop/files/h7-emea-hero-2000x2000.png?v=1762528364.'
@@ -110,7 +109,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'AF120',
                 'category_id' => 1,
                 'product_price' => 50,
-                'product_description'=> '',
+                'product_description'=> 'High-performance case fans to keep your system cool under load.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/71Pgp9awWGL.jpg'
@@ -120,7 +119,7 @@ class ProductSeeder extends Seeder
                 'product_model' => 'AX200',
                 'category_id' => 1,
                 'product_price' => 40,
-                'product_description'=> '',
+                'product_description'=> 'Next-generation Wi-Fi 6 network card for faster wireless connectivity.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/61UW07Y1tLL._AC_SL1000_.jpg'
@@ -130,10 +129,112 @@ class ProductSeeder extends Seeder
                 'product_model' => 'Odyssey G5',
                 'category_id' => 1,
                 'product_price' => 300,
-                'product_description'=> '',
+                'product_description'=> 'A curved display with vibrant colors and smooth refresh for gaming and productivity.',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
                 'product_image' =>'https://m.media-amazon.com/images/I/61VO4NO1vHL._AC_UF1000,1000_QL80_.jpg'
+            ],
+
+            [
+                'product_name' => 'HyperX Gaming Rig',
+                'product_model' => 'HX-5000',
+                'category_id' => 2,
+                'product_price' => 1500,
+                'product_description' => 'High-end gaming PC with RTX 4070 and Intel i7 processor.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/91QNSIAZLKL._AC_UL480_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Nova Workstation',
+                'product_model' => 'NV-3000',
+                'category_id' => 2,
+                'product_price' => 1300,
+                'product_description' => 'Reliable PC for creators and multitasking with AMD Ryzen 9.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/81KnlVQl3bL._AC_SY300_SX300_QL70_ML2_.jpg',
+            ],
+            [
+                'product_name' => 'Stealth Mini-PC',
+                'product_model' => 'ST-100',
+                'category_id' => 2,
+                'product_price' => 1000,
+                'product_description' => 'Compact gaming PC with GTX 1660 Ti, perfect for small spaces.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/81VPFlY3WmL._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Titan Pro Gaming',
+                'product_model' => 'TP-700',
+                'category_id' => 2,
+                'product_price' => 1800,
+                'product_description' => 'Top-tier gaming experience with RTX 4080 and 32GB RAM.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/71JjWbIHvIL._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Eco Budget PC',
+                'product_model' => 'EB-250',
+                'category_id' => 2,
+                'product_price' => 700,
+                'product_description' => 'Affordable PC for everyday use with integrated graphics.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/71uQil+zxJL._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+
+            [
+                'product_name' => 'Ultimate Gaming Bundle',
+                'product_model' => 'BrandX',
+                'category_id' => 3,
+                'product_price' => 2500,
+                'product_description' => 'PC + monitor + keyboard + mouse combo for gamers.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/81EFH6sT5CL._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Creator’s Bundle',
+                'product_model' => 'BrandY',
+                'category_id' => 3,
+                'product_price' => 2200,
+                'product_description' => 'Workstation PC bundle with dual monitors and professional accessories.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/613+s9cGm5L._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Mini Office Bundle',
+                'product_model' => 'BrandZ',
+                'category_id' => 3,
+                'product_price' => 1200,
+                'product_description' => 'Compact PC bundle with monitor, keyboard, and mouse for home office.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/61Owitvq44L._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Streaming Bundle',
+                'product_model' => 'StreamMaster',
+                'category_id' => 3,
+                'product_price' => 1900,
+                'product_description' => 'PC with webcam, mic, and capture card for live streaming setup.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/71uITD7P8QL._AC_UY327_FMwebp_QL65_.jpg',
+            ],
+            [
+                'product_name' => 'Beginner Gamer Bundle',
+                'product_model' => 'StartUp',
+                'category_id' => 3,
+                'product_price' => 1000,
+                'product_description' => 'Entry-level gaming PC bundle with essential peripherals.',
+                'product_createdate' => now(),
+                'product_stock' => 10,
+                'product_image' => 'https://m.media-amazon.com/images/I/712zBD3Mj-L._AC_UY327_FMwebp_QL65_.jpg',
             ],
         ]);
     }
