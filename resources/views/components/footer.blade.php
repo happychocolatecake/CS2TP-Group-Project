@@ -16,7 +16,7 @@
                         <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Help</h3>
                         <ul role="list" class="mt-4 space-y-4">
                             <li><a href="#" class="text-base text-gray-400 hover:text-white">FAQ</a></li>
-                            <li><a href="#" class="text-base text-gray-400 hover:text-white">How-to Guides</a></li>
+                            <li><a href="build-guide" class="text-base text-gray-400 hover:text-white">How-to Guides</a></li>
                         </ul>
                     </div>
                     <div>

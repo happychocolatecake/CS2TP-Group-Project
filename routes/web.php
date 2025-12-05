@@ -40,6 +40,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::get('/build-guide', function () {
+    return view('build-guide');
+})->name('build-guide');
+
 Route::post('/contact', function (Request $request) {
     $request->validate([
         'subject' => 'required|string|max:255',
