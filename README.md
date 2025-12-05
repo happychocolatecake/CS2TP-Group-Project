@@ -4,7 +4,7 @@
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 * **Storefront:** A welcoming homepage that displays current best-sellers.
 * **Dynamic Navigation:** A fixed navigation bar that expands on hover for easy access to all product categories (CPU, GPU, RAM, etc.).
@@ -16,7 +16,7 @@
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 * **Backend:** [**Laravel**](https://laravel.com/) - A robust PHP framework used for a secure structure and rapid development.
 * **Frontend:** [**Vue.js**](https://vuejs.org/) - A component-based JavaScript framework for creating a dynamic and maintainable user interface.
@@ -24,7 +24,7 @@
 
 ---
 
-## 🎨 Design & Planning
+##  Design & Planning
 
 The project was planned extensively before development, including a site map, database schema, and full UI mockups.
 
@@ -39,7 +39,7 @@ We created low-fidelity wireframes and high-fidelity Figma mockups to visualize 
 
 ---
 
-## 🛠️ Project Management & Contributing
+##  Project Management & Contributing
 
 This project is managed using the **Kanban (Agile)** methodology, chosen for its flexibility in handling changing requirements.
 
@@ -64,6 +64,6 @@ This project is managed using the **Kanban (Agile)** methodology, chosen for its
 
 ---
 
-## ℹ️ Project Context
+##  Project Context
 
 This is a team project for the **CS2TP** module.
