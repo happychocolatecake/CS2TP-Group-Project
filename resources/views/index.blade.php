@@ -23,8 +23,8 @@
                 <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700">
                     Shop Now
                 </a>
-                <a href="/cc" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
-                    Computer Configurator
+                <a href="/build-guide" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
+                    Build Guide
                 </a>
             </div>
         </div>
@@ -139,7 +139,7 @@
     </div>
 
     <div class="mt-12">
-        <a href="/cc" class="bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
+        <a href="/build-guide" class="bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
             Start Now
         </a>
     </div>
