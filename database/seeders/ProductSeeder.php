@@ -12,7 +12,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-      
+
 
         DB::table('products')->insert([
             [
@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> '',
                 'product_createdate' =>now(),
                 'product_stock' => 10, // Added default stock
-                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg',        
+                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg',
             ],
             [
                 'product_name' => 'Intel i9 14900K',
@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> '',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
-                'product_image' =>'https://media.very.co.uk/i/very/W1HGC_SQ1_0000000099_N_A_SLf?$pdp_576x768_x2$&fmt=webp'    
+                'product_image' =>'https://media.very.co.uk/i/very/W1HGC_SQ1_0000000099_N_A_SLf?$pdp_576x768_x2$&fmt=webp'
             ],
             [
                 'product_name' => 'AMD Ryzen 9 7950X',
@@ -93,7 +93,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> '',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
-                'product_image' =>'https://img.overclockers.co.uk/images/HS-03M-NC/05e4e38b81d0351597f55b71637a424c.jpg'      
+                'product_image' =>'https://img.overclockers.co.uk/images/HS-03M-NC/05e4e38b81d0351597f55b71637a424c.jpg'
             ],
             [
                 'product_name' => 'NZXT H710 Case',
@@ -123,7 +123,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> '',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
-                'product_image' =>'https://m.media-amazon.com/images/I/61n4OsWtW7L.jpg.'
+                'product_image' =>'https://m.media-amazon.com/images/I/61UW07Y1tLL._AC_SL1000_.jpg'
             ],
             [
                 'product_name' => 'Samsung 27" Curved Monitor',
@@ -133,7 +133,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> '',
                 'product_createdate' =>now(),
                 'product_stock' => 10,
-                'product_image' =>'https://m.media-amazon.com/images/I/61VO4NO1vHL._AC_UF1000,1000_QL80_.jpg.'
+                'product_image' =>'https://m.media-amazon.com/images/I/61VO4NO1vHL._AC_UF1000,1000_QL80_.jpg'
             ],
         ]);
     }
