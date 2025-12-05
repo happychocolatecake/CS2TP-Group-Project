@@ -64,7 +64,7 @@
                     <x-filter-item label="White" name="color_white" />
                 </x-filter-group>
 
-                <h2 class="text-2xl font-bold mb-4">Sort By </h2>
+                <h2 class="text-2xl font-bold mb-4">Sort By</h2>
 
                 <x-filter-group title="Filters">
                         <div class="relative inline-block text-left">
@@ -137,6 +137,7 @@
                                             :description="$description"
                                             :price="$price"
                                             :image="$image"
+                                            :context="'store'"
 
                                         />
                                     </a>
