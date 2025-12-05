@@ -12,7 +12,7 @@
         <div class="p-12 flex flex-col justify-center">
 
             <h1 class="text-3xl font-bold mb-4 text-gray-900">
-                "Power Your Dreams, One Build at a Time, With Happy Hardware! "
+                "Your Dream Build. Without the Guesswork."
             </h1>
 
             <p class="text-gray-600 mb-8">
