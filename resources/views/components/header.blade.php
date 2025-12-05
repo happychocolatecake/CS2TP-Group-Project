@@ -9,6 +9,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     @livewireStyles
+    <link rel="icon" href="{{ asset('mouse.jpeg') }}">
 </head>
 <body>
 
