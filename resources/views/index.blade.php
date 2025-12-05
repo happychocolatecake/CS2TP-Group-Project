@@ -5,29 +5,29 @@
     <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-12">
 
 
-    <div class="h-67 overflow-hidden">
-        <img src="/images/hero_pc.jpg" alt="Cool PC" class="w-full h-full object-cover">
-    </div>
+        <div class="h-67 overflow-hidden">
+            <img src="/images/hero_pc.jpg" alt="Cool PC" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+        </div>
 
-    <div class="p-12 flex flex-col justify-center">
+        <div class="p-12 flex flex-col justify-center">
 
-    <h1 class="text-3xl font-bold mb-4 text-gray-900">
-        "Power Your Dreams, One Build at a Time, With Happy Hardware! "
-    </h1>
+            <h1 class="text-3xl font-bold mb-4 text-gray-900">
+                "Power Your Dreams, One Build at a Time, With Happy Hardware! "
+            </h1>
 
-    <p class="text-gray-600 mb-8">
-            We offer the best prices on CPUs, GPUs and pre-builts. Better service, better gaming.
-    </p>
+            <p class="text-gray-600 mb-8">
+                    We offer the best prices on CPUs, GPUs and pre-builts. Better service, better gaming.
+            </p>
 
-    <div class="flex gap-4">
-        <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700">
-            Shop Now
-        </a>
-        <a href="/cc" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
-            Computer Configurator
-        </a>
-    </div>
-    </div>
+            <div class="flex gap-4">
+                <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700">
+                    Shop Now
+                </a>
+                <a href="/cc" class="bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-600">
+                    Computer Configurator
+                </a>
+            </div>
+        </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
@@ -35,24 +35,29 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
 
             <a href="/store" class="block group">
-                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
-                    <span class="text-gray-500 font-bold text-xl">Components</span>
+                <div class="transform transition duration-300 hover:translate-y-2 hover:shadow-lg">
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Components</span>
+                    </div>
                 </div>
-
                 <h3 class="text-lg font-semibold">Shop Individual Parts</h3>
             </a>
 
             <a href="/store" class="block group">
-                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
-                    <span class="text-gray-500 font-bold text-xl">Bundles</span>
+                <div class="transform transition duration-300 hover:translate-y-1 hover:shadow-lg">
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Bundles</span>
+                    </div>
                 </div>
 
                 <h3 class="text-lg font-semibold">Save with Bundles</h3>
             </a>
 
             <a href="/store" class="block group">
-                <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
-                    <span class="text-gray-500 font-bold text-xl">Pre-Builts</span>
+                <div class="transform transition duration-300 hover:translate-y-2 hover:shadow-lg">
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Pre-Builts</span>
+                    </div>
                 </div>
 
                 <h3 class="text-lg font-semibold">Ready to Game</h3>
@@ -68,26 +73,27 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-                <x-product-card
-                    title="Popular Pre-Built"
-                    description="Ready to game straight out the box."
-                    price="1300"
-                    image="null"
-                    />
+                @foreach ( $bestSellers as $product )
 
-                <x-product-card
-                    title="Popular CPU"
-                    description="High pefformance CPU for gaming and productivity."
-                    price="300"
-                    image="null"
-                    />
+                    <form method="POST" action="{{ route('basket.add') }}">
 
-                <x-product-card
-                    title="Popular GPU"
-                    description="Next-gen graphics power."
-                    price="600"
-                    image="null"
-                    />
+                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        <input type="hidden" name="quantity" value="1">
+                        @csrf
+                            <div class="transform transition duration-200 hover:scale-105 hover:shadow-lg">
+                                <a href="{{ route('product.show', $product->id)}}" class="block">
+                                    <x-product-card
+                                        title="{{$product->product_name}}"
+                                        description="{{$product->product_description}}"
+                                        price="{{$product->product_price}}"
+                                        image="{{$product->product_image}}"
+                                        :context="'index'"
+                                    />
+                                </a>
+                            </div>
+                    </form>
+
+                @endforeach
 
             </div>
         </div>

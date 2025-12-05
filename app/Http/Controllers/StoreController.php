@@ -64,8 +64,15 @@ class StoreController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
+
         return view('store-page', compact('products', 'categories'));
 
+    }
+
+    public function bestSeller() {
+
+        $bestSellers = Product::whereIn('id', [4, 1, 10])->get();
+        return view('index', compact('bestSellers'));
 
     }
 
