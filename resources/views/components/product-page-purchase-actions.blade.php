@@ -11,7 +11,11 @@
                     <label class="block font-bold text-x1 mb-4">Quantity</label>
                     <div class="flex items-center gap-6 text-4xl font-light select-none">
                         <button type="button" id="minus_quantity" class= "hover:text-gray-600 pb-1 cursor-pointer"> - </button>
-                        <input id="quantity" name="quantity" type="number" value="1" min="1" class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" />
+                        @if($stock != 0)
+                        <input id="quantity" name="quantity" type="number" value="1" min="1" max={{$stock}} class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none" />
+                        @else
+                        <span id="quantity" name="quantity" type="number" value="0" class="mx-2 w-12 text-center bg-transparent border-none appearance-none focus:outline-none"> 0 </span>
+                        @endif
                         <button type="button" id="plus_quantity" class= "hover:text-gray-600 pb-1 cursor-pointer"> + </button>
 
                     </div>

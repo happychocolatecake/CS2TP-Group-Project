@@ -14,13 +14,13 @@ class CheckoutController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         // load items and products
         $basket = $user->basket()->with('items.product')->first();
 
         // Check if basket exists and has items
         if (!$basket || $basket->items->isEmpty()) {
-            return redirect()->route('store.index'); 
+            return redirect()->route('store.index');
         }
 
         // Put the database data into an array for a more suitabe view
@@ -51,15 +51,22 @@ class CheckoutController extends Controller
             'city' => 'required|string|max:100',
             'postcode' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'shipping_cost' => 'required|numeric|in:3.95,6.95', 
+            'shipping_cost' => 'required|numeric|in:3.95,6.95',
         ]);
 
         // Get users basket from database
         $user = Auth::user();
         $basket = $user->basket()->with('items.product')->first();
-        
+
         if (!$basket || $basket->items->isEmpty()) {
             return redirect()->route('store.index')->withErrors(['cart' => 'Your cart is empty.']);
+        }
+
+                //checks stock is validated
+        foreach ($basket->items as $item) {
+            if ($item->product->product_stock < $item->quantity) {
+                return redirect()->route('store.index')->withErrors(['cart' => 'Some of your products are out of stock.']);
+            }
         }
 
         // calculate total cost from the servers side
@@ -67,7 +74,7 @@ class CheckoutController extends Controller
         foreach ($basket->items as $item) {
             $subtotal += $item->product->product_price * $item->quantity;
         }
-        
+
         $shippingCost = $validatedData['shipping_cost'];
         $grandTotal = $subtotal + $shippingCost;
 
@@ -75,19 +82,19 @@ class CheckoutController extends Controller
         $order = new Order();
         $order->user_id = $user->id;
         $order->order_date = now();
-        $order->order_status = 'Placed'; 
-        
+        $order->order_status = 'Placed';
+
         $fullAddress = $validatedData['address_line_1'] . ', ';
         if (!empty($validatedData['address_line_2'])) {
             $fullAddress .= $validatedData['address_line_2'] . ', ';
         }
         $fullAddress .= $validatedData['city'] . ', ' . $validatedData['postcode'];
-        
+
         $order->order_address = $fullAddress;
-        
- 
-        $order->total_price = $grandTotal; 
-        
+
+
+        $order->total_price = $grandTotal;
+
         $order->save();
 
         // Moves items from basket to orders
@@ -103,14 +110,14 @@ class CheckoutController extends Controller
         }
 
         // empty basket after order has been succesful
-        $basket->items()->delete(); 
+        $basket->items()->delete();
 
         return redirect()->route('checkout.success')->with([
             'success' => 'Thank you for your order!',
             'order_total' => $grandTotal
         ]);
     }
-    
+
 
     public function success()
     {
