@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="flex-1 min-w-0">
-                                <a href="#" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition truncate block mb-1">
+                                <a href="/product/{{$item->product->id}}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition truncate block mb-1">
                                     {{ $item->product->product_name }}
                                 </a>
                                 <p class="text-sm text-gray-500 mb-3">Model: {{ $item->product->product_model }}</p>
