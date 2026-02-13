@@ -47,7 +47,7 @@ class StoreController extends Controller
 
             if ($request->input('action') === 'increment') {
                 //checks if quantity wanted does not exceed the stock limit
-                if ($basketItem->product->product_stock >= $basketItem->quantity){
+                if ($basketItem->product->product_stock > $basketItem->quantity){
                     $basketItem->increment('quantity');
                 }
                 else {
