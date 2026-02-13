@@ -47,11 +47,13 @@ class StoreController extends Controller
 
             if ($request->input('action') === 'increment') {
                 //checks if quantity wanted does not exceed the stock limit
-                if ($basketItem->product->product_stock > $basketItem->quantity){
+                if ($basketItem->product->product_stock >= $basketItem->quantity){
                     $basketItem->increment('quantity');
                 }
                 else {
-                    $basketItem->delete();
+                    //if the quantity now exceeds stock limit
+                    return redirect()->route('basket.view')->with('error', 'There is only'.$basketItem->product->product_stock.'available');
+                    //doesnt show error message, but it doesnt delete the basket item now
                 }
 
             } else {
