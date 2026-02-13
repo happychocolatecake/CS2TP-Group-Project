@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="flex items-center justify-center  bg-gradient-to-t from-gray-700 via-gray-800 to-gray-900">
+    <div class="flex items-center justify-center bg-gradient-to-t from-gray-700 via-gray-800 to-gray-900">
 <x-layouts.auth>
     
     <div class="flex justify-center flex-col gap-6">
