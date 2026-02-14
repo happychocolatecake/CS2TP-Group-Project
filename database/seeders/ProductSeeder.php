@@ -559,7 +559,7 @@ class ProductSeeder extends Seeder
                 'product_description'=>'Bootable ArchLinux installer USB with a progress display.',
                 'product_createdate'=>now(),
                 'product_stock'=>25,
-                'product_image'=>'https://github.com/Samdoses/CS2TP-Group-Project/blob/main/public/images/archusb.png'
+                'product_image'=>'https://github.com/Samdoses/CS2TP-Group-Project/blob/main/public/images/archusb.png?raw=true'
             ]
         ]);
     }
