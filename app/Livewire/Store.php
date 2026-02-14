@@ -97,8 +97,10 @@ class Store extends Component
             $query->whereIn('product_part', $this->selectedPCParts);
         }
 
-        $query->whereBetween('product_price', [$this->minPrice, $this->selectedMaxPrice]);
-
+        $query->when($this->minPrice !== null && $this->selectedMaxPrice !== null, function ($q) {
+            $q->whereBetween('product_price', [$this->minPrice, $this->selectedMaxPrice]);
+        }
+        );
 
         return view('livewire.store', [
             'products' => $query->orderBy($this->sortField, $this->sortDirection)->get(),
