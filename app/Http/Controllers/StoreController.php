@@ -73,8 +73,10 @@ class StoreController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
+        $colours = Product::select('product_colour')->distinct()->pluck('product_colour');
+        $pcParts = Product::select('product_part')->distinct()->pluck('product_part');
 
-        return view('store-page', compact('products', 'categories'));
+        return view('store-page', compact('products', 'categories', 'colours', 'pcParts'));
 
     }
 
