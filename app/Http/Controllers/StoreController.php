@@ -52,7 +52,7 @@ class StoreController extends Controller
                 }
                 else {
                     //if the quantity now exceeds stock limit
-                    return redirect()->route('basket.view')->with('error', 'There is only'.$basketItem->product->product_stock.'available');
+                    return redirect()->route('basket.view')->with('error', 'There are only '.$basketItem->product->product_stock.' available '. $basketItem->product->product_name . 's');
                     //doesnt show error message, but it doesnt delete the basket item now
                 }
 

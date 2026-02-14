@@ -87,9 +87,16 @@
                                         @csrf
                                         <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
                                         <input type="hidden" name="action" value="increment">
+
+                                        @if ($item->quantity >= $item->product->product_stock)
+                                        <button disabled class="px-3 py-1 text-base bg-gray-200 opacity-50 leading-none h-full">
+                                            +
+                                        </button>
+                                        @else
                                         <button type="submit" class="px-3 py-1 text-base bg-gray-50 hover:bg-gray-200 transition leading-none h-full">
                                             +
                                         </button>
+                                        @endif
                                     </form>
 
                                 </div>
