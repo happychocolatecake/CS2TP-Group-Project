@@ -221,6 +221,11 @@ class ProductSpecSeeder extends Seeder
             ['product_id'=>44,'spec_key'=>'license','spec_value'=>'Open Source'],
             ['product_id'=>44,'spec_key'=>'install_media','spec_value'=>'USB'],
 
+            //archusb
+            ['product_id'=>45,'spec_key'=>'type','spec_value'=>'64-bit'],
+            ['product_id'=>45,'spec_key'=>'license','spec_value'=>'Open Source'],
+            ['product_id'=>45,'spec_key'=>'install_media','spec_value'=>'USB'],
+
             /*Monitors*/
 
             //oddesy

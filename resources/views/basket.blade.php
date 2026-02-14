@@ -12,6 +12,16 @@
             Your Shopping Basket
         </h1>
 
+        @if (session('error'))
+            <div class="container mx-auto px-6 mt-4">
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
+                    <p class="font-bold">Error</p>
+                    <p>{{ session('error') }}</p>
+                </div>
+            </div>
+            <br>
+        @endif
+
         @if (!$basket || $basket->items->isEmpty())
             <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-6 rounded-lg shadow-inner" role="alert">
                 <p class="font-bold text-xl mb-2">Your Basket is Empty!</p>

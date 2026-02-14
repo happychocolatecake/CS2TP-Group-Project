@@ -543,11 +543,23 @@ class ProductSeeder extends Seeder
                 'product_part'=>'Operating System',
                 'product_colour'=>'N/A',
                 'category_id'=>1,
-                'product_price'=>15,
+                'product_price'=>1000,
                 'product_description'=>'Bootable Ubuntu installer USB.',
                 'product_createdate'=>now(),
-                'product_stock'=>25,
+                'product_stock'=>4,
                 'product_image'=>'https://m.media-amazon.com/images/I/61MY8X-U9ZL._AC_SY300_SX300_QL70_ML2_.jpg'
+            ],
+            [
+                'product_name'=>'ArchNode X1 OLED',
+                'product_model'=>'ARCH-USB-64GB',
+                'product_part'=>'Operating System',
+                'product_colour'=>'N/A',
+                'category_id'=>1,
+                'product_price'=>10,
+                'product_description'=>'Bootable ArchLinux installer USB with a progress display.',
+                'product_createdate'=>now(),
+                'product_stock'=>25,
+                'product_image'=>'https://github.com/Samdoses/CS2TP-Group-Project/blob/main/public/images/archusb.png'
             ]
         ]);
     }

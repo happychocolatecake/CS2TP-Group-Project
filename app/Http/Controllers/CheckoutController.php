@@ -62,10 +62,13 @@ class CheckoutController extends Controller
             return redirect()->route('store.index')->withErrors(['cart' => 'Your cart is empty.']);
         }
 
-                //checks stock is validated
+            //checks stock is validated
         foreach ($basket->items as $item) {
+            if ($item->product->product_stock = 0){
+                return redirect()->route('basket.view')->with('error','The '.$item->product->product_name. 'is out of stock.');
+            }
             if ($item->product->product_stock < $item->quantity) {
-                return redirect()->route('store.index')->withErrors(['cart' => 'Some of your products are out of stock.']);
+                return redirect()->route('basket.view')->with('error','There are only '.$item->product->product_stock.' available '. $item->product->product_name . 's');
             }
         }
 
