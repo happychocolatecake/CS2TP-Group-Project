@@ -21,16 +21,16 @@
                 @foreach($orders as $order)
                     <tr class="border-b border-gray-100 hover:bg-gray-50">
                         <td class="py-3 px-4 font-medium text-gray-900">#{{ $order->id }}</td>
-                        <td class="py-3 px-4 text-gray-600">{{ $order->created_at->format('M d, Y') }}</td>
+                        <td class="py-3 px-4 text-gray-600">{{ $order->order_date->format('M d, Y') }}</td>
                         <td class="py-3 px-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-semibold 
+                            <span class="px-2 py-1 rounded-full text-xs font-semibold
                                 {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                 {{ ucfirst($order->status) }}
                             </span>
                         </td>
                         <td class="py-3 px-4 text-right font-medium">£{{ number_format($order->total_price, 2) }}</td>
                         <td class="py-3 px-4 text-right">
-                            <a href="/view-past-order-details" class="text-indigo-600 hover:text-indigo-900 font-medium">View</a>
+                            <a href="{{ route('profile.orders.show', $order->id)}}" class="text-indigo-600 hover:text-indigo-900 font-medium">View</a>
                         </td>
                     </tr>
                 @endforeach
