@@ -55,6 +55,9 @@ Route::post('/contact', function (Request $request) {
 
 Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp');
 
+//Google Auth
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
 // Checkout Routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -69,10 +72,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-
-    //Google Auth
-    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
-    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
     // Basket Functionality
     Route::get('/my-basket', [StoreController::class, 'viewBasket'])->name('basket.view');
