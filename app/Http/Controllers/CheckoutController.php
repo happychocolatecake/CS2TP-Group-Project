@@ -64,7 +64,7 @@ class CheckoutController extends Controller
 
             //checks stock is validated
         foreach ($basket->items as $item) {
-            if ($item->product->product_stock = 0){
+            if ($item->product->product_stock == 0){
                 return redirect()->route('basket.view')->with('error','The '.$item->product->product_name. 'is out of stock.');
             }
             if ($item->product->product_stock < $item->quantity) {
