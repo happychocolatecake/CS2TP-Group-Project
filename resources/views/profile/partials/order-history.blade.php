@@ -30,7 +30,7 @@
                         </td>
                         <td class="py-3 px-4 text-right font-medium">£{{ number_format($order->total_price, 2) }}</td>
                         <td class="py-3 px-4 text-right">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 font-medium">View</a>
+                            <a href="/view-past-order-details" class="text-indigo-600 hover:text-indigo-900 font-medium">View</a>
                         </td>
                     </tr>
                 @endforeach

@@ -143,4 +143,6 @@ class ProfileController extends Controller
         
         return back()->with('status', 'password-updated');
     }
+
+
 }
