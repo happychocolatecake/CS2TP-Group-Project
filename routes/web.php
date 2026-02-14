@@ -7,6 +7,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GoogleAuthController;
 
 // Public Routes
 
@@ -68,6 +69,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
+    //Google Auth
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
     // Basket Functionality
     Route::get('/my-basket', [StoreController::class, 'viewBasket'])->name('basket.view');
