@@ -560,7 +560,7 @@ class ProductSeeder extends Seeder
                 'product_colour'=>'N/A',
                 'category_id'=>1,
                 'product_price'=>120,
-                'product_tagline'=>'Best for everyday users and students.',
+                'product_tagline'=>'The Standard OS, best for everyday users and students.',
                 'product_description'=> 'The definitive choice for the modern household, seamlessly blending an intuitive, refined interface with industry-leading gaming technology. Designed for accessibility and speed, it provides a secure environment for everything from creative projects to high-fidelity 4K gaming.',
                 'product_createdate'=>now(),
                 'product_stock'=>50,
