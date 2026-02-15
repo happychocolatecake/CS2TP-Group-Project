@@ -89,6 +89,8 @@ class CheckoutController extends Controller
         $order->order_date = now();
         $order->order_status = 'Placed';
         $order->delivery_method = $validatedData['delivery_method'];
+        $order->created_at = now();
+        $order->updated_at = now();
 
         $fullAddress = $validatedData['address_line_1'] . ', ';
         if (!empty($validatedData['address_line_2'])) {

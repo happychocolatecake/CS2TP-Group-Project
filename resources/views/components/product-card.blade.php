@@ -1,4 +1,4 @@
-@props(['title', 'description', 'price', 'image', 'context'])
+@props(['title', 'tagline', 'price', 'image', 'context'])
 
 <div class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center h-full">
     <div class="w-full bg-gray-200 h-48 rounded mb-6 overflow-hidden">
@@ -8,7 +8,7 @@
     <h3 class="text-xl font-bold mb-2">{{ $title }}</h3>
 
     <p class="text-gray-500 text-sm mb-6 flex-grow line-clamp-3">
-        {{ $description }}
+        {{ $tagline }}
     </p>
 
     @if($context !== 'index')
