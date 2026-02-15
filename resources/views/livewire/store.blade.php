@@ -158,14 +158,14 @@
                                     $title = $item->product_name;
                                     $image = $item->product_image;
                                     $price = $item->product_price;
-                                    $description = !empty($item->product_description) ? $item->product_description : 'This item is still in development.';
+                                    $tagline = !empty($item->product_tagline) ? $item->product_tagline : 'This item is still in development.';
                                 @endphp
 
                                 <div class="transform transition duration-200 hover:scale-105 hover:shadow-lg">
                                     <a href="{{ route('product.show', $item->id)}}" class="block">
                                         <x-product-card
                                             :title="$title"
-                                            :description="$description"
+                                            :tagline="$tagline"
                                             :price="$price"
                                             :image="$image"
                                             :context="'store'"

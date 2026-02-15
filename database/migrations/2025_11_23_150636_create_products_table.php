@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('product_price');
             $table->string('product_part');
             $table->text('product_description');
-            $table->string('product_thumbnail')->nullable();
+            $table->string('product_tagline');
             $table->string('product_image')->nullable();
             $table->dateTime('product_createdate');
             $table->integer('product_stock')->default(0);
