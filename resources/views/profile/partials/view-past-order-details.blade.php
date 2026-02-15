@@ -54,10 +54,9 @@
         <h2 class="text-2xl font-bold mb-4 text-gray-800 mb-4 text-center">Order Details</h2>
 
         <!-- showing customer details -->
-        <p class="text-lg"><span class="font-semibold">Name:</span> {{$order->user->first_name . " " .$order->user->last_name}}</p>
-        <p class="text-lg"><span class="font-semibold">Email:</span> {{$order->user->email}} </p>
-        <p class="text-lg"><span class="font-semibold">Phone Number:</span> will add to database later</p>
-        <p class="text-lg"><span class="font-semibold">Shipping Address:</span> {{$order->order_address}}</p>
+        <p class="text-lg mb-2"><span class="font-semibold">Name:</span> {{$order->user->first_name . " " .$order->user->last_name}}</p>
+        <p class="text-lg mb-2"><span class="font-semibold">Email:</span> {{$order->user->email}} </p>
+        <p class="text-lg mb-2"><span class="font-semibold">Shipping Address:</span> {{$order->order_address}}</p>
     </div>
 
     <!-- the order summary box -->
@@ -65,12 +64,22 @@
         <!-- the heading for the box -->
         <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Order Summary</h2>
 
+
         <!-- Showing the prices of the order -->
-        <p class="text-lg mb-2"><span class="font-semibold">Subtotal:</span> £{{number_format($order->total_price, 2)}}</p>
 
-        <p class="text-lg mb-2"><span class="font-semibold">Delivery Charges:</span> £5.00 fix later</p>
+        @php
+            //calculating the price of the shipping from the delivery method selected
+            $shippingCost= [
+                'standard' => 3.95,
+                'express' => 6.95
+            ]
+        @endphp
 
-        <p class="text-lg mb-2"><span class="font-semibold">Grand Total:</span> £155.00 fix later</p>
+        <p class="text-lg mb-2"><span class="font-semibold">Subtotal:</span> £{{number_format(($order->total_price) - ($shippingCost[$order->delivery_method]) , 2)}}</p>
+
+        <p class="text-lg mb-2"><span class="font-semibold">Delivery Charges:</span> {{ucfirst($order->delivery_method)}} Delivery (£{{number_format($shippingCost[$order->delivery_method], 2)}})</p>
+
+        <p class="text-lg mb-2"><span class="font-semibold">Grand Total:</span> £{{number_format($order->total_price, 2)}}</p>
     </div>
 
 </div>

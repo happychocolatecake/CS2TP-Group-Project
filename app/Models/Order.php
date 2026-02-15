@@ -9,7 +9,7 @@ class Order extends Model
     public $timestamps = false;
 
     protected $fillable  = ['order_address',
-    'total_price', 'order_date', 'order_status',
+    'total_price', 'delivery_method','order_date', 'order_status',
     'user_id'];
 
     protected $casts = [
