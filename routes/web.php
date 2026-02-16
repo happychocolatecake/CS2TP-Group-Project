@@ -58,6 +58,8 @@ Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp'
 //Google Auth
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+// past order details route
+Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->middleware('auth')->name('profile.orders.show');
 
 // Checkout Routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

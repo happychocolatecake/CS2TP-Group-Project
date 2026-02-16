@@ -84,7 +84,7 @@
                                 <a href="{{ route('product.show', $product->id)}}" class="block">
                                     <x-product-card
                                         title="{{$product->product_name}}"
-                                        description="{{$product->product_description}}"
+                                       tagline="{{$product->product_tagline}}"
                                         price="{{$product->product_price}}"
                                         image="{{$product->product_image}}"
                                         :context="'index'"
