@@ -11,6 +11,7 @@
 
                     <div class="hidden md:flex items-center bg-white/5 rounded-full px-2 py-1 space-x-1">
                         <a href="/store" class="rounded-full px-5 py-2 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200">Store</a>
+                        <a href="/build-guide" class="rounded-full px-5 py-2 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200">Build Guide</a>
                         <a href="/about" class="rounded-full px-5 py-2 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200">About</a>
                         <a href="/contact" class="rounded-full px-5 py-2 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200">Contact</a>
                     </div>
