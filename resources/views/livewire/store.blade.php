@@ -59,9 +59,40 @@
 
                 </x-filter-group>
 
-                <x-filter-group title="Primary Colour">
-                    <x-filter-item label="Black" name="color_black" />
-                    <x-filter-item label="White" name="color_white" />
+                <x-filter-group title="Primary Colour" open>
+                    @foreach ($colours as $colour)
+                        <!-- displays all available colours except for the objects that have a irrelevant colour -->
+                        @if ($colour != 'N/A')
+                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                wire:click="toggleColours('{{ $colour }}')"
+                                @if(in_array($colour, $selectedColours))checked @endif
+                                class="form-checkbox h-4 w-4 text-gray-800 border-gray-300 rounded focus:ring-gray-800">
+
+
+                            <span class="text-gray-700">{{ $colour }}</span>
+                        </label>
+                        @endif
+                    @endforeach
+                </x-filter-group>
+
+                 <x-filter-group title="PC Part" open>
+                    @foreach ($pcParts as $part)
+                        <!-- displays all available colours except for the objects that have a irrelevant colour -->
+                        @if ($part != 'N/A')
+                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                wire:click="togglePcParts('{{ $part }}')"
+                                @if(in_array($part, $selectedPCParts))checked @endif
+                                class="form-checkbox h-4 w-4 text-gray-800 border-gray-300 rounded focus:ring-gray-800">
+
+
+                            <span class="text-gray-700">{{ $part }}</span>
+                        </label>
+                        @endif
+                    @endforeach
                 </x-filter-group>
 
                 <h2 class="text-2xl font-bold mb-4">Sort By</h2>
@@ -127,14 +158,14 @@
                                     $title = $item->product_name;
                                     $image = $item->product_image;
                                     $price = $item->product_price;
-                                    $description = !empty($item->product_description) ? $item->product_description : 'This item is still in development.';
+                                    $tagline = !empty($item->product_tagline) ? $item->product_tagline : 'This item is still in development.';
                                 @endphp
 
                                 <div class="transform transition duration-200 hover:scale-105 hover:shadow-lg">
                                     <a href="{{ route('product.show', $item->id)}}" class="block">
                                         <x-product-card
                                             :title="$title"
-                                            :description="$description"
+                                            :tagline="$tagline"
                                             :price="$price"
                                             :image="$image"
                                             :context="'store'"

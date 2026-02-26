@@ -46,7 +46,16 @@ class StoreController extends Controller
             $basketItem = BasketItem::findOrFail($request->input('basket_item_id'));
 
             if ($request->input('action') === 'increment') {
-                $basketItem->increment('quantity');
+                //checks if quantity wanted does not exceed the stock limit
+                if ($basketItem->product->product_stock > $basketItem->quantity){
+                    $basketItem->increment('quantity');
+                }
+                else {
+                    //if the quantity now exceeds stock limit
+                    return redirect()->route('basket.view')->with('error', 'There are only '.$basketItem->product->product_stock.' available '. $basketItem->product->product_name . 's');
+
+                }
+
             } else {
                 // Decrement Logic
                 if ($basketItem->quantity > 1) {
@@ -64,8 +73,10 @@ class StoreController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
+        $colours = Product::select('product_colour')->distinct()->pluck('product_colour');
+        $pcParts = Product::select('product_part')->distinct()->pluck('product_part');
 
-        return view('store-page', compact('products', 'categories'));
+        return view('store-page', compact('products', 'categories', 'colours', 'pcParts'));
 
     }
 
@@ -88,10 +99,12 @@ class StoreController extends Controller
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
             'quantity' => 'required|integer|min:1',
+
         ]);
 
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity');
+        $stock = $request->input('product_stock');
         $userId = Auth::id();
 
         // Find or create a basket for the user so every user has only one basket in darabase
@@ -106,22 +119,46 @@ class StoreController extends Controller
                                 ->first();
 
         if ($basketItem) {
-            // if the item arleady exists then increment it by the quantity
-            $basketItem->quantity += $quantity;
-            $basketItem->save();
-            $message = 'Quantity updated in your basket!';
+            //if adding the item will not exceed stock limit
+            if ($basketItem->product->product_stock > $basketItem->quantity){
+                // if the item arleady exists then increment it by the quantity
+                $basketItem->quantity += $quantity;
+                $basketItem->save();
+                $message = 'Quantity updated in your basket!';
+                $errormessage = null;
+            }
+            else {
+                $errormessage = 'We currently have limited stock of this product.';
+            }
+
         } else {
             // if item doesnt exist, then create a new item
-            BasketItem::create([
+            $tempItem = BasketItem::create([
                 'basket_id' => $basket->id,
                 'product_id' => $productId,
                 'quantity' => $quantity,
             ]);
-            $message = 'Product added to your basket!';
+
+            if ($tempItem->product->product_stock < $tempItem ->quantity ){
+                $errormessage = 'We currently have limited stock of this product.';
+                $tempItem->delete();
+            }
+            else {
+                $message = 'Product added to your basket!';
+                $errormessage = null;
+            }
+
         }
 
-        // Redirect with success message, back to the page that it came from
-        return redirect()->back()->with('success', $message);
+        //if error message is empty display error, otherwise show success
+        if ($errormessage != null) {
+            return redirect()->back()->with('error', $errormessage);
+        }
+        else {
+            // Redirect with success message, back to the page that it came from
+            return redirect()->back()->with('success', $message);
+        }
+
     }
 
     //used to fetch a specific product and display it on a single product page
