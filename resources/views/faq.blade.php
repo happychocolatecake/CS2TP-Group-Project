@@ -44,7 +44,7 @@
                                     <div x-show="open" x-collapse class="p-5 border-t border-gray-200 text-gray-600 bg-gray-50">
                                         With our friendly
                                         <a href="/build-guide" class="text-happy-green underline hover:text-green-700 transition"> build guide</a>
-                                        , you can construct your PC stress free
+                                        , you can construct your PC stress free!!
                                     </div>
                                 </div>
 
@@ -55,6 +55,27 @@
                                     </button>
                                     <div x-show="open" x-collapse class="p-5 border-t border-gray-200 text-gray-600 bg-gray-50">
                                         Happy Hardware!!
+                                    </div>
+                                </div>
+
+                                <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                        <span>How Can I Check What Have I Ordered??</span>
+                                        <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
+                                    </button>
+                                    <div x-show="open" x-collapse class="p-5 border-t border-gray-200 text-gray-600 bg-gray-50">
+                                        You can check you order in the built in order history tab, in the profile page.
+                                    </div>
+                                </div>
+
+                                <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                        <span>How Can I Contact You Concerning Something??</span>
+                                        <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
+                                    </button>
+                                    <div x-show="open" x-collapse class="p-5 border-t border-gray-200 text-gray-600 bg-gray-50">
+                                        You can get in touch with us, through the dedicated
+                                        <a href="/contact" class="text-happy-green underline hover:text-green-700 transition"> contact page.</a>
                                     </div>
                                 </div>
                             </div>
