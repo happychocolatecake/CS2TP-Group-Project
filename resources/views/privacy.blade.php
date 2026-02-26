@@ -21,28 +21,28 @@
 
                         <br>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             Do you have concerns about your data??
-                            You should. Sam is going to sell it
+                            <strong>You should. </strong> Sam is going to sell it
                         </p>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             Here at <strong>Happy Hardware</strong>, we care about your data.
                         </p>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             We collect information like your name, email address, and shipping address.
                         </p>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             We use this information specifically to fullfil your order.
                         </p>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             We do not sell or distribute your data to third parties.
                         </p>
 
-                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-600">
                             You reserve the right to ask us to delete your data from our systems.
                         </p>
 
