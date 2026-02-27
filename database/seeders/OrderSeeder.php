@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
 
         DB::table('orders')->insert([
             [
-                'order_address' => '9 appley appleton road A12 BFN',
+                'order_address' => '9 appley appleton road A14 BFT',
                 'total_price' => 653.95,
                 'delivery_method' => 'standard',
                 'order_date' => now(),
