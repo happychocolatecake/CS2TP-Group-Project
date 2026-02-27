@@ -1,5 +1,3 @@
-
-
     <x-header></x-header>
 
     <x-layout>
@@ -53,7 +51,7 @@
                         <x-product-page-header
                         :title=$title
                         :brandName=$brandName
-                        review="69" />
+                        review="70" />
 
                         <p class="text-gray-700 text-lg mb-10">{{$description}}</p>
 
