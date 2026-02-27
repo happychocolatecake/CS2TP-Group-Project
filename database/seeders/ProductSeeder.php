@@ -48,7 +48,11 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'product_price' => 650,
                 'product_tagline'=> 'Top-tier AMD processor delivering multi-core performance for gaming.',
-                'product_description' => 'This Ryzen 9 chip is made for the professionals - whether it\'s gaming, creativity or productivity, this processor\'s got the power to support you. It\'s packed with 16 cores and it can boost up to 5.7 GHz, so it\'ll tear through intensive workflows. t\'s loaded with 144 MB of 2nd gen AMD 3D V-Cache for incredibly fast performance. The 9000 series processors are built on the new Zen 5 architecture.',
+                'product_description' =>
+                'This Ryzen 9 chip is made for the professionals - whether it\'s gaming, creativity or productivity, this processor\'s got the power to support you.
+                It\'s packed with 16 cores and it can boost up to 5.7 GHz, so it\'ll tear through intensive workflows.
+                It\'s loaded with 144 MB of 2nd gen AMD 3D V-Cache for incredibly fast performance.
+                It\'s 9000 series processors are built on the new Zen 5 architecture.',
                 'product_createdate' =>now(),
                 'product_stock' => 4,
                 'product_image' =>'https://m.media-amazon.com/images/I/5116zdA9uyL._AC_SL1200_.jpg'
@@ -60,7 +64,7 @@ class ProductSeeder extends Seeder
                 'product_colour' => 'Black',
                 'category_id' => 1,
                 'product_price' => 150,
-                'product_tagline'=> 'High-speed DDR5 memory kit to improve system performance and multitasking.',
+                'product_tagline'=> 'High-speed DDR5 memory kit to improve system performance.',
                 'product_description'=> 'CORSAIR VENGEANCE RGB DDR5 memory delivers DDR5 performance, higher frequencies, and greater capacities optimized for Intel® motherboards while lighting up your PC with dynamic, individually addressable ten-zone RGB lighting.',
                 'product_createdate' =>now(),
                 'product_stock' => 12,
@@ -586,7 +590,7 @@ class ProductSeeder extends Seeder
                 'product_colour'=>'N/A',
                 'category_id'=>1,
                 'product_price'=>1000,
-                'product_tagline'=>'Best for developers and linux lovers.',
+                'product_tagline'=>'Best for developers and those who love linux.',
                 'product_description'=> 'Ubuntu stands as the global leader in open-source computing, offering a rock-solid, secure, and highly customisable environment. It is the preferred choice for software engineers and those seeking a high-performance alternative to proprietary ecosystems, providing a seamless bridge between local development and cloud infrastructure.',
                 'product_createdate'=>now(),
                 'product_stock'=>4,

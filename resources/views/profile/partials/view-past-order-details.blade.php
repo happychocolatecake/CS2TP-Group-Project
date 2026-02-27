@@ -1,7 +1,7 @@
 <x-header></x-header>
 
 <x-layout>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<div class="bg-gray-100 min-h-screen flex flex-col">
 <div class="container mx-auto px-6 ">
 <br>
 <!-- title of the page -->
@@ -87,6 +87,6 @@
 
 
 </div>
+</div>
 </x-layout>
-</body>
 <x-footer></x-footer>

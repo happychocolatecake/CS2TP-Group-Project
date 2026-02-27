@@ -7,6 +7,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GoogleAuthController;
 
 // Public Routes
 
@@ -44,6 +45,14 @@ Route::get('/build-guide', function () {
     return view('build-guide');
 })->name('build-guide');
 
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
+
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
 Route::post('/contact', function (Request $request) {
     $request->validate([
         'subject' => 'required|string|max:255',
@@ -54,6 +63,9 @@ Route::post('/contact', function (Request $request) {
 
 Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp');
 
+//Google Auth
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 // past order details route
 Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->middleware('auth')->name('profile.orders.show');
 

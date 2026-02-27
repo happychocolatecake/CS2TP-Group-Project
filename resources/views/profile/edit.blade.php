@@ -1,7 +1,7 @@
 <x-header></x-header>
 <x-layout>
 
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<div class="bg-gray-100 font-sans leading-normal tracking-normal">
 
     <div class="container mx-auto p-6">
 
@@ -77,6 +77,6 @@
             </div>
     </div>
 
-</body>
+</div>
 </x-layout>
 <x-footer></x-footer>
