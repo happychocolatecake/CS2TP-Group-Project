@@ -26,4 +26,14 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function getColourStatus()
+    {
+        return match($this->order_status) {
+            'Delivered'  => 'bg-green-500 text-white',
+            'Shipped'    => 'bg-blue-500 text-white',
+            'Returned'   => 'bg-red-600 text-white',
+            default      => 'bg-indigo-600 text-white',
+        };
+    }
+
 }

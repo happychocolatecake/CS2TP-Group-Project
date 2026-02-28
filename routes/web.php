@@ -7,6 +7,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleAuthController;
 
 // Public Routes
@@ -66,8 +67,6 @@ Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp'
 //Google Auth
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
-// past order details route
-Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->middleware('auth')->name('profile.orders.show');
 
 // Checkout Routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -82,6 +81,14 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
+    //View past order
+    // past order details route
+    Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
+
+    //Review Routes
+    Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
     // Basket Functionality
     Route::get('/my-basket', [StoreController::class, 'viewBasket'])->name('basket.view');
