@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 use function Symfony\Component\Clock\now;
 
@@ -35,6 +37,8 @@ class OrderSeeder extends Seeder
                 'created_at' => now()
             ]
         ]);
+
+        Order::factory()->count(10)->create();
 
         DB::table('order_details')->insert([
             [
