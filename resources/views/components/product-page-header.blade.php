@@ -11,7 +11,7 @@
                 {{ $i <= $review ? '★' : '☆' }}
             @endfor
         
-        <span class="text-sm text-gray-600 "> Product rating </span>
+        <span class="text-sm text-gray-600 "> Rating </span>
         </div>
     </div>
 
