@@ -65,13 +65,13 @@
                     </div>
                 </div>
             </form>
-            
+
 <div class="w-full p-4 border rounded-lg mt-10">
 <h3 class="text-lg font-bold mb-4 text-center">Customer Reviews</h3>
 
 <div class="flex flex-col gap-4">
    <div class="flex gap-4">
-     <img src="https://via.placeholder.com/100x60" class="w-24 h-15 object-cover">
+     <img src="hello" class="w-24 h-15 object-cover">
      <div class="flex-1">
        <div class="flex justify-between mb-1">
          <span class="font-semibold">John Doe</span>
