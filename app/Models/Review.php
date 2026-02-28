@@ -12,6 +12,8 @@ class Review extends Model
     'review_image', 'review_text', 'review_date',
     'user_id', 'order_id', 'product_id', 'created_at'];
 
+    protected $casts = [
+        'created_at' => 'datetime' ];
     //this is for the foreign keys (many to one)
 
     public function user() {

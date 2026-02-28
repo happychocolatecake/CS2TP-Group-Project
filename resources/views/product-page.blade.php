@@ -69,18 +69,38 @@
              <div class="w-full p-4 border border-grey-500 rounded-lg mt-10">
                 <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
 
-                <div class="flex flex-col gap-4">
-                    <div class="flex gap-4">
-                        <img src="placeholder" class="w-24 h-15 object-cover">
-                        <div class="flex-1">
-                            <div class="flex justify-between mb-1">
-                            <span class="font-semibold"> Customer name</span>
-                            <span class="text-xs text-grey-500"> 28 Febuary 2026</span>
-</div>
-                    <p class= "text-grey-700 text-sm"> Really liked this product. Fast delivery and wporks fine.</p>
-</div>
-</div>
-                    <div class="mt-2 text-center font-bold text-grey-600 cursor-pointer"> Show more reviews</div>
+                @if($product->reviews->count() > 0)
+                    @foreach($product->reviews as $review)
+                        <div class="flex flex-col gap-4">
+                            <div class="flex gap-4">
+                                @if($review->review_image)
+                                    <img src="{{ asset('storage/' . $review->review_image) }}"
+                                        class="w-24 h-24 object-cover rounded-lg shadow-sm border border-gray-100"
+                                        alt="Review photo">
+                                @else
+                                    <img src="placeholder" class="w-24 h-15 object-cover" alt="No Image">
+                                @endif
+                                    <div class="flex-1">
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-semibold"> {{ $review->user->first_name }} {{ $review->user->last_name }}</span>
+                                            <span class="text-xs text-grey-500"> {{ $review->created_at->format('d F Y (H:i)') }} </span>
+                                        </div>
+                                        <p class= "text-grey-700 text-sm"> {{ $review->review_text }} </p>
+                                    @php
+                                        //obtain order quantity for the review
+                                        $orderDetail = \App\Models\OrderDetail::where('order_id', $review->order_id)
+                                                        ->where('product_id', $review->product_id)
+                                                        ->first();
+                                    @endphp
+                                        <p class= "text-xs font-extralight"> Purchased {{$orderDetail->quantity}}</p>
+                                    </div>
+
+                            </div>
+                    @endforeach
+                     <div class="mt-2 text-center font-bold text-grey-600 cursor-pointer"> Show more reviews</div>
+                @else
+                    <p class="font-bold">No reviews yet.</p>
+                @endif
 </div>
 </div>
 </main>
