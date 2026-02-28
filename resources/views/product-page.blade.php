@@ -51,7 +51,7 @@
                         <x-product-page-header
                         :title=$title
                         :brandName=$brandName
-                        review="70" />
+                        review="70 reviews" />
 
                         <p class="text-gray-700 text-lg mb-10">{{$description}}</p>
 
