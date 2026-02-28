@@ -9,5 +9,16 @@
         </div>
         <span class="border-l border-black h-5 mx-3"></span>
         <span class="text-xs text-gray-500">{{ $review }}</span>
+        <div class="flex items-center gap-2 mt-2">
+<!-- start reviews of the product--> 
+  <div class="text-yellow-400 text-lg"> 
+    @for ($i = 1; $i <= 5; $i++)
+  {{ $i <= $review ? '★' : '☆' }}
+   @endfor
+</div>
+
+  <span class="text-sm text-gray-600"> Product rating </span>
+
+        </div>
     </div>
 </div>
