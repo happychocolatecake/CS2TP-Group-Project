@@ -45,7 +45,7 @@
         </div>
         <div class="flex-1 min-w-0">
               <!-- shows the item name -->
-            <p class="text-xl font-bold text-gray-800 mb-1">{{ $item->product->product_name ?? 'Product removed from sale' }}</p>
+            <a href="/product/{{$item->product->id}}" class="text-xl font-bold text-gray-800 mb-1">{{ $item->product->product_name ?? 'Product removed from sale' }}</a>
               <!-- show the model of the item -->
             <p class="text-sm text-gray-500 mb-3">Model: {{ $item->product->product_model }}</p>
             <p class="text-sm text-gray-700 mb-3">Colour: {{ $item->product->product_colour }}</p>
