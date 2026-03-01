@@ -40,6 +40,8 @@
                         $price = $product->product_price;
                         $stock = $product->product_stock;
                         $colour = $product->product_colour;
+                        $avgRating = round($product->reviews->avg('rating'), 1); // e.g., 4.5
+                        $totalReviews = $product->reviews->count();
                     @endphp
 
                     <x-product-page-gallery
@@ -51,7 +53,8 @@
                         <x-product-page-header
                         :title=$title
                         :brandName=$brandName
-                        review="70 reviews" />
+                        :avgRating="$avgRating"
+                        :totalReviews="$totalReviews" />
 
                         <p class="text-gray-700 text-lg mb-10">{{$description}}</p>
 
@@ -74,11 +77,12 @@
                         <div class="flex flex-col gap-4">
                             <div class="flex gap-4">
                                 @if($review->review_image)
-                                    <img src="{{ asset('storage/' . $review->review_image) }}"
+                                    <a href="{{ route('reviews.image.show', $review->id) }}" class="flex-shrink-0 group">
+                                    <img src="{{ asset('images/reviews/' . $review->review_image) }}"
                                         class="w-24 h-24 object-cover rounded-lg shadow-sm border border-gray-100"
                                         alt="Review photo">
                                 @else
-                                    <img src="placeholder" class="w-24 h-15 object-cover" alt="No Image">
+                                    <!-- <img src="placeholder" class="w-24 h-15 object-cover" alt="No Image"> no image -->
                                 @endif
                                     <div class="flex-1">
                                         <div class="flex justify-between mb-1">
@@ -97,7 +101,7 @@
 
                             </div>
                     @endforeach
-                     <div class="mt-2 text-center font-bold text-grey-600 cursor-pointer"> Show more reviews</div>
+                     <!-- <div class="mt-2 text-center font-bold text-grey-600 cursor-pointer"> Show more reviews</div> -->
                 @else
                     <p class="font-bold">No reviews yet.</p>
                 @endif

@@ -35,6 +35,16 @@ class ReviewSeeder extends Seeder
                 'order_id' => 2,
                 'product_id' => 3,
                 'created_at' => now()
+            ],
+            [
+                'rating' => 5,
+                'review_image' => 'plant_ryzen.jpg',
+                'review_text' => 'I love this cpu, its cheap and very good quality!',
+                'review_date' => now(),
+                'user_id' => 2,
+                'order_id' => 2,
+                'product_id' => 26,
+                'created_at' => now()
             ]
         ]);
     }

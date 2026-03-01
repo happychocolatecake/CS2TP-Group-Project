@@ -21,6 +21,11 @@ Route::get('/', [StoreController::class, 'bestSeller'])->name('home');
 Route::get('/store', [StoreController::class, 'index'])->name('store.index');
 
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+//view the review image expanded on another tab
+// Route to show a single review image in full screen
+Route::get('/review/image/{review}', function (App\Models\Review $review) {
+    return view('show-image', ['review' => $review]);
+})->name('reviews.image.show');
 
 Route::get('/search', function () {
     return view('store');

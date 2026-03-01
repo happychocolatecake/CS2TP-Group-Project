@@ -23,8 +23,17 @@ class OrderSeeder extends Seeder
                 'total_price' => 653.95,
                 'delivery_method' => 'standard',
                 'order_date' => now(),
-                'order_status' => 'Placed',
+                'order_status' => 'Delivered',
                 'user_id' => 1,
+                'created_at' => now()
+            ],
+            [
+                'order_address' => '5 appley appleton road A12 BFN',
+                'total_price' => 1353.95,
+                'delivery_method' => 'standard',
+                'order_date' => now(),
+                'order_status' => 'Delivered',
+                'user_id' => 2,
                 'created_at' => now()
             ],
             [
@@ -32,7 +41,7 @@ class OrderSeeder extends Seeder
                 'total_price' => 653.95,
                 'delivery_method' => 'standard',
                 'order_date' => now(),
-                'order_status' => 'Placed',
+                'order_status' => 'Delivered',
                 'user_id' => 2,
                 'created_at' => now()
             ]
@@ -54,6 +63,14 @@ class OrderSeeder extends Seeder
                 'quantity' => 1,
                 'order_id' => 2,
                 'product_id' => 3,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'order_price' => 1350,
+                'quantity' => 3,
+                'order_id' => 2,
+                'product_id' => 26,
                 'created_at' => now(),
                 'updated_at' => now()
             ]
