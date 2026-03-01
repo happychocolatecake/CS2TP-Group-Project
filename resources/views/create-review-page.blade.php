@@ -83,12 +83,15 @@
                         <!-- text and review area enter button -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Your Review</label>
-                            <textarea name="review_text" rows="6"
+                            <textarea name="review_text" id="review_textarea" rows="6"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Share your experience with this product..."></textarea>
+                                placeholder="Share your experience with this product...">{{old('review_text')}}</textarea>
                             @error('review_text')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
+                            <p class="text-xs text-gray-400 ml-auto">
+                                <span id="char_count">0</span>/500 characters
+                            </p>
                         </div>
                     </div>
 
@@ -110,3 +113,17 @@
 </x-layout>
 
 <x-footer></x-footer>
+
+<script>
+    const textarea = document.getElementById('review_textarea');
+    const count = document.getElementById('char_count');
+
+    textarea.addEventListener('input', () => {
+        count.textContent = textarea.value.length;
+        if(textarea.value.length >= 500) {
+            count.classList.add('text-red-500');
+        } else {
+            count.classList.remove('text-red-500');
+        }
+    });
+</script>

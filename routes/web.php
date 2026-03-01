@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
     Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
+    Route::get('/profile/reviews', [ProfileController::class, 'reviews'])->name('profile.reviews');
 
     // Profile Actions (PUT/Update)
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

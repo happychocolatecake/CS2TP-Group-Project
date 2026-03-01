@@ -30,7 +30,7 @@ class ReviewController extends Controller
                         ->exists();
 
         if ($exists) {
-            return redirect()->back()->with('error', 'You have already reviewed the ' . $product->product_name . '.');
+            return redirect()->back()->with('error', 'You have already reviewed the ' . $product->product_name . ' in this order.');
         }
 
         return view('create-review-page', compact('order', 'product'));
@@ -43,11 +43,24 @@ class ReviewController extends Controller
             'order_id' => 'required|exists:orders,id',
             'product_id' => 'required|exists:products,id',
             'rating' => 'required|integer|min:1|max:5',
-            'review_text' => 'nullable|string|max:1000',
+            'review_text' => 'nullable|string|max:500',
             'review_image' => 'nullable|image|max:2048',
         ]);
 
+        //LATER AFTER JOT DOES THE ADMIN PAGE I WILL SEND REVIEWS THERE TO BE REVIEWED BEFORE POSTED
+        //because of evil cs2tp competitors
         //saves the new review to the database where it is retrieved on the product page later
+
+        //double check authorisation again
+        $order = Order::findOrFail($request->order_id);
+        if ($order->user_id !== Auth::id() || $order->order_status !== 'Delivered') {
+            return redirect()->back()->withErrors(['security' => 'Unauthorised review attempt.']);
+        }
+
+        if (strlen($request->review_text) > 500) {
+            return redirect()->back()->withInput()->withErrors(['review_text' => 'Your review is too long! Please limit it to 500 characters.']);
+        }
+
         $review = new Review();
         $review->user_id = Auth::id();
         $review->order_id = $request->order_id;
@@ -58,8 +71,14 @@ class ReviewController extends Controller
 
         //image upload (for after aishas part in case)
         if ($request->hasFile('review_image')) {
-            $path = $request->file('review_image')->store('reviews', 'public');
-            $review->review_image = $path;
+            $file = $request->file('review_image');
+
+            //generate unique filename using uniqueids and timestamps
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            //move the file ot the correct location and save it to the database
+            $file->move(public_path('images/reviews'), $fileName);
+            $review->review_image = $fileName;
         }
 
         $review->save();
