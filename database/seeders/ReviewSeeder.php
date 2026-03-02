@@ -21,7 +21,7 @@ class ReviewSeeder extends Seeder
         DB::table('reviews')->insert([
             [
                 'rating' => 5,
-                'review_image' => null,
+                'review_image' => '1772411357_69a4d9dda3fbe.jpg',
                 'review_text' => 'A very fast and good quality cpu.',
                 'review_date' => now(),
                 'user_id' => 1,
@@ -31,7 +31,7 @@ class ReviewSeeder extends Seeder
             ],
             [
                 'rating' => 3,
-                'review_image' => null,
+                'review_image' => '1772411308_69a4d9ac6aa81.jpg',
                 'review_text' => 'A perfect pc cpu.',
                 'review_date' => now(),
                 'user_id' => 2,
