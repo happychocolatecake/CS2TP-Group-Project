@@ -83,8 +83,8 @@
                             <i class="fas fa-sign-out-alt mr-2"></i> Log Out
                         </button>
                     </form>
-                </div>
             </div>
+        </div>
     </div>
 
 </div>

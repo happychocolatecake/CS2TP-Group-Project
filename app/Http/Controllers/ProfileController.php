@@ -29,7 +29,7 @@ class ProfileController extends Controller
     // Order page
     public function orders()
     {
-        $orders = Auth::user()->orders()->latest()->paginate(10);
+        $orders = Auth::user()->orders()->latest()->paginate(20);
 
         return view('profile.edit', [
             'user' => Auth::user(),

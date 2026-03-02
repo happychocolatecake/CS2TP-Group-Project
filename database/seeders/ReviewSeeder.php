@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\Review;
 
 use function Symfony\Component\Clock\now;
 
@@ -12,6 +14,7 @@ class ReviewSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
     public function run(): void
     {
 
@@ -47,5 +50,15 @@ class ReviewSeeder extends Seeder
                 'created_at' => now()
             ]
         ]);
+
+        //make sure we have some delivered orders
+        if (Order::count() == 0) {
+            Order::factory(20)->create(['order_status' => 'Delivered']);
+        }
+
+        //obtain 50 different reviews for user 1 and 2
+        Review::factory(20)->create();
+
+        $this->command->info('...20 reviews generated for users 1 and 2!');
     }
 }
