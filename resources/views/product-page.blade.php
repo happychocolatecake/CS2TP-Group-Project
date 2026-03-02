@@ -68,11 +68,13 @@
                     </div>
                 </div>
             </form>
-            <!-- Customer reviews with images, name, date and comment-->
-             <div class="w-full p-4 border border-grey-500 rounded-lg mt-10">
-                <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
+           
 
                 @if($product->reviews->count() > 0)
+                     <!-- Customer reviews with images, name, date and comment-->
+             <div class="w-full p-4 border-2 border-grey-500 rounded-lg mt-10">
+                <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
+
                     @foreach($product->reviews as $review)
                         <div class="flex flex-col gap-4 mb-8 border-b border-gray-100 pb-6">
                             <div class="flex gap-6">
@@ -137,19 +139,15 @@
                                             <p class="text-xs text-gray-400 italic">Purchased: {{ $orderDetail->quantity ?? 1 }}</p>
                                         </div>
                                 </div>
-
                             </div>
                         </div>
-                    @endforeach
-                     <!-- <div class="mt-2 text-center font-bold text-grey-600 cursor-pointer"> Show more reviews</div> -->
+                    @endforeach 
                 @else
-                    <p class="font-bold p-4">No reviews yet.</p>
                 @endif
 </div>
 </div>
 </main>
 </x-layout>
-
 <x-footer></x-footer>
 
 
