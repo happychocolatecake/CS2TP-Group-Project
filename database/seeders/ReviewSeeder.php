@@ -41,7 +41,7 @@ class ReviewSeeder extends Seeder
             ],
             [
                 'rating' => 5,
-                'review_image' => 'plant_ryzen.jpg',
+                'review_image' => '1772411357_69a4d9dda3faa.jpg',
                 'review_text' => 'I love this cpu, its cheap and very good quality!',
                 'review_date' => now(),
                 'user_id' => 2,
