@@ -55,6 +55,7 @@ class ReviewFactory extends Factory
         return [
             'rating' => $this->faker->numberBetween(3, 5), //mostly positive reviews
             'review_image' => null,
+            'review_status' => $this->faker->randomElement(['Approved', 'Approved', 'Approved', 'Pending', 'Pending', 'Rejected']),
             'review_text' => $this->faker->paragraph(rand(1, 4)), //generates 50-500 chars
             'review_date' => $order->order_date,
             'user_id' => $order->user_id,

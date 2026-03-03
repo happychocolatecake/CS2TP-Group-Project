@@ -32,7 +32,15 @@
 
                 <div class="flex-1">
                     <div class="flex justify-between items-start">
-                        <a href="/product/{{$review->product->id}}" class="font-bold text-gray-800">{{ $review->product->product_name ?? 'Product removed from sale' }}</a>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <a href="/product/{{$review->product->id}}" class="font-bold text-gray-800 hover:text-indigo-600 transition">
+                                {{ $review->product->product_name ?? 'Product removed from sale' }}
+                            </a>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold border {{ $review->getStatusColour() }}">
+                                {{ $review->review_status }}
+                            </span>
+                        </div>
+
                         <span class="text-xs text-gray-400">{{ $review->created_at->format('d M Y') }}</span>
                     </div>
 
@@ -43,7 +51,7 @@
                     </div>
 
                     @if(strlen($review->review_text) > 150)
-                            "{{ \Illuminate\Support\Str::limit($review->review_text, 150, '...') }}"
+                            <p class="text-sm text-gray-600 italic"> "{{ \Illuminate\Support\Str::limit($review->review_text, 150, '...') }}" </p>
                             <a href="{{ route('reviews.image.show', $review->id) }}"
                                 class="text-indigo-600 font-medium hover:underline ml-1">
                                 Read full review
@@ -58,16 +66,21 @@
                             </a>
                     @endif
 
-                    <div class="mt-3 flex justify-end border-t border-gray-50 pt-2">
-                        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure you want to delete this review?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-700 text-xs font-semibold flex items-center transition duration-200">
-                                <i class="fas fa-trash-alt mr-1"></i> Delete Review
-                            </button>
-                        </form>
-                    </div>
+
+                        <div class="mt-3 flex justify-end gap-3 border-t border-gray-200 pt-2">
+                            <a href="{{ route('reviews.edit', $review->id) }}" class="text-indigo-600 hover:text-indigo-800 text-xs font-semibold flex items-center transition duration-200">
+                                <i class="fas fa-edit mr-1"></i> Edit Review
+                            </a>
+                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-700 text-xs font-semibold flex items-center transition duration-200">
+                                    <i class="fas fa-trash-alt mr-1"></i> Delete Review
+                                </button>
+                            </form>
+                        </div>
+
                 </div>
             </div>
         @endforeach

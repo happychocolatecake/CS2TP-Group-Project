@@ -34,7 +34,16 @@
 
             <div class="p-6 bg-gray-800 text-white">
                 <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-xl font-bold">{{ $review->user->first_name }}'s Review on the {{$itemName}}</h2>
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-xl font-bold">{{ $review->user->first_name }}'s Review on the {{$itemName}}</h2>
+
+                        <!-- if the review belongs to the current user then it will display the status of the review -->
+                        @if(Auth::check() && Auth::id() === $review->user_id)
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold border {{ $review->getStatusColour() }}">
+                                {{ $review->review_status }}
+                            </span>
+                        @endif
+                    </div>
                     <span class="text-gray-400 text-sm">{{ $review->created_at->format('M d, Y') }}</span>
                 </div>
                 <div class="bg-gray-900/50 rounded-lg p-6 border border-gray-700">

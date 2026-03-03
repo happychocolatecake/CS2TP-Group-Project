@@ -27,7 +27,8 @@ class ReviewSeeder extends Seeder
                 'user_id' => 1,
                 'order_id' => 1,
                 'product_id' => 3,
-                'created_at' => now()
+                'created_at' => now(),
+                'review_status' => 'Approved'
             ],
             [
                 'rating' => 3,
@@ -35,8 +36,9 @@ class ReviewSeeder extends Seeder
                 'review_text' => 'A perfect pc cpu.',
                 'review_date' => now(),
                 'user_id' => 2,
-                'order_id' => 2,
+                'order_id' => 3,
                 'product_id' => 3,
+                'review_status' => 'Approved',
                 'created_at' => now()
             ],
             [
@@ -47,6 +49,7 @@ class ReviewSeeder extends Seeder
                 'user_id' => 2,
                 'order_id' => 2,
                 'product_id' => 26,
+                'review_status' => 'Approved',
                 'created_at' => now()
             ]
         ]);
@@ -57,8 +60,8 @@ class ReviewSeeder extends Seeder
         }
 
         //obtain 50 different reviews for user 1 and 2
-        Review::factory(20)->create();
+        Review::factory(50)->create();
 
-        $this->command->info('...20 reviews generated for users 1 and 2!');
+        $this->command->info('...50 reviews generated for users 1 and 2!');
     }
 }

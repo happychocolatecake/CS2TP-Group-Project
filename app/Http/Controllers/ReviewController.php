@@ -25,9 +25,7 @@ class ReviewController extends Controller
 
         //checks if they have already reviewed this product for this specific order
 
-        $exists = Review::where('order_id', $order->id)
-                        ->where('product_id', $product->id)
-                        ->exists();
+        $exists = Review::where('order_id', $order->id)->where('product_id', $product->id)->exists();
 
         if ($exists) {
             return redirect()->back()->with('error', 'You have already reviewed the ' . $product->product_name . ' in this order.');
@@ -50,6 +48,7 @@ class ReviewController extends Controller
         //LATER AFTER JOT DOES THE ADMIN PAGE I WILL SEND REVIEWS THERE TO BE REVIEWED BEFORE POSTED
         //because of evil cs2tp competitors
         //saves the new review to the database where it is retrieved on the product page later
+        //i introuduce a new status for reviews here
 
         //double check authorisation again
         $order = Order::findOrFail($request->order_id);
@@ -63,13 +62,14 @@ class ReviewController extends Controller
 
         $review = new Review();
         $review->user_id = Auth::id();
+        $review->review_status = 'Pending';
         $review->order_id = $request->order_id;
         $review->product_id = $request->product_id;
         $review->rating = $request->rating;
         $review->review_text = $request->review_text;
         $review->created_at = now();
 
-        //image upload (for after aishas part in case)
+        //image upload onto the github and phpmyadmin database
         if ($request->hasFile('review_image')) {
             $file = $request->file('review_image');
 
@@ -107,4 +107,54 @@ class ReviewController extends Controller
 
         return redirect()->route('profile.reviews')->with('status', 'Review deleted successfully.');
     }
+
+public function edit(Review $review)
+{
+    if ($review->user_id !== Auth::id()) {
+        abort(403, 'This is not your review.');
+    }
+
+    //we need the product and order info for the header of the edit page
+    $review->load(['product', 'order.orderDetails']);
+    $product = $review->product;
+    $order = $review->order;
+
+    return view('edit-review-page', compact('review', 'product', 'order'));
+}
+
+public function update(Request $request, Review $review)
+{
+    if ($review->user_id !== Auth::id()) {
+        abort(403, 'This is not your review.');
+    }
+
+    $request->validate([
+        'rating' => 'required|integer|min:1|max:5',
+        'review_text' => 'nullable|string|max:500',
+        'review_image' => 'nullable|image|max:2048',
+    ]);
+
+    $review->rating = $request->rating;
+    $review->review_text = $request->review_text;
+    $review->review_status = 'Pending';
+
+    if ($request->hasFile('review_image')) {
+        //deletes old image if it exists
+        //later i will properly implement this as i still need the images for the seeder
+        //otherwise it makes permanent changes on github as i use it to store the review images
+        /*
+        if ($review->review_image) {
+            @unlink(public_path('images/reviews/' . $review->review_image));
+        }*/
+
+        $file = $request->file('review_image');
+        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('images/reviews'), $fileName);
+        $review->review_image = $fileName;
+    }
+
+    $review->save();
+
+    return redirect()->route('profile.reviews')->with('status', 'Review updated and is now pending approval!');
+}
 }

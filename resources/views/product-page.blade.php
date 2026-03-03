@@ -40,8 +40,11 @@
                         $price = $product->product_price;
                         $stock = $product->product_stock;
                         $colour = $product->product_colour;
-                        $avgRating = round($product->reviews->avg('rating'), 1); // e.g., 4.5
-                        $totalReviews = $product->reviews->count();
+                        //we will only use approved review stats for the products
+                        $approvedReviews = $product->reviews->where('review_status', 'Approved');
+
+                            $avgRating = round($approvedReviews->avg('rating'), 1);
+                            $totalReviews = $approvedReviews->count();
                     @endphp
 
                     <x-product-page-gallery
@@ -68,14 +71,16 @@
                     </div>
                 </div>
             </form>
-           
 
-                @if($product->reviews->count() > 0)
+
+                @if($approvedReviews->count() > 0)
                      <!-- Customer reviews with images, name, date and comment-->
              <div class="w-full p-4 border-2 border-grey-500 rounded-lg mt-10">
                 <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
 
-                    @foreach($product->reviews as $review)
+                    @foreach($approvedReviews as $review)
+                        <!-- only show approved reviews-->
+                        @if($review->review_status === 'Approved')
                         <div class="flex flex-col gap-4 mb-8 border-b border-gray-100 pb-6">
                             <div class="flex gap-6">
                                 <div class="w-24 flex-shrink-0">
@@ -86,7 +91,7 @@
                                             alt="Review photo">
                                         </a>
                                     @else
-                                            <!-- <img src="placeholder" class="w-24 h-15 object-cover" alt="No Image"> no image -->
+                                            <!-- no image -->
                                             <div class="w-24 h-24 bg-gray-50 rounded-lg border border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-[10px] text-center px-1">
                                                 No Photo
                                             </div>
@@ -128,9 +133,7 @@
                                         </p>
                                     @php
                                         //obtain order quantity for the review
-                                        $orderDetail = \App\Models\OrderDetail::where('order_id', $review->order_id)
-                                                    ->where('product_id', $review->product_id)
-                                                    ->first();
+                                        $orderDetail = \App\Models\OrderDetail::where('order_id', $review->order_id)->where('product_id', $review->product_id)->first();
                                     @endphp
                                         <div class="mt-4 flex items-center gap-3">
                                             <span class="text-[10px] font-bold uppercase tracking-wider text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
@@ -141,7 +144,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach 
+                        @endif
+                    @endforeach
                 @else
                 @endif
 </div>
