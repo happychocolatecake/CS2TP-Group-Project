@@ -51,7 +51,7 @@
                     </div>
 
                     @if(strlen($review->review_text) > 150)
-                            <p class="text-sm text-gray-600 italic"> "{{ \Illuminate\Support\Str::limit($review->review_text, 150, '...') }}" </p>
+                            <p class="text-sm text-gray-600 italic"> "{{ \Illuminate\Support\Str::limit($review->review_text, 110, '...') }}" </p>
                             <a href="{{ route('reviews.image.show', $review->id) }}"
                                 class="text-indigo-600 font-medium hover:underline ml-1">
                                 Read full review
