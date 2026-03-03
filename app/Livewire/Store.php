@@ -75,6 +75,13 @@ class Store extends Component
         $this->sortDirection = $direction;
     }
 
+    //automatically resets pagination when the variables change
+    public function updatingSearch() { $this->resetPage(); }
+    public function updatingSelectedCategories() { $this->resetPage(); }
+    public function updatingSelectedColours() { $this->resetPage(); }
+    public function updatingSelectedPCParts() { $this->resetPage(); }
+    public function updatingSelectedMaxPrice() { $this->resetPage(); }
+
 
     public function render()
     {
