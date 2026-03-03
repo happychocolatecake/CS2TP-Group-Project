@@ -3,11 +3,15 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\Category;
 
 class Store extends Component
 {
+
+    use WithPagination;
+
     public $search = '';
     public $selectedCategories = [];
     public $minPrice;
@@ -103,7 +107,7 @@ class Store extends Component
         );
 
         return view('livewire.store', [
-            'products' => $query->orderBy($this->sortField, $this->sortDirection)->get(),
+            'products' => $query->orderBy($this->sortField, $this->sortDirection)->paginate(9),
         ]);
     }
 }
