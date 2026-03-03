@@ -51,11 +51,31 @@
                 </div>
 
                 <!--downloadable button so you can download the image from the review -->
-                <div class="mt-4">
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-700 pt-4">
+                    @if($review->review_image)
                     <a href="{{ asset('images/reviews/' . $review->review_image) }}" download
-                       class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm transition">
+                       class="inline-block bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm transition">
                         Download Image
                     </a>
+                    @endif
+                    @if(Auth::check() && Auth::id() === $review->user_id)
+                    <!-- if the review belongs to the current user then they can edit or delete the review -->
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('reviews.edit', $review->id) }}"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-semibold transition">
+                            Edit Review
+                        </a>
+
+                        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this review permanently?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold transition">
+                                Delete Review
+                            </button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
