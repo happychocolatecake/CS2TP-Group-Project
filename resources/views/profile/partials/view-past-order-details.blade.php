@@ -59,12 +59,27 @@
             <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}
             </div>
 
-            @if($order->order_status === 'Delivered')
+
+        @if($order->order_status === 'Delivered')
+            @php
+                //find and check if a review already exists for this item in this order
+                $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
+            @endphp
+            @if($existingReview)
+            <!--if a review exists show view the review -->
+            <a href="{{ route('reviews.image.show', $existingReview->id) }}"
+               class="font-bold text-green-600 hover:text-green-800 transition">
+                    View Your Review
+                </a>
+            @else
+                <!-- if no review exists show write a review -->
                 <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
-                   class="btn btn-primary font-bold text-indigo-500 hover:text-indigo-700 ">
-                   Write a Review
+                class="font-bold text-indigo-500 hover:text-indigo-700 transition">
+                    Write a Review
                 </a>
             @endif
+        @endif
+
         </div>
 
 
