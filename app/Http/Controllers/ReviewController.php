@@ -42,7 +42,7 @@ class ReviewController extends Controller
             'product_id' => 'required|exists:products,id',
             'rating' => 'required|integer|min:1|max:5',
             'review_text' => 'nullable|string|max:500',
-            'review_image' => 'nullable|image|max:2048',
+            'review_image' => 'nullable|image|max:10240',
         ]);
 
         //LATER AFTER JOT DOES THE ADMIN PAGE I WILL SEND REVIEWS THERE TO BE REVIEWED BEFORE POSTED
@@ -131,7 +131,7 @@ public function update(Request $request, Review $review)
     $request->validate([
         'rating' => 'required|integer|min:1|max:5',
         'review_text' => 'nullable|string|max:500',
-        'review_image' => 'nullable|image|max:2048',
+        'review_image' => 'nullable|image|max:10240',
     ]);
 
     $review->rating = $request->rating;
