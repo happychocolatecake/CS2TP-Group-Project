@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         //Fetch user reviews with the product relationship so we can show what they reviewed
-        $reviews = Review::where('user_id', $user->id)->with('product')->latest()->paginate(10);
+        $reviews = Review::where('user_id', $user->id)->with('product')->latest()->paginate(4);
 
         return view('profile.edit', [
             'user' => $user,

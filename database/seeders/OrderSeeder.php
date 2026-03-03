@@ -47,7 +47,7 @@ class OrderSeeder extends Seeder
             ]
         ]);
 
-        Order::factory()->count(10)->create();
+        Order::factory()->count(30)->create();
 
         DB::table('order_details')->insert([
             [
