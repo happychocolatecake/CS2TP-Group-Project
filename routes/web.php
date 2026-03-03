@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
     //Review Routes
     Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // Basket Functionality
     Route::get('/my-basket', [StoreController::class, 'viewBasket'])->name('basket.view');

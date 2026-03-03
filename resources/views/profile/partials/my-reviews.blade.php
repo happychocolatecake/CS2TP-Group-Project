@@ -32,7 +32,7 @@
 
                 <div class="flex-1">
                     <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-gray-800">{{ $review->product->product_name ?? 'Product Deleted' }}</h4>
+                        <a href="/product/{{$review->product->id}}" class="font-bold text-gray-800">{{ $review->product->product_name ?? 'Product removed from sale' }}</a>
                         <span class="text-xs text-gray-400">{{ $review->created_at->format('d M Y') }}</span>
                     </div>
 
@@ -48,7 +48,9 @@
                                 class="text-indigo-600 font-medium hover:underline ml-1">
                                 Read full review
                             </a>
-                     @else
+                    @elseif (empty($review->review_text))
+                            <p class="text-xs text-gray-400 italic">No written comment provided.</p>
+                    @else
                         <p class="text-sm text-gray-600 italic">"{{ $review->review_text }}"</p>
                             <a href="{{ route('reviews.image.show', $review->id) }}"
                             class="text-indigo-600 font-medium hover:underline ml-1">
@@ -56,6 +58,16 @@
                             </a>
                     @endif
 
+                    <div class="mt-3 flex justify-end border-t border-gray-50 pt-2">
+                        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this review?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700 text-xs font-semibold flex items-center transition duration-200">
+                                <i class="fas fa-trash-alt mr-1"></i> Delete Review
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         @endforeach

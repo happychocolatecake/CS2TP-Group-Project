@@ -83,7 +83,28 @@ class ReviewController extends Controller
 
         $review->save();
 
-        return redirect()->route('profile.orders.show', $request->order_id)
-                        ->with('success', 'Thank you for your review!');
+        return redirect()->route('profile.orders.show', $request->order_id)->with('success', 'Thank you for your review!');
+    }
+
+    public function destroy(Review $review)
+    {
+        //makes sure the user is logged in and the review belongs to them before they delete it
+        if ($review->user_id !== Auth::id()) {
+            abort(403, 'This is not your review.');
+        }
+
+        //deletes the review image from the database (as well as the github) as the review is deleted
+        //later i will properly implement this as i still need the images for the seeder
+        /*
+        if ($review->review_image) {
+            $imagePath = public_path('images/reviews/' . $review->review_image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }*/
+        //i can delete it from the database because that doesnt affect the github files
+        $review->delete();
+
+        return redirect()->route('profile.reviews')->with('status', 'Review deleted successfully.');
     }
 }

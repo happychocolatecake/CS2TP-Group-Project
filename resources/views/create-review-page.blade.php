@@ -74,8 +74,11 @@
 
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Upload Photo (Optional)</label>
-                                <input type="file" name="review_image"
+                                <input type="file" name="review_image" accept="image/jpeg,image/png"
                                     class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition">
+                                @error('review_image')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                                 <p class="text-xs text-gray-500 mt-2">Accepted formats: JPG, PNG. Max 2MB.</p>
                             </div>
                         </div>
