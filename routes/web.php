@@ -48,6 +48,14 @@ Route::get('/build-guide', function () {
 
 Route::get('/part-picker', PartPicker::class)->name('part-picker');
 
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
+
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
 Route::post('/contact', function (Request $request) {
     $request->validate([
         'subject' => 'required|string|max:255',
