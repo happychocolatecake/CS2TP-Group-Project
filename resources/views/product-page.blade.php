@@ -21,7 +21,7 @@
     @endif
 
     <main class="container mx-auto px-6 py-8 max-w-7xl">
-        <x-product-page-breadcrumb />
+        <x-product-page-breadcrumb :product="$product"/>
 
 
         <form method="POST" action="{{ route('basket.add') }}">
