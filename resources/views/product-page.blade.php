@@ -64,92 +64,65 @@
             </div>
         </form>
 
-
-        @if ($approvedReviews->count() > 0)
-            <!-- Customer reviews with images, name, date and comment-->
+        @if ($approvedReviews->where('review_status', 'Approved')->count() > 0)
             <div class="w-full p-4 border-2 border-grey-500 rounded-lg mt-10">
                 <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
 
-                @foreach ($approvedReviews as $review)
-                    <!-- only show approved reviews-->
-                    @if ($review->review_status === 'Approved')
-                        <div class="flex flex-col gap-4 mb-8 border-b border-gray-100 pb-6">
-                            <div class="flex gap-6">
-                                <div class="w-24 flex-shrink-0">
-                                    @if ($review->review_image)
-                                        <a href="{{ route('reviews.image.show', $review->id) }}" class="block group">
-                                            <img src="{{ asset('images/reviews/' . $review->review_image) }}"
-                                                class="w-24 h-24 object-cover rounded-lg shadow-sm border border-gray-100"
-                                                alt="Review photo">
-                                        </a>
-                                    @else
-                                        <!-- no image -->
-                                        <div
-                                            class="w-24 h-24 bg-gray-50 rounded-lg border border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-[10px] text-center px-1">
-                                            No Photo
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-start mb-1">
-                                        <div>
-                                            <span class="font-semibold text-lg block">
-                                                {{ $review->user->first_name }} {{ $review->user->last_name }}
-                                            </span>
-                                            <div class="flex text-yellow-400 text-sm mt-0.5">
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    <span>{{ $i <= $review->rating ? '★' : '☆' }}</span>
-                                                @endfor
-                                            </div>
-                                        </div>
-                                        <span class="text-xs text-grey-500 px-2 py-1 rounded">
-                                            {{ $review->created_at->format('d F Y (H:i)') }}
-                                        </span>
+                <!--we filter the collection here so the loop only runs for approved items -->
+                @foreach ($approvedReviews->where('review_status', 'Approved') as $review)
+                    <div class="flex flex-col gap-4 mb-8 border-b border-gray-100 pb-6 last:border-b-0">
+                        <div class="flex gap-6">
+                            <!-- photo displaying area -->
+                            <div class="w-24 flex-shrink-0">
+                                @if ($review->review_image)
+                                    <a href="{{ route('reviews.image.show', $review->id) }}" class="block group">
+                                        <img src="{{ asset('images/reviews/' . $review->review_image) }}"
+                                            class="w-24 h-24 object-cover rounded-lg shadow-sm" alt="Review photo">
+                                    </a>
+                                @else
+                                    <div class="w-24 h-24 bg-gray-50 rounded-lg border border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-[10px]">
+                                        No Photo
                                     </div>
-                                    <p class= "text-grey-700 text-sm mt-3 leading-relaxed">
+                                @endif
+                            </div>
 
-                                        @if (strlen($review->review_text) > 120)
-                                            "{{ \Illuminate\Support\Str::limit($review->review_text, 120, '...') }}"
-                                            <a href="{{ route('reviews.image.show', $review->id) }}"
-                                                class="text-indigo-600 font-medium hover:underline ml-1">
-                                                Read full review
-                                            </a>
-                                        @else
-                                            {{ $review->review_text }}
-                                            <div class="mt-2 text-sm">
-                                                <a href="{{ route('reviews.image.show', $review->id) }}"
-                                                    class="text-indigo-600 font-medium hover:underline">
-                                                    Read full review
-                                                </a>
-                                            </div>
-                                        @endif
-                                    </p>
-                                    @php
-                                        //obtain order quantity for the review
-                                        $orderDetail = \App\Models\OrderDetail::where('order_id', $review->order_id)
-                                            ->where('product_id', $review->product_id)
-                                            ->first();
-                                    @endphp
-                                    <div class="mt-4 flex items-center gap-3">
-                                        <span
-                                            class="text-[10px] font-bold uppercase tracking-wider text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
-                                            Verified Purchase
-                                        </span>
-                                        <p class="text-xs text-gray-400 italic">Purchased:
-                                            {{ $orderDetail->quantity ?? 1 }}</p>
+                            <!-- text area of the review -->
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div>
+                                        <span class="font-semibold text-lg block">{{ $review->user->first_name }} {{ $review->user->last_name }}</span>
+                                        <div class="flex text-yellow-400 text-sm">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <span>{{ $i <= $review->rating ? '★' : '☆' }}</span>
+                                            @endfor
+                                        </div>
                                     </div>
+                                    <span class="text-xs text-gray-500">{{ $review->created_at->format('d F Y') }}</span>
+                                </div>
+
+                                <p class="text-gray-700 text-sm mt-3">
+                                    {{ $review->review_text }}
+                                </p>
+
+                                <div class="mt-4 flex items-center gap-3">
+                                    <span class="text-[10px] font-bold uppercase text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
+                                        Verified Purchase
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    </div>
                 @endforeach
-                <div class="mt-8 pt-6 border-t border-gray-100">
-                    {{ $reviews->links() }}
-                </div>
-            @else
+
+                <!--pagination links-->
+                @if($reviews->hasPages())
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        {{ $reviews->links() }}
+                    </div>
+                @endif
+            </div>
         @endif
-        </div>
-        </div>
+
     </main>
 </x-layout>
 <x-footer></x-footer>

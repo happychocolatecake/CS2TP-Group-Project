@@ -178,7 +178,7 @@
                         @endforeach
                     </div>
                      <div class="mt-4">
-                        {{ $products->links() }}
+                            {{ $products->links() }}
                     </div>
                 @else
                     <div class="text-center py-12">
