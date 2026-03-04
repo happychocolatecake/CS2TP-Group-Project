@@ -1,3 +1,4 @@
+<x-header></x-header>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
     </style>
 </head>
 <body>
+    
     <div class="success-card">
         <h1>✅ Order Placed Successfully!</h1>
         <p>Thank you for shopping with us.</p>
@@ -23,5 +25,8 @@
         
         <a href="/" class="btn">Continue Shopping</a>
     </div>
+    
 </body>
 </html>
+<x-footer></x-footer>
+
