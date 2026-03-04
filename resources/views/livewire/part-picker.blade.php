@@ -1,3 +1,12 @@
+@if (session('success'))
+        <div class="container mx-auto px-6 mt-4">
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm">
+                <p class="font-bold">Success</p>
+                <p>{{ session('success') }}</p>
+            </div>
+        </div>
+@endif
+
 <div class="min-h-screen bg-gray-50 py-10 px-4">
 
     <div class="max-w-6xl mx-auto space-y-8">
