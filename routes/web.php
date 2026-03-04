@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Livewire\PartPicker;
 
 // Public Routes
 
@@ -44,6 +45,8 @@ Route::get('/contact', function () {
 Route::get('/build-guide', function () {
     return view('build-guide');
 })->name('build-guide');
+
+Route::get('/part-picker', PartPicker::class)->name('part-picker');
 
 Route::post('/contact', function (Request $request) {
     $request->validate([
