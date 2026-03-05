@@ -8,11 +8,13 @@
                         <img src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-16 w-auto drop-shadow-lg">
                     </a>
 
-                    <div class="hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
-                        <a href="/store" class="rounded-full px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-all duration-200 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white">Store</a>
-                        <a href="/build-guide" class="rounded-full px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-all duration-200 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white">Build Guide</a>
-                        <a href="/about" class="rounded-full px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-all duration-200 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white">About</a>
-                        <a href="/contact" class="rounded-full px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-all duration-200 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white">Contact</a>
+                    <div id="main-nav-links" class="relative hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
+                        <span id="main-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gray-200 transition-all duration-300 ease-out dark:bg-white/10"></span>
+                        <a href="/store" data-nav-link data-active="{{ request()->is('store*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('store*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Store</a>
+                        <a href="/build-guide" data-nav-link data-active="{{ request()->is('build-guide*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('build-guide*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Build Guide</a>
+                        <a href="{{ route('part-picker') }}" data-nav-link data-active="{{ request()->is('part-picker*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('part-picker*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Part Picker</a>
+                        <a href="/about" data-nav-link data-active="{{ request()->is('about*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('about*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">About</a>
+                        <a href="/contact" data-nav-link data-active="{{ request()->is('contact*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('contact*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Contact</a>
                     </div>
                 </div>
 
@@ -85,6 +87,34 @@
                     // Ignore storage errors.
                 }
             };
+        }
+
+        var navContainer = document.getElementById('main-nav-links');
+        var indicator = document.getElementById('main-nav-active-pill');
+        if (navContainer && indicator) {
+            var navLinks = navContainer.querySelectorAll('[data-nav-link]');
+
+            var moveIndicator = function (targetLink) {
+                if (!targetLink) return;
+                indicator.style.width = targetLink.offsetWidth + 'px';
+                indicator.style.transform = 'translateX(' + targetLink.offsetLeft + 'px)';
+            };
+
+            var activeLink = navContainer.querySelector('[data-active="true"]') || navLinks[0];
+            requestAnimationFrame(function () {
+                moveIndicator(activeLink);
+            });
+
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    moveIndicator(link);
+                });
+            });
+
+            window.addEventListener('resize', function () {
+                var currentActive = navContainer.querySelector('[data-active="true"]') || activeLink;
+                moveIndicator(currentActive);
+            });
         }
     })();
 </script>
