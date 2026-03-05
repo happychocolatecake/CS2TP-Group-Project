@@ -100,9 +100,21 @@
                                     <span class="text-xs text-gray-500">{{ $review->created_at->format('d F Y') }}</span>
                                 </div>
 
-                                <p class="text-gray-700 text-sm mt-3">
-                                    {{ $review->review_text }}
-                                </p>
+                                @if(strlen($review->review_text) > 150)
+                                        <p class="text-sm text-gray-600 italic"> "{{ \Illuminate\Support\Str::limit($review->review_text, 110, '...') }}" </p>
+                                        <a href="{{ route('reviews.image.show', $review->id) }}"
+                                            class="text-indigo-600 font-medium hover:underline ml-1">
+                                            Read full review
+                                        </a>
+                                @elseif (empty($review->review_text))
+                                        <p class="text-xs text-gray-400 italic">No written comment provided.</p>
+                                @else
+                                    <p class="text-sm text-gray-600 italic">"{{ $review->review_text }}"</p>
+                                        <a href="{{ route('reviews.image.show', $review->id) }}"
+                                        class="text-indigo-600 font-medium hover:underline ml-1">
+                                            Read full review
+                                        </a>
+                                @endif
 
                                 <div class="mt-4 flex items-center gap-3">
                                     <span class="text-[10px] font-bold uppercase text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
