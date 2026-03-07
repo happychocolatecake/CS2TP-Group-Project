@@ -60,26 +60,50 @@
             </div>
 
 
-        @if($order->order_status === 'Delivered')
-            @php
-                //find and check if a review already exists for this item in this order
-                $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
-            @endphp
-            @if($existingReview)
-            <!--if a review exists show view the review -->
-            <a href="{{ route('reviews.image.show', $existingReview->id) }}"
-               class="font-bold text-green-600 hover:text-green-800 transition">
-                    View Your Review
-                </a>
-            @else
-                <!-- if no review exists show write a review -->
-                <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
-                class="font-bold text-indigo-500 hover:text-indigo-700 transition">
-                    Write a Review
-                </a>
-            @endif
-        @endif
+            @if($order->order_status === 'Delivered')
+                @php
+                    //find and check if a review already exists for this item in this order
+                    $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
+                    $existingReturn = \App\Models\ReturnOrder::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
 
+                @endphp
+                    <div>
+                    @if($existingReview)
+                    <!--if a review exists show view the review -->
+                    <a href="{{ route('reviews.image.show', $existingReview->id) }}"
+                    class="font-bold text-green-600 hover:text-green-800 transition">
+                            View Your Review
+                        </a>
+                    @else
+                        <!-- if no review exists show write a review -->
+                        <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
+                        class="font-bold text-indigo-500 hover:text-indigo-700 transition">
+                            Write a Review
+                        </a>
+                    @endif
+                    </div>
+
+                    <div>
+                    @if($order->isReturnable() && !$existingReturn)
+                            <form action="{{ route('orders.return.item', [$order->id, $item->product_id]) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="font-bold text-red-500 hover:underline">
+                                    Return Item
+                                </button>
+                            </form>
+                    @elseif($existingReturn)
+                            @if($existingReturn->status == 'Pending Return')
+                                <span class="font-bold text-orange-500">
+                                    Item pending return
+                                </span>
+                            @elseif($existingReturn->status == 'Returned')
+                                <span class="font-bold text-green-900">
+                                    Item returned
+                                </span>
+                            @endif
+                    @endif
+                    </div>
+            @endif
         </div>
 
 
@@ -127,6 +151,38 @@
 
 </div>
 
+<div>
+    @if($order->isReturnable())
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                <div>
+                    <h4 class="font-bold text-gray-800">Need to return everything?</h4>
+                    <p class="text-sm text-gray-600">This will request a return for all items in Order #{{ $order->id }}.</p>
+                </div>
+                <form action="{{ route('orders.return.all', $order->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded font-bold hover:bg-red-700 transition"
+                            onclick="return confirm('Are you sure you want to return the entire order?')">
+                        Return Entire Order
+                    </button>
+                </form>
+            </div>
+    @endif
+    @if($order->isCancellable())
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+             <div>
+                <h4 class="font-bold text-gray-800">Changed your mind?</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">This will cancel your entire order.</p>
+            </div>
+            <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded font-bold hover:bg-red-700 transition"
+                        onclick="return confirm('Are you sure you want to cancel this order?')">
+                    Cancel Order
+                </button>
+            </form>
+        </div>
+    @endif
+</div>
 
 
 </div>

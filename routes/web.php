@@ -7,6 +7,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Livewire\PartPicker;
@@ -96,6 +97,13 @@ Route::middleware(['auth'])->group(function () {
     //View past order
     // past order details route
     Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
+
+    //Return
+    Route::post('/order/{order}/return-item/{product}', [ReturnController::class, 'returnSingleItem'])->name('orders.return.item');
+    Route::post('/order/{order}/return-all', [ReturnController::class, 'returnEntireOrder'])->name('orders.return.all');
+
+    //Cancelling
+    Route::post('/order/{order}/cancel', [ReturnController::class, 'cancel'])->name('orders.cancel');
 
     //Review Routes
     Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');
