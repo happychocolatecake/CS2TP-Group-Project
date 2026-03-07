@@ -1,7 +1,7 @@
 <x-header></x-header>
 <x-layout>
 
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<div class="bg-gray-100 min-h-screen flex flex-col">
 
     <nav class="w-full bg-white shadow-md p-4 mb-8 text-center border-b border-gray-200">
         {{-- Nav content if needed --}}
@@ -209,7 +209,7 @@
             updateTotals();
         });
     </script>
-</body>
+</div>
 
 </x-layout>
 <x-footer></x-footer>

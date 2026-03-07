@@ -1,6 +1,6 @@
 <x-header></x-header>
 <x-layout>
-<body class="min-h-screen bg-slate-50 font-sans text-slate-900">
+<div class="min-h-screen bg-slate-50 font-sans text-slate-900">
 
 
 
@@ -261,6 +261,6 @@
 <script>
     lucide.createIcons();
 </script>
-</body>
+</div>
 </x-layout>
 <x-footer></x-footer>

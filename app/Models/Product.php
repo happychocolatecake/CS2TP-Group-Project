@@ -8,7 +8,7 @@ class Product extends Model
 {
     public $timestamps = false;
 
-    protected $fillable  = [
+    protected $fillable = [
         'product_name',
         'product_model',
         'product_price',
@@ -31,5 +31,10 @@ class Product extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class)->latest();
     }
 }
