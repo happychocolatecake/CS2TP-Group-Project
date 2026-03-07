@@ -57,6 +57,10 @@ Route::get('/part-picker', function () {
     return view('partpicker-link'); // This points to your partpicker-link.blade.php file
 })->name('part-picker');
 
+Route::get('/returns', function () {
+    return view('returns'); // This points to your return.blade.php file
+})->name('returns');
+
 
 Route::get('/faq', function () {
     return view('faq');

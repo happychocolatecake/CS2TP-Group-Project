@@ -59,6 +59,12 @@
             <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}
             </div>
 
+         <div class="flex gap-4 mt-3">
+         <!-- return product page -->
+                <a href="{{ route('returns') }}"
+                class="font-bold text-indigo-500 hover:text-indigo-700 transition whitespace-nowrap">
+                   Return
+                </a>
 
             @if($order->order_status === 'Delivered')
                 @php
@@ -105,8 +111,7 @@
                     </div>
             @endif
         </div>
-
-
+    </div>
     </div>
     @endforeach
 </div>
