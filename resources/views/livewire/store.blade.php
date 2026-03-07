@@ -161,8 +161,8 @@
                                     $tagline = !empty($item->product_tagline) ? $item->product_tagline : 'This item is still in development.';
                                 @endphp
 
-                                <div class="transform transition duration-200 hover:scale-105 hover:shadow-lg">
-                                    <a href="{{ route('product.show', $item->id)}}" class="block">
+                                <div class="h-full transform transition duration-200 hover:scale-105 hover:shadow-lg flex flex-col">
+                                    <a href="{{ route('product.show', $item->id)}}" class="flex-grow">
                                         <x-product-card
                                             :title="$title"
                                             :tagline="$tagline"

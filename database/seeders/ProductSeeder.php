@@ -607,7 +607,7 @@ class ProductSeeder extends Seeder
                 'product_description'=> 'The definitive standard for those who believe an operating system should be built, not just installed. It offers a minimalist "rolling release" model, providing the latest software as soon as it\'s available. This is the unrivalled desktop experience for the architect who demands absolute system transparency and total ownership.',
                 'product_createdate'=>now(),
                 'product_stock'=>25,
-                'product_image'=>'https://github.com/Samdoses/CS2TP-Group-Project/blob/main/public/images/archusb.png?raw=true'
+                'product_image'=>'https://i.postimg.cc/0yKsVC9B/archusbnew.png'
             ]
         ]);
     }
