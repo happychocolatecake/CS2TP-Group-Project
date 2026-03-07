@@ -59,6 +59,12 @@
             <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}
             </div>
 
+         <div class="flex gap-4 mt-3">
+         <!-- return product page -->
+                <a href="{{ route('returns') }}"
+                class="font-bold text-indigo-500 hover:text-indigo-700 transition whitespace-nowrap">
+                   Return
+                </a>
 
         @if($order->order_status === 'Delivered')
             @php
@@ -74,15 +80,14 @@
             @else
                 <!-- if no review exists show write a review -->
                 <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
-                class="font-bold text-indigo-500 hover:text-indigo-700 transition">
+                class="font-bold text-indigo-500 hover:text-indigo-700 transition whitespace-nowrap">
                     Write a Review
                 </a>
             @endif
         @endif
 
         </div>
-
-
+    </div>
     </div>
     @endforeach
 </div>
