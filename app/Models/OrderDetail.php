@@ -8,15 +8,23 @@ class OrderDetail extends Model
 {
     public $timestamps = false;
 
-    protected $fillable  = ['order_price',
-    'quantity', 'order_id', 'product_id',
-    'created_at', 'updated_at'];
+    protected $fillable  = [
+        'order_price',
+        'quantity',
+        'delivery_status',
+        'order_id',
+        'product_id',
+        'created_at',
+        'updated_at',
+    ];
 
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }
