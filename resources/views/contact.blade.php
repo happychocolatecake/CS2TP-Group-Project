@@ -1,7 +1,7 @@
 <x-header></x-header>
 <x-layout>
     <div class="max-w-2xl mx-auto px-4 py-12">
-        <div class="bg-white p8 md:p-12 rounded-xl border border-gray-100 shadow-2xl">
+        <div class="bg-white p-8 md:p-12 rounded-xl border border-gray-100 shadow-2xl">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
         <p class="text-gray-600 mb-8">
             Have a question or need help with a build? Send us a message below!
