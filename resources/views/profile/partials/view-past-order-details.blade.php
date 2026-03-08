@@ -38,11 +38,23 @@
 <div class="lg:col-span-2 space-y-6 mb-8">
     <!-- example of a ordered item -->
     @foreach ($order->orderDetails as $item)
-    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 border border-gray-200">
+    @php
+        $pendingQty = \App\Models\ReturnOrder::getPendingQty($order->id, $item->product_id);
+        $returnedQty = \App\Models\ReturnOrder::getReturnedQty($order->id, $item->product_id);
+
+        //item is only gone if the confirmed returns match the quantity
+        $isOfficiallyReturned = ($returnedQty >= $item->quantity);
+        //calculates what can still be actioned (remaining to be returned)
+        $remainingToReturn = $item->quantity - ($pendingQty + $returnedQty);
+    @endphp
+    <!-- if all the quantity items arent being returned, then it will look normal -->
+    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 border border-gray-200 transition-all duration-300
+        {{ $isOfficiallyReturned ? 'opacity-60 grayscale bg-gray-50 border-dashed' : '' }}">
         <div class="flex-shrink-0">
             <!-- the image of the item-->
             <img src="{{$item->product->product_image}}" alt="Item" class="w-24 h-24 object-cover rounded-lg shadow-sm">
         </div>
+
         <div class="flex-1 min-w-0">
               <!-- shows the item name -->
             <a href="/product/{{$item->product->id}}" class="text-xl font-bold text-gray-800 mb-1">{{ $item->product->product_name ?? 'Product removed from sale' }}</a>
@@ -56,16 +68,14 @@
               <!-- shows the price of this item -->
             <div class="font-bold text-lg text-gray-800">£{{number_format($item->order_price, 2)}}</div>
               <!-- shows the quantity of this item -->
-            <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}
-            </div>
+            <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}</div>
 
 
 
-            @if($order->order_status === 'Delivered')
+            @if($order->order_status == 'Delivered' || $order->isReturnable())
                 @php
                     //find and check if a review already exists for this item in this order
                     $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
-                    $existingReturn = \App\Models\ReturnOrder::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
 
                 @endphp
                     <div>
@@ -83,28 +93,66 @@
                         </a>
                     @endif
                     </div>
+            @endif
+            @if ($order->isReturnable())
+                @php
+                    //calculates if there is still quantity within a product that you can return
+                    $totalReturnedForThisItem = \App\Models\ReturnOrder::where('order_id', $order->id)
+                    ->where('product_id', $item->product_id)->sum('return_quantity');
 
-                    <div>
-                    @if($order->isReturnable() && !$existingReturn)
-                            <!-- return product page -->
-                            <form action="{{ route('orders.return.item', [$order->id, $item->product_id]) }}" method="POST">
+                    $remainingQty = $item->quantity - $totalReturnedForThisItem;
+
+                    //calculates the amount of quantity within the product that is pending return or completed return
+
+                           //calculates what can still be actioned (remaining to be returned)
+                    $remainingToReturn = $item->quantity - ($pendingQty + $returnedQty);
+
+                @endphp
+                <div class="w-full">
+                    @if($remainingToReturn > 0)
+                            <!-- return product page visible when there are products u can till return -->
+                            <form action="{{ route('orders.return.item', [$order->id, $item->product_id]) }}" method="POST" class="rounded-lg border border-gray-200 space-y-3">
                                 @csrf
-                                <button type="submit" class="font-bold text-red-500 hover:underline">
-                                    Return Item
+                                <div class="flex items-center justify-between gap-2">
+                                    <label for="qty-{{ $item->product_id }}" class="text-xs font-bold text-gray-600 uppercase">Qty to Return:</label>
+                                    <select name="return_quantity" id="qty-{{ $item->product_id }}" class="rounded border-gray-300 py-1 text-sm focus:ring-red-500">
+                                        @for ($i = 1; $i <= $remainingQty; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+
+                                <button type="submit"
+                                        class="w-full md:w-auto px-4 py-2 border-2 border-red-500 text-red-500 font-bold rounded-lg hover:bg-red-500 hover:text-white transition-all duration-200"
+                                        onclick="return confirm('Confirm return for the selected quantity?')">
+                                    Return Selected
                                 </button>
+
                             </form>
-                    @elseif($existingReturn)
-                            @if($existingReturn->return_status == 'Pending Return')
-                                <span class="font-bold text-orange-500">
-                                    Item pending return
-                                </span>
-                            @elseif($existingReturn->return_status == 'Returned')
-                                <span class="font-bold text-green-900">
-                                    Item returned
-                                </span>
-                            @endif
                     @endif
-                    </div>
+                        <!-- displays a message only when there is already some quantity of product pending/completed return-->
+                            <div class="mt-2 flex flex-col items-end gap-1">
+                                @if($remainingToReturn <= 0)
+                                    <!-- can put smth here later to show every quantity has been either partially or fully returned
+                                    can also do a statement to ($isOfficiallyReturned) to check if the entire order is fully returned-->
+                                @endif
+
+                                @if($returnedQty > 0)
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold border border-green-200">
+                                        {{ $returnedQty }} returned
+                                    </span>
+                                @endif
+
+                                @if($pendingQty > 0)
+                                    <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold border border-orange-200">
+                                        {{ $pendingQty }} pending return
+                                    </span>
+                                @endif
+
+
+
+                            </div>
+                </div>
             @endif
         </div>
 

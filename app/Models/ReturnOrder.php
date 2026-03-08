@@ -17,6 +17,22 @@ class ReturnOrder extends Model
         'return_date' =>'datetime',
     ];
 
+    public static function getPendingQty($orderId, $productId)
+    {
+        return self::where('order_id', $orderId)
+            ->where('product_id', $productId)
+            ->whereIn('return_status', ['Pending Partial Return', 'Pending Full Return'])
+            ->sum('return_quantity');
+    }
+
+    public static function getReturnedQty($orderId, $productId)
+    {
+        return self::where('order_id', $orderId)
+            ->where('product_id', $productId)
+            ->whereIn('return_status', ['Partially Returned', 'Fully Returned'])
+            ->sum('return_quantity');
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -24,4 +40,5 @@ class ReturnOrder extends Model
     public function order() {
         return $this->belongsTo(Order::class);
     }
+
 }

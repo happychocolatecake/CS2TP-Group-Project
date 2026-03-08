@@ -23,14 +23,14 @@ class ReturnOrderSeeder extends Seeder
             'user_id' => 2,
             'return_date' => now(),
             'reason' => 'Item arrived with a slight scratch on the casing.',
-            'return_status' => 'Pending Return',
+            'return_status' => 'Pending Full Return',
             'return_quantity' => 1,
             'stock_restored' => false, //stock not updated yet
             'created_at' => now(),
             'updated_at'=>now()
         ]);
 
-        $order->update(['order_status' => 'Pending Return']);
+        $order->update(['order_status' => 'Pending Full Return']);
 
         $this->command->info('Seeded a Delivered order with 1 item pending return.');
     }

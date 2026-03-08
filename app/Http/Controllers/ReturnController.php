@@ -13,20 +13,35 @@ class ReturnController extends Controller
 
     public function returnSingleItem(Request $request, $orderId, $productId)
     {
+
+        $request->validate([
+            'return_quantity' => 'required|integer|min:1',
+            'reason' => 'nullable|string|max:255'
+        ]);
+
         $reason = $request->input('reason', 'No reason provided');
         //locates the order this return is linked to
         $order = Order::findOrFail($orderId);
+        $item = $order->orderDetails()->where('product_id', $productId)->first();
+        $quantityToReturn = $request->input('return_quantity');
+
+        $alreadyReturned = ReturnOrder::where('order_id', $orderId)->where('product_id', $productId) ->sum('return_quantity');
 
         //makes sure order is returnable (if its been delivered)
         if (!$order->isReturnable()) {
             return redirect()->route('profile.orders.show', $orderId)->with('error', 'Only delivered orders can be returned.');
-
         }
 
-        ReturnOrder::create([
+        //make sure returning quantity doesnt exceed the product stock
+        if ($request->return_quantity > ($item->quantity - $alreadyReturned)) {
+        return back()->with('error', 'You cannot return more items than you currently possess.');
+        }
+
+        $returnOrder = ReturnOrder::create([
             'return_date' => now(),
             'reason' => $reason,
-            'return_status' => 'Pending Return',
+            'return_status' => 'Pending Partial Return',
+            'return_quantity' => $quantityToReturn,
             'product_id' => $productId,
             'order_id' => $orderId,
             'user_id' => Auth::id(),
@@ -35,16 +50,22 @@ class ReturnController extends Controller
         ]);
 
         //because its only one item, we dont update order status until all items are return requested
-        $totalItemsInOrder = $order->orderDetails()->count();
-        $totalItemsReturned = ReturnOrder::where('order_id', $orderId)->count();
+        //sum of everything originally bought
+        $totalUnitsOrdered = $order->orderDetails->sum('quantity');
 
-        if ($totalItemsReturned === $totalItemsInOrder) {
-            //all items are now requested for return, so we update the main order status
-            $order->update(['order_status' => 'Pending Return']);
-            $message = 'All items requested for return. Order status updated.';
+        //sum of everything currently being returned (across all products in this order)
+        $totalUnitsReturned = ReturnOrder::where('order_id', $orderId)->sum('return_quantity');
+
+        if ($totalUnitsReturned >= $totalUnitsOrdered) {
+            //every single item is coming back from the order
+            $order->update(['order_status' => 'Pending Full Return']);
+            //its still part of a full order so returnOrder will view it as a partial return
+            $returnOrder->update(['return_status' => 'Pending Partial Return']);
+            $message = 'Entire order is now pending full return.';
         } else {
-            //some items are still kept, so we leave the order as 'Delivered' (or a partial status)
-            $message = 'Item return requested. Other items in this order remain active.';
+            //user is still holding onto some items
+            $order->update(['order_status' => 'Pending Partial Return']);
+            $message = 'Item(s) added to return. Return request updated.';
         }
 
         return redirect()->route('profile.orders.show', $orderId)->with('success', $message);
@@ -66,7 +87,7 @@ class ReturnController extends Controller
                 [
                     'return_date' => now(),
                     'reason' => 'Full order return requested by user.',
-                    'return_status' => 'Pending Return',
+                    'return_status' => 'Pending Full Return',
                     'user_id' => Auth::id(),
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -75,7 +96,7 @@ class ReturnController extends Controller
         }
 
         //update the main order status
-        $order->update(['order_status' => 'Pending Return']);
+        $order->update(['order_status' => 'Pending Full Return']);
         return back()->with('success', 'Entire order marked for return.');
     }
 
