@@ -54,14 +54,17 @@
         $pendingQty = \App\Models\ReturnOrder::getPendingQty($order->id, $item->product_id);
         $returnedQty = \App\Models\ReturnOrder::getReturnedQty($order->id, $item->product_id);
 
+        //checks if the ENTIRE quantity is either already returned OR waiting for approval
+        $isFullyReturned = (($pendingQty + $returnedQty) >= $item->quantity);
         //item is only gone if the confirmed returns match the quantity
         $isOfficiallyReturned = ($returnedQty >= $item->quantity);
         //calculates what can still be actioned (remaining to be returned)
         $remainingToReturn = $item->quantity - ($pendingQty + $returnedQty);
+
     @endphp
     <!-- if all the quantity items arent being returned, then it will look normal -->
     <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 border border-gray-200 transition-all duration-300
-        {{ $isOfficiallyReturned ? 'opacity-60 grayscale bg-gray-50 border-dashed' : '' }}">
+        {{ $isFullyReturned ? 'opacity-60 grayscale bg-gray-50 border-dashed' : '' }}">
         <div class="flex-shrink-0">
             <!-- the image of the item-->
             <img src="{{$item->product->product_image}}" alt="Item" class="w-24 h-24 object-cover rounded-lg shadow-sm">

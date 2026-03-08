@@ -92,24 +92,40 @@ class ReturnController extends Controller
     {
         $order = Order::with('orderDetails')->findOrFail($orderId);
 
+        if ($order->user_id !== Auth::id()) abort(403);
+
         if (!$order->isReturnable()) {
             return back()->with('error', 'Order cannot be returned.');
         }
 
+        $createdAny = false;
+
         //create return records for EVERY item in the order
         foreach ($order->orderDetails as $item) {
+            $pendingQty = ReturnOrder::getPendingQty($order->id, $item->product_id);
+            $returnedQty = ReturnOrder::getReturnedQty($order->id, $item->product_id);
+
+            //calculate what hasn't been touched yet
+            $remainingToReturn = $item->quantity - ($pendingQty + $returnedQty);
             //only create if one doesn't already exist for this item
-            ReturnOrder::firstOrCreate(
-                ['order_id' => $orderId, 'product_id' => $item->product_id],
-                [
+            if ($remainingToReturn > 0) {
+            ReturnOrder::Create([
+                    'order_id' => $orderId,
+                    'product_id' => $item->product_id,
                     'return_date' => now(),
                     'reason' => 'Full order return requested by user.',
                     'return_status' => 'Pending Full Return',
                     'user_id' => Auth::id(),
+                    'return_quantity' => $remainingToReturn,
                     'created_at' => now(),
                     'updated_at' => now(),
-                ]
-            );
+                ]);
+            $createdAny = true;
+        }
+        }
+
+        if (!$createdAny) {
+        return back()->with('error', 'All items in this order are already pending or returned.');
         }
 
         //update the main order status
