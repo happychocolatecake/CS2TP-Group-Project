@@ -11,21 +11,38 @@ use Illuminate\Support\Facades\Auth;
 class ReturnController extends Controller
 {
 
+    public function showReturnForm(Order $order, Product $product)
+    {
+        if ($order->user_id !== Auth::id()) abort(403);
+
+        $item = $order->orderDetails()->where('product_id', $product->id)->firstOrFail();
+
+        $pendingQty = ReturnOrder::getPendingQty($order->id, $product->id);
+        $returnedQty = ReturnOrder::getReturnedQty($order->id, $product->id);
+        $maxQuantity = $item->quantity - ($pendingQty + $returnedQty);
+
+        return view('returns', compact('order', 'product', 'maxQuantity'));
+    }
+
     public function returnSingleItem(Request $request, $orderId, $productId)
     {
 
         $request->validate([
             'return_quantity' => 'required|integer|min:1',
-            'reason' => 'nullable|string|max:255'
+            'reason' => 'required|string|max:255'
         ]);
 
-        $reason = $request->input('reason', 'No reason provided');
+
+
         //locates the order this return is linked to
         $order = Order::findOrFail($orderId);
         $item = $order->orderDetails()->where('product_id', $productId)->first();
         $quantityToReturn = $request->input('return_quantity');
 
         $alreadyReturned = ReturnOrder::where('order_id', $orderId)->where('product_id', $productId) ->sum('return_quantity');
+
+        //make sure the order belongs to the user
+        if ($order->user_id !== Auth::id()) abort(403);
 
         //makes sure order is returnable (if its been delivered)
         if (!$order->isReturnable()) {
@@ -39,7 +56,7 @@ class ReturnController extends Controller
 
         $returnOrder = ReturnOrder::create([
             'return_date' => now(),
-            'reason' => $reason,
+            'reason' => $request->reason,
             'return_status' => 'Pending Partial Return',
             'return_quantity' => $quantityToReturn,
             'product_id' => $productId,
@@ -98,6 +115,24 @@ class ReturnController extends Controller
         //update the main order status
         $order->update(['order_status' => 'Pending Full Return']);
         return back()->with('success', 'Entire order marked for return.');
+    }
+
+    public function processReturn(Request $request, $orderId, $productId)
+    {
+
+        //make sure a reason was selected
+        $request->validate([
+            'reason' => 'required|string',
+            'additional_details' => 'nullable|string|max:500'
+        ]);
+
+        $selectedReason = $request->input('reason');
+        $details = $request->input('additional_details');
+
+        //if there are details, combine ther just use the selected reason
+        $combinedReason = $details ? $selectedReason . ': ' . $details  : $selectedReason;
+        $request->merge(['reason' => $combinedReason]);
+        return $this->returnSingleItem($request, $orderId, $productId);
     }
 
     public function cancel(Order $order)

@@ -26,6 +26,11 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function returns()
+    {
+        return $this->hasMany(ReturnOrder::class);
+    }
+
     public function isReturnable(): bool
     {
         //makes sure the order this return request belongs to is delivered

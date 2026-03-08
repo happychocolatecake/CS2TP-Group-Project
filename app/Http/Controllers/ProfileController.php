@@ -40,7 +40,8 @@ class ProfileController extends Controller
     public function viewOrder($orderId) {
 
         $order = Order::with('orderDetails.product')->findOrFail($orderId);
-        return view('profile.partials.view-past-order-details', compact('order'));
+        $returns = $order->returns()->with('product')->latest()->get();
+        return view('profile.partials.view-past-order-details', compact('order','returns'));
     }
 
     public function reviews() {

@@ -11,10 +11,11 @@ class ReturnOrder extends Model
     public $timestamps = false;
 
     protected $fillable = ['return_date', 'reason', 'return_status', 'return_quantity',
-    'product_id', 'order_id', 'user_id', 'stock_restored'];
+    'product_id', 'order_id', 'user_id', 'stock_restored','created_at','updated_at'];
 
     protected $casts = [
         'return_date' =>'datetime',
+        'created_at' => 'datetime'
     ];
 
     public static function getPendingQty($orderId, $productId)
@@ -41,4 +42,8 @@ class ReturnOrder extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
