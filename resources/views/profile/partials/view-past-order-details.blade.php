@@ -59,12 +59,7 @@
             <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}
             </div>
 
-         <div class="flex gap-4 mt-3">
-         <!-- return product page -->
-                <a href="{{ route('returns') }}"
-                class="font-bold text-indigo-500 hover:text-indigo-700 transition whitespace-nowrap">
-                   Return
-                </a>
+
 
             @if($order->order_status === 'Delivered')
                 @php
@@ -91,6 +86,7 @@
 
                     <div>
                     @if($order->isReturnable() && !$existingReturn)
+                            <!-- return product page -->
                             <form action="{{ route('orders.return.item', [$order->id, $item->product_id]) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="font-bold text-red-500 hover:underline">
@@ -98,11 +94,11 @@
                                 </button>
                             </form>
                     @elseif($existingReturn)
-                            @if($existingReturn->status == 'Pending Return')
+                            @if($existingReturn->return_status == 'Pending Return')
                                 <span class="font-bold text-orange-500">
                                     Item pending return
                                 </span>
-                            @elseif($existingReturn->status == 'Returned')
+                            @elseif($existingReturn->return_status == 'Returned')
                                 <span class="font-bold text-green-900">
                                     Item returned
                                 </span>
@@ -111,7 +107,7 @@
                     </div>
             @endif
         </div>
-    </div>
+
     </div>
     @endforeach
 </div>

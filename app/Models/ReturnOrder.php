@@ -10,8 +10,8 @@ class ReturnOrder extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['return_date', 'reason', 'status',
-    'product_id', 'order_id', 'user_id'];
+    protected $fillable = ['return_date', 'reason', 'return_status', 'return_quantity',
+    'product_id', 'order_id', 'user_id', 'stock_restored'];
 
     protected $casts = [
         'return_date' =>'datetime',

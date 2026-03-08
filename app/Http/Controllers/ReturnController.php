@@ -26,10 +26,12 @@ class ReturnController extends Controller
         ReturnOrder::create([
             'return_date' => now(),
             'reason' => $reason,
-            'status' => 'Pending Return',
+            'return_status' => 'Pending Return',
             'product_id' => $productId,
             'order_id' => $orderId,
             'user_id' => Auth::id(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         //because its only one item, we dont update order status until all items are return requested
@@ -64,8 +66,10 @@ class ReturnController extends Controller
                 [
                     'return_date' => now(),
                     'reason' => 'Full order return requested by user.',
-                    'status' => 'Pending Return',
+                    'return_status' => 'Pending Return',
                     'user_id' => Auth::id(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]
             );
         }
@@ -77,8 +81,8 @@ class ReturnController extends Controller
 
     public function cancel(Order $order)
     {
-        //ensure the user owns the order and it's actually pending
-        if (Auth::id() !== $order->user_id) {
+        //ensure the user owns the order and it's actually pending (not shipped or delivered to cancel)
+        if (Auth::id() !== $order->user_id && $order->order_status == 'Placed') {
             abort(403);
         }
 

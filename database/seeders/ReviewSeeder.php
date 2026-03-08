@@ -28,6 +28,7 @@ class ReviewSeeder extends Seeder
                 'order_id' => 1,
                 'product_id' => 3,
                 'created_at' => now(),
+                'updated_at' =>now(),
                 'review_status' => 'Approved'
             ],
             [
@@ -39,7 +40,8 @@ class ReviewSeeder extends Seeder
                 'order_id' => 3,
                 'product_id' => 3,
                 'review_status' => 'Approved',
-                'created_at' => now()
+                'created_at' => now(),
+                'updated_at' =>now()
             ],
             [
                 'rating' => 5,
@@ -50,6 +52,7 @@ class ReviewSeeder extends Seeder
                 'order_id' => 2,
                 'product_id' => 26,
                 'review_status' => 'Approved',
+                'updated_at' =>now(),
                 'created_at' => now()
             ]
         ]);
