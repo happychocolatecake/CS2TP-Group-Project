@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\ReturnOrder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReturnController extends Controller
 {
@@ -162,8 +163,30 @@ class ReturnController extends Controller
             return back()->with('error', 'This order cannot be cancelled as it is already being processed.');
         }
 
-        $order->update(['order_status' => 'Cancelled']);
+      DB::transaction(function () use ($order) {
+            //updates the order status
+            $order->update(['order_status' => 'Cancelled']);
+
+            //loop through the order items and put them back into stock making sure its the right one
+            foreach ($order->orderDetails()->with('product')->get() as $item) {
+                if ($item->product) {
+                    $item->product->increment('product_stock', $item->quantity);
+                }
+            }
+        });
 
         return back()->with('success', 'Order #'. $order->id .' has been cancelled.');
+    }
+
+    public function approveReturn(ReturnOrder $returnOrder)
+    {
+        DB::transaction(function () use ($returnOrder) {
+            $returnOrder->update(['return_status' => 'Approved']);
+
+            //put the specific returned quantity back into stock
+            $returnOrder->product->increment('product_stock', $returnOrder->return_quantity);
+        });
+
+        return back()->with('success', 'Return approved and stock updated.');
     }
 }
