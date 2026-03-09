@@ -30,13 +30,14 @@
                     @endfor
                 </select>
             </div>
-            <label class="block mb-4 font-medium"> Reason for Return* </label>
+            <label class="block mb-4 font-bold text-gray-700"> Reason for Return </label>
             <!-- select the option for return -->
             <select name="reason" class="w-full border rounded-lg p-3 mb-4">
                 <option disabled selected> Select an option </option>
-                <option> Wrong item recieved </option>
+                <option> Wrong item received </option>
                 <option> Wrong size/fit </option>
                 <option> Defective Product </option>
+                <option> Item not as described </option>
                 <option> Changed my mind </option>
                 <option> Other </option>
             </select>
