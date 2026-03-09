@@ -37,7 +37,8 @@ class Order extends Model
         $validStatus = [
         'Delivered',
         'Partially Returned',
-        'Pending Partial Return'
+        'Pending Partial Return',
+        'Pending Full Return'
         ];
 
         return in_array($this->order_status, $validStatus);

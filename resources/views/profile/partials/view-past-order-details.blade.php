@@ -206,7 +206,7 @@
             <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
                 <div>
                     <h4 class="font-bold text-gray-800">Need to return everything?</h4>
-                    <p class="text-sm text-gray-600">This will request a return for all items in Order #{{ $order->id }}.</p>
+                    <p class="text-sm text-gray-600">This will request a return for all items in Order #{{ $order->id }}. No questions asked!</p>
                 </div>
                 <form action="{{ route('orders.return.all', $order->id) }}" method="POST">
                     @csrf
