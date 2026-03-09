@@ -58,9 +58,9 @@ class Order extends Model
             'Shipped' => 'bg-blue-500 text-white',
             'Pending Full Return' => 'bg-yellow-500 text-white',
             'Pending Partial Return' => 'bg-orange-400 text-white',
-            'Partially Returned' => 'bg-red-400 text-white',
-            'Fully Returned' => 'bg-red-600 text-white',
-            'Cancelled' => 'bg-gray-500 text-white',
+            'Partially Returned' => 'bg-purple-700 text-white',
+            'Fully Returned' => 'bg-slate-600 text-white',
+            'Cancelled' => 'bg-red-600 text-white',
             default => 'bg-indigo-600 text-white',
         };
     }
