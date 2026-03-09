@@ -25,8 +25,8 @@ class OrderSeeder extends Seeder
                 'order_date' => now(),
                 'order_status' => 'Delivered',
                 'user_id' => 1,
-                'created_at' => now()
-            ],
+                'created_at' => now(),
+                'updated_at' => now()           ],
             [
                 'order_address' => '5 appley appleton road A12 BFN',
                 'total_price' => 1353.95,
@@ -34,7 +34,8 @@ class OrderSeeder extends Seeder
                 'order_date' => now(),
                 'order_status' => 'Delivered',
                 'user_id' => 2,
-                'created_at' => now()
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'order_address' => '5 appley appleton road A12 BFN',
@@ -43,7 +44,8 @@ class OrderSeeder extends Seeder
                 'order_date' => now(),
                 'order_status' => 'Delivered',
                 'user_id' => 2,
-                'created_at' => now()
+                'created_at' => now(),
+                'updated_at' => now()
             ]
         ]);
 

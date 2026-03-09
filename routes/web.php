@@ -57,10 +57,6 @@ Route::get('/part-picker', function () {
     return view('partpicker-link'); // This points to your partpicker-link.blade.php file
 })->name('part-picker');
 
-Route::get('/returns', function () {
-    return view('returns'); // This points to your return.blade.php file
-})->name('returns');
-
 
 Route::get('/faq', function () {
     return view('faq');
@@ -103,10 +99,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
 
     //Return
-    Route::post('/order/{order}/return-item/{product}', [ReturnController::class, 'returnSingleItem'])->name('orders.return.item');
+    Route::get('/order/{order}/return-item/{product}', [ReturnController::class, 'showReturnForm'])->name('orders.return.item');
     Route::post('/order/{order}/return-all', [ReturnController::class, 'returnEntireOrder'])->name('orders.return.all');
+    Route::post('/order/{order}/return-item/{product}/process', [ReturnController::class, 'processReturn'])->name('orders.return.process');
 
-    //Cancelling
+    //Cancelling Order
     Route::post('/order/{order}/cancel', [ReturnController::class, 'cancel'])->name('orders.cancel');
 
     //Review Routes

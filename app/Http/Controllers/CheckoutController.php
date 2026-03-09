@@ -64,20 +64,25 @@ class CheckoutController extends Controller
         }
 
             //checks stock is validated
+        return DB::transaction(function () use ($basket, $validatedData, $user) {
+
+        $subtotal = 0;
+
         foreach ($basket->items as $item) {
+
             if ($item->product->product_stock == 0){
-                return redirect()->route('basket.view')->with('error','The '.$item->product->product_name. 'is out of stock.');
+                throw new \Exception("The item {$item->product->product_name} is no longer in stock.");
             }
             if ($item->product->product_stock < $item->quantity) {
                 return redirect()->route('basket.view')->with('error','There are only '.$item->product->product_stock.' available '. $item->product->product_name . 's');
             }
-        }
 
-        // calculate total cost from the servers side
-        $subtotal = 0;
-        foreach ($basket->items as $item) {
+            $item->product->decrement('product_stock', $item->quantity);
+            // calculate total cost from the servers side
             $subtotal += $item->product->product_price * $item->quantity;
         }
+
+
 
         //calculate shipping cost based on method picked
         $shippingCost = $validatedData['delivery_method'] === 'express' ? 6.95 : 3.95;
@@ -124,6 +129,7 @@ class CheckoutController extends Controller
             'success' => 'Thank you for your order!',
             'order_total' => $grandTotal
         ]);
+        }, 5);
     }
 
 
