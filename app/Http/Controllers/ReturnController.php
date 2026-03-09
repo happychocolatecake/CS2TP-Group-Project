@@ -185,8 +185,34 @@ class ReturnController extends Controller
 
             //put the specific returned quantity back into stock
             $returnOrder->product->increment('product_stock', $returnOrder->return_quantity);
+            $this->syncOrderStatus($returnOrder->order);
+
         });
 
         return back()->with('success', 'Return approved and stock updated.');
+    }
+
+    private function syncOrderStatus(Order $order)
+    {
+        //calculate total units ordered
+        $totalOrdered = $order->orderDetails()->sum('quantity');
+
+        //caclulate returned orders that have been approved to return
+        $totalReturned = $order->returns()
+            ->where('return_status', 'Approved')
+            ->sum('return_quantity');
+
+        //calculate returned orders that are still either pending full/partial returns
+        $totalPending = $order->returns()
+            ->where('return_status', 'like', 'Pending%')
+            ->sum('return_quantity');
+
+        //update the order status
+        if ($totalReturned >= $totalOrdered) {
+            $order->update(['order_status' => 'Fully Returned']);
+        } elseif ($totalReturned > 0 || $totalPending > 0) {
+            //if anything is pending or some is returned it is at least a Partial Return
+            $order->update(['order_status' => 'Partially Returned']);
+        }
     }
 }
