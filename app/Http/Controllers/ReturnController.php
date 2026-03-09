@@ -114,7 +114,7 @@ class ReturnController extends Controller
                     'order_id' => $orderId,
                     'product_id' => $item->product_id,
                     'return_date' => now(),
-                    'reason' => 'Full order return requested by user.',
+                    'reason' => 'Full order return requested.',
                     'return_status' => 'Pending Full Return',
                     'user_id' => Auth::id(),
                     'return_quantity' => $remainingToReturn,

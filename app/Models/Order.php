@@ -36,6 +36,7 @@ class Order extends Model
         //makes sure the order this return request belongs to is delivered
         $validStatus = [
         'Delivered',
+        'Shipped',
         'Partially Returned',
         'Pending Partial Return',
         'Pending Full Return'
