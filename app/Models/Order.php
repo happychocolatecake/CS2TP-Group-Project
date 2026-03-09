@@ -45,10 +45,10 @@ class Order extends Model
     }
 
     public function isCancellable(): bool
-{
+    {
     //make sure the order this return request belonds to is not shipped
     return $this->order_status === 'Placed';
-}
+    }
 
     public function getColourStatus()
     {
