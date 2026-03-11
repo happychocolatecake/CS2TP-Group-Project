@@ -178,6 +178,32 @@ class ReturnController extends Controller
         return back()->with('success', 'Order #'. $order->id .' has been cancelled.');
     }
 
+    public function cancelPendingReturn(ReturnOrder $return)
+    {
+        //make sure the return belongs to the user
+        if (Auth::id() !== $return->user_id && $return->order->order_status == 'Placed') {
+            abort(403);
+        }
+
+        //double check that it is still in a 'Pending' state before deleting
+        if (!str_contains($return->return_status, 'Pending')) {
+            return back()->with('error', 'This return has already been processed and cannot be cancelled.');
+        }
+
+        $return->delete();
+
+        $remainingReturnsCount = \App\Models\ReturnOrder::where('order_id', $return->order->id)->count();
+
+        if ($remainingReturnsCount === 0) {
+            //if there are returns are left at all, revert the order status
+            $return->order->update([
+                'order_status' => 'Delivered'
+            ]);
+        }
+
+        return back()->with('success', 'Return request has been cancelled.');
+    }
+
     public function approveReturn(ReturnOrder $returnOrder)
     {
         DB::transaction(function () use ($returnOrder) {

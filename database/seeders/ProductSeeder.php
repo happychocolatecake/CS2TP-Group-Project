@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
                 'product_description' => 'Supercharge your PC with the NVIDIA® GeForce RTX™ 4080 SUPER and RTX 4080. Bring your games and creative projects to life with accelerated ray tracing and AI-powered graphics. They\'re powered by the ultra-efficient NVIDIA Ada Lovelace architecture and 16GB of super-fast G6X memory.',
                 'product_createdate' => now(),
                 'product_stock' => 15, // Added default stock
-                'product_image' => 'https://pchocasi.com.tr/wp-content/uploads/2022/09/Nvidia-GeForce-RTX-4080-1.jpg'
+                'product_image' => 'https://m.media-amazon.com/images/I/71QoQqPmzvL._AC_SX679_.jpg'
             ],
             [
                 'product_name' => 'Intel i9 14900K',

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Basket;
 use App\Models\BasketItem;
 use App\Models\Category;
+use App\Models\WebsiteReview;
 use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
@@ -83,7 +84,14 @@ class StoreController extends Controller
     public function bestSeller() {
 
         $bestSellers = Product::whereIn('id', [13, 1, 22])->get();
-        return view('index', compact('bestSellers'));
+        $websiteReviews = WebsiteReview::where('review_status', 'Approved')->latest()->paginate(3);
+
+        $userReview = null;
+        if (Auth::check()) {
+            //finds the users review (pending or approved)
+            $userReview = WebsiteReview::where('user_id', Auth::id())->first();
+        }
+        return view('index', compact('bestSellers', 'websiteReviews', 'userReview'));
 
     }
 

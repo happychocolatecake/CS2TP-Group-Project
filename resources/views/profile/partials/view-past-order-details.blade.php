@@ -63,81 +63,89 @@
 
     @endphp
     <!-- if all the quantity items arent being returned, then it will look normal -->
-    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 border border-gray-200 transition-all duration-300
+    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center md:items-stretch gap-6 border border-gray-200 transition-all duration-300
         {{ $isFaded ? 'opacity-60 bg-gray-50 border-dashed' : '' }}">
 
-        <div class="flex-shrink-0 relative">
-            <img src="{{$item->product->product_image}}" alt="Item" class="w-24 h-24 object-cover rounded-lg shadow-sm {{ $isOfficiallyReturned ? 'sepia-[.5]' : '' }}">
-            @if($isOfficiallyReturned)
-                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-10 rounded-lg">
-                    <span class="text-white text-[10px] font-black uppercase tracking-widest bg-red-600 px-2 py-1 rounded shadow">Returned</span>
-                </div>
-            @endif
+        <div class="flex-shrink-0 relative w-24 h-24">
+            <img src="{{$item->product->product_image}}" alt="Item" class="w-full h-full object-cover rounded-lg shadow-sm {{ $isOfficiallyReturned ? 'sepia-[.5]' : '' }}">
+                @if($isOfficiallyReturned)
+                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-10 rounded-lg">
+                        <span class="text-white text-[10px] font-black uppercase tracking-widest bg-red-600 px-2 py-1 rounded shadow">Returned</span>
+                    </div>
+                @elseif($order->order_status === 'Cancelled')
+                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-lg">
+                        <span class="text-white text-[10px] font-black uppercase tracking-widest bg-gray-700 px-2 py-1 rounded shadow">Cancelled</span>
+                    </div>
+                @endif
         </div>
 
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 flex flex-col justify-center">
               <!-- shows the item name -->
             <a href="/product/{{$item->product->id}}"
                 class="text-xl font-bold mb-1 block {{ $isFaded ? 'line-through text-gray-500' : 'text-gray-800' }}">{{ $item->product->product_name ?? 'Product removed from sale' }}</a>
               <!-- show the model of the item -->
-            <p class="text-sm text-gray-500 mb-3 {{ $isFaded ? 'line-through' : '' }}">Model: {{ $item->product->product_model }}</p>
-            <p class="text-sm text-gray-700 mb-3 {{ $isFaded ? 'line-through' : '' }}">Colour: {{ $item->product->product_colour }}</p>
+            <p class="text-sm text-gray-500 {{ $isFaded ? 'line-through' : '' }}">Model: {{ $item->product->product_model }}</p>
+            <p class="text-sm text-gray-700 {{ $isFaded ? 'line-through' : '' }}">Colour: {{ $item->product->product_colour }}</p>
 
         </div>
 
-        <div class="flex flex-col items-end md:items-center gap-2 md:gap-4 md:w-40">
-              <!-- shows the price of this item -->
-            <div class="font-bold text-lg text-gray-800 {{ $isFaded ? 'line-through' : '' }}">£{{number_format($item->order_price, 2)}}</div>
+        <div class="w-full md:w-56 flex flex-col justify-between items-end gap-3 border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6">
+            <div class="w-full flex flex-col items-center gap-1">
+            <!-- shows the price of this item -->
+            <div class="font-bold text-lg text-center text-gray-800 {{ $isFaded ? 'line-through' : '' }}">£{{number_format($item->order_price, 2)}}</div>
               <!-- shows the quantity of this item -->
             <div class="px-3 py-1 border border-gray-300 rounded-lg text-center font-semibold text-gray-700"> Quantity: {{$item->quantity}}</div>
+            </div>
 
-
-
+            <div class="w-full space-y-2">
             @if($order->order_status == 'Delivered' || $order->isReturnable())
                 @php
                     //find and check if a review already exists for this item in this order
                     $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
 
                 @endphp
-                    <div>
-                    @if($existingReview)
-                    <!--if a review exists show view the review -->
-                    <a href="{{ route('reviews.image.show', $existingReview->id) }}"
-                    class="font-bold text-green-600 hover:text-green-800 transition">
-                            View Your Review
-                        </a>
-                    @else
-                        <!-- if no review exists show write a review -->
-                        <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
-                        class="font-bold text-indigo-500 hover:text-indigo-700 transition">
-                            Write a Review
-                        </a>
-                    @endif
+                    <div class="text-center">
+                        @if($existingReview)
+                        <!--if a review exists show view the review -->
+                        <a href="{{ route('reviews.image.show', $existingReview->id) }}"
+                        class="font-bold text-green-600 hover:text-green-800 transition">
+                                View Your Review
+                            </a>
+                        @else
+                            <!-- if no review exists show write a review -->
+                            <a href="{{ route('reviews.create', [$order->id, $item->product->id]) }}"
+                            class="font-bold text-indigo-500 hover:text-indigo-700 transition">
+                                Write a Review
+                            </a>
+                        @endif
                     </div>
             @endif
-            @if ($order->isReturnable())
+
+            @if ($order->isReturnable() && $order->order_status !== 'Cancelled')
                 @php
                     //calculates if there is still quantity within a product that you can return
                     $totalReturnedForThisItem = \App\Models\ReturnOrder::where('order_id', $order->id)
                     ->where('product_id', $item->product_id)->sum('return_quantity');
 
-                    $remainingQty = $item->quantity - $totalReturnedForThisItem;
 
                     //calculates the amount of quantity within the product that is pending return or completed return
+                    $remainingQty = $item->quantity - $totalReturnedForThisItem;
 
-                           //calculates what can still be actioned (remaining to be returned)
+
+                    //calculates what can still be actioned (remaining to be returned)
                     $remainingToReturn = $item->quantity - ($pendingQty + $returnedQty);
 
                 @endphp
-                    <div class="w-full">
+                    <div class="w-full space-y-2">
                         @if($remainingToReturn > 0)
                             <!-- return product page visible when there are products u can till return -->
                             <a href="{{ route('orders.return.item', [$order->id, $item->product_id]) }}"
-                            class="w-full block text-center px-3 py-1 border border-red-500 text-red-500 font-bold rounded-lg hover:bg-red-500 hover:text-white transition-all duration-200">
+                            class="w-full block text-center text-red-500 font-bold rounded-lg hover:bg-red-500 hover:text-white transition-all duration-200">
                                 Return Item
                             </a>
                         @endif
                         <!-- displays a message only when there is already some quantity of product pending/completed return-->
+                       <div class="space-y-1">
                         @if($remainingToReturn <= 0)
                             <!-- can put smth here later to show every quantity has been either partially or fully returned
                                 can also do a statement to ($isOfficiallyReturned) to check if the entire order is fully returned-->
@@ -154,11 +162,14 @@
                                 {{ $pendingQty }} pending return
                             </span>
                         @endif
+                       </div>
 
                     </div>
-                </div>
+
             @endif
         </div>
+        </div>
+
 
     </div>
     @endforeach
@@ -273,7 +284,19 @@
                                     {{ str_contains($return->return_status, 'Pending') ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-700' }}">
                                     {{ $return->return_status }}
                                 </span>
-                                <p class="text-xs text-gray-400 italic mt-1 truncate">"{{ $return->reason }}"</p>
+
+                                @if(str_contains($return->return_status, 'Pending'))
+                                    <form action="{{ route('orders.return.cancel', $return->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this return request?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-[10px] font-bold text-red-500 hover:text-red-700 underline transition">
+                                            Cancel Return
+                                        </button>
+                                    </form>
+                                @endif
+                                <div class="col-span-12 pt-2 border-t border-gray-100">
+                                    <p class="text-xs text-gray-500 italic truncate">"{{ $return->reason }}"</p>
+                                </div>
                             </div>
                         </div>
                         </div>

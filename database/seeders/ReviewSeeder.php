@@ -57,6 +57,25 @@ class ReviewSeeder extends Seeder
             ]
         ]);
 
+        DB::table('website_reviews')->insert([
+            [
+                'rating' => 5,
+                'review_text' => 'I love happy hardware! There are amazing deals with the bundles and extremely fast delivery times!',
+                'user_id' => 1,
+                'review_status' => 'Approved',
+                'updated_at' =>now(),
+                'created_at' => now()
+            ],
+            [
+                'rating' => 5,
+                'review_text' => 'I\'ve never seen such great prices on computer parts! Their ram prices are genuinely a steal!',
+                'user_id' => 2,
+                'review_status' => 'Approved',
+                'updated_at' =>now(),
+                'created_at' => now()
+            ]
+        ]);
+
         //make sure we have some delivered orders
         if (Order::count() == 0) {
             Order::factory(20)->create(['order_status' => 'Delivered']);

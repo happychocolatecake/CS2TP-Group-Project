@@ -99,6 +99,85 @@
         </div>
     </div>
 
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">What Our Users Say</h2>
+                <p class="text-gray-600 mt-2">Real feedback from our gaming community.</p>
+            </div>
+
+            @auth
+                @if($userReview)
+                    <div class="max-w-3xl mx-auto mb-12 bg-white p-6 rounded-2xl border-2 border-indigo-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
+                                    {{ substr($userReview->user->first_name, 0, 1) }}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Your Review</h3>
+                                    <span class="text-xs px-2 py-1 rounded-full {{ $userReview->review_status == 'Approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                        {{ $userReview->review_status }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 text-sm">
+                                <a href="{{ route('website-reviews.edit', $userReview) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
+                                <form action="{{ route('website-reviews.destroy', $userReview->id) }}" method="POST" onsubmit="return confirm('Delete this review?')">
+                                    @csrf @method('DELETE')
+                                    <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            @for($i=1; $i<=5; $i++)
+                                <span class="text-lg">{{ $i <= $userReview->rating ? '★' : '☆' }}</span>
+                            @endfor
+                        </div>
+                        <p class="text-gray-700 italic">"{{ $userReview->review_text }}"</p>
+                    </div>
+                @else
+                    <div class="text-center mb-12">
+                        <button onclick="document.getElementById('websiteReviewModal').classList.remove('hidden')"
+                                class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-lg">
+                            Write a Website Review
+                        </button>
+                    </div>
+                @endif
+            @endauth
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @foreach($websiteReviews as $review)
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between transition-transform hover:scale-[1.02]">
+                    <div>
+                        <div class="flex text-yellow-400 mb-4">
+                            @for($i=1; $i<=5; $i++)
+                                <span>{{ $i <= $review->rating ? '★' : '☆' }}</span>
+                            @endfor
+                        </div>
+                        <p class="text-gray-600 italic leading-relaxed mb-6">"{{ $review->review_text }}"</p>
+                    </div>
+
+                    <div class="flex items-center gap-3 border-t pt-6">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-semibold text-gray-500">
+                            {{ substr($review->user->first_name, 0, 1) }}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">{{ $review->user->first_name }} {{ $review->user->last_name }}</p>
+                            <p class="text-xs text-gray-400">{{ $review->created_at ? $review->created_at->format('M d, Y') : 'Recently' }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            </div>
+
+            <div class="mt-12 flex justify-center">
+                {{ $websiteReviews->links() }}
+            </div>
+        </div>
+    </div>
+    <br>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
 
         <h2 class="text-3xl font-bold mb-4">Not sure where to start?</h2>
@@ -136,19 +215,44 @@
             <p class="bg-gray-100 p-2 px-4 rounded text-sm">To learn the essentials of building a PC, read our guides.</p>
         </div>
 
+        </div>
+
+        <div class="mt-12">
+            <a href="/build-guide" class="bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
+                Start Now
+            </a>
+        </div>
     </div>
 
-    <div class="mt-12">
-        <a href="/build-guide" class="bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
-            Start Now
-        </a>
+    <div id="websiteReviewModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Write a Review</h2>
+
+            <form action="{{ route('website-reviews.store') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2">Rating</label>
+                    <select name="rating" class="w-full border rounded-lg p-2">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-bold mb-2">Your Feedback</label>
+                    <textarea name="review_text" rows="4" class="w-full border rounded-lg p-2" placeholder="What did you think of our service?"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="document.getElementById('websiteReviewModal').classList.add('hidden')" class="px-4 py-2 text-gray-500">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold">Submit Review</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-
-
-
-
 
 </x-layout>
 
