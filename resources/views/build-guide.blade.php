@@ -11,14 +11,14 @@
             Let's Build Your Dream PC
         </h1>
         <p class="text-xl text-indigo-100 max-w-2xl mx-auto">
-            Feeling nervous? Don't be! We're here to hold your hand through every click, screw, and plug. It's just like LEGOs, but expensive!
+            Feeling nervous? Don't be! We're here to hold your hand through every click, screw, and plug. It's just like LEGO, but expensive!
         </p>
     </div>
 </div>
 
 <!-- Main Content -->
 <main class="container mx-auto px-4 py-12 max-w-5xl">
-    
+
     <!-- Pre-Flight Check -->
     <div class="mb-12">
         <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
@@ -31,8 +31,8 @@
                 <h3 class="font-bold text-lg mb-4 text-slate-700">Your Toolkit</h3>
                 <div class="space-y-2">
                     <!-- Checklist Item Component -->
-                    <div x-data="{ checked: false }" 
-                         @click="checked = !checked" 
+                    <div x-data="{ checked: false }"
+                         @click="checked = !checked"
                          class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all border select-none"
                          :class="checked ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200 hover:border-indigo-300'">
                         <div class="h-5 w-5 rounded border flex items-center justify-center transition-colors"
@@ -41,9 +41,9 @@
                         </div>
                         <span :class="checked ? 'text-slate-800 line-through opacity-70' : 'text-slate-700'">Phillips head screwdriver</span>
                     </div>
-                    
+
                     <div x-data="{ checked: false }" @click="checked = !checked" class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all border select-none" :class="checked ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200 hover:border-indigo-300'">
-                        <div class="h-5 w-5 rounded border flex items-center justify-center transition-colors" :class="checked ? 'bg-green-500 border-green-500' : 'border-slate-300'"><i x-show="checked" data-lucide="check" class="w-3.5 h-3.5 text-white"></i></div>
+                        <div class="h-5 w-5 rounded border flex items-center justify-center transition-colors" :class="checked ? 'bg-green-500 border-green-500' : 'border-slate-300'"><i x-show="checked" data-lucide="check" class="w-3.5 h-3.5 text-white dark:text-black"></i></div>
                         <span :class="checked ? 'text-slate-800 line-through opacity-70' : 'text-slate-700'">Flat head screwdriver</span>
                     </div>
 
@@ -52,8 +52,8 @@
                         <span :class="checked ? 'text-slate-800 line-through opacity-70' : 'text-slate-700'">Cable ties (for tidiness)</span>
                     </div>
 
-                    <div x-data="{ checked: false }" @click="checked = !checked" class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all border select-none" :class="checked ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200 hover:border-indigo-300'">
-                        <div class="h-5 w-5 rounded border flex items-center justify-center transition-colors" :class="checked ? 'bg-green-500 border-green-500' : 'border-slate-300'"><i x-show="checked" data-lucide="check" class="w-3.5 h-3.5 text-white"></i></div>
+                    <div x-data="{ checked: false }" @click="checked = !checked" class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all border select-none" :class="checked ? 'bg-green-50 border-green-200': 'bg-white border-slate-200 hover:border-indigo-300'">
+                        <div class="h-5 w-5 rounded border flex items-center justify-center transition-colors" :class="checked ? 'bg-green-500 border-green-500'  : 'border-slate-300'"><i x-show="checked" data-lucide="check" class="w-3.5 h-3.5 text-white"></i></div>
                         <span :class="checked ? 'text-slate-800 line-through opacity-70' : 'text-slate-700'">Scissors or wire cutters</span>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
     <div class="grid gap-8">
 
         <!-- Step 1 -->
-        
+
         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -209,7 +209,7 @@
         </div>
 
         <!-- Step 6 -->
-         
+
         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
