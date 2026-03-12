@@ -19,12 +19,14 @@
 <!-- Main Content -->
 <main class="container mx-auto px-4 py-12 max-w-5xl">
 
+    <div class="bg-amber-100">
     <!-- Pre-Flight Check -->
     <div class="mb-12">
         <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
             <i data-lucide="wrench" class="text-indigo-600"></i>
-            The Pre-Flight Check
+            Initial Checklist
         </h2>
+
         <div class="grid md:grid-cols-2 gap-6">
             <!-- Toolkit Card -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
@@ -58,6 +60,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- Sanity Check Card -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
@@ -219,8 +222,8 @@
                 <i data-lucide="monitor" class="text-slate-400 w-6 h-6"></i>
             </div>
             <div class="p-6">
-                <p class="text-slate-600 mb-4">The moment of truth for gamers.</p>
-                <ol class="list-decimal pl-5 space-y-2 text-slate-600">
+                <p class="text-slate-600 mb-4 dark:text-amber-50">The moment of truth for gamers.</p>
+                <ol class="list-decimal pl-5 space-y-2 text-slate-600 dark:text-slate-50">
                     <li>Find the top long PCIe slot on the motherboard.</li>
                     <li>Remove the metal covers on the back of the case that align with it.</li>
                     <li>Push the GPU into the slot until it <strong>CLICKS</strong>.</li>
