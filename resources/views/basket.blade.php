@@ -126,17 +126,6 @@
                             </a>
                         </div>
 
-                        <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
-                            <div class="space-y-3">
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="gift" class="mr-3 h-4 w-4 cursor-pointer accent-indigo-600">
-                                    <label for="gift" class="cursor-pointer select-none text-sm text-gray-800 dark:text-gray-100">
-                                        Buying as a Gift?
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <a href="{{ route('store.index') }}" class="block w-full rounded-lg border border-gray-300 bg-white p-3 text-center text-[15px] font-bold text-gray-700 shadow-sm transition-colors duration-200 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
                             ← Back to Store
                         </a>

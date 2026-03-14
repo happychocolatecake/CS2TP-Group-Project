@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="mt-4 border-t border-gray-300 pt-4 md:flex md:items-center md:justify-between dark:border-gray-700">
-                <p class="text-sm text-gray-600 dark:text-gray-400">&copy; 2025 Happy Hardware. Group 27.</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">&copy; 2026 Happy Hardware. Group 27.</p>
             </div>
         </div>
     </footer>
