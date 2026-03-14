@@ -1,6 +1,6 @@
 <x-header></x-header>
 <x-layout>
-    <div class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen">
+    <div class= "text-gray-800 font-sans flex flex-col min-h-screen">
 
 
 

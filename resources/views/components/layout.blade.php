@@ -5,7 +5,7 @@
                 {{-- Logo & Nav Links --}}
                 <div class="flex items-center space-x-8">
                     <a href="/" class="shrink-0">
-                        <img src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-16 w-auto drop-shadow-lg">
+                        <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-16 w-auto drop-shadow-lg" >
                     </a>
 
                     <div id="main-nav-links" class="relative hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
@@ -76,13 +76,21 @@
             }
             root.classList.add('light-theme-initialized');
         }
+        //initialises the correct logo based on the current view mode toggled (light/dark)
+        var useDark = root.classList.contains('dark');
+        var logo = document.getElementById('main-logo');
+        if (logo) {
+            logo.src = useDark ? "{{ asset('images/logo-removebg-preview.png') }}" : "{{ asset('images/lightmodelogo.png') }}";
+        }
 
         if (typeof window.toggleTheme !== 'function') {
             window.toggleTheme = function () {
                 var willBeDark = !root.classList.contains('dark');
                 root.classList.toggle('dark', willBeDark);
+
                 try {
                     localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+
                 } catch (error) {
                     // Ignore storage errors.
                 }
@@ -116,5 +124,21 @@
                 moveIndicator(currentActive);
             });
         }
+        //looks out for any mode changes seperately from the isToggle function to change the logo specifically
+        var observer = new MutationObserver(function(modeChanges) {
+            modeChanges.forEach(function(modeChange) {
+                if (modeChange.attributeName === "class") {
+                    var isDark = document.documentElement.classList.contains('dark');
+                    var logo = document.getElementById('main-logo');
+                    if (logo) {
+                        logo.src = isDark ? "{{ asset('images/logo-removebg-preview.png') }}"  : "{{ asset('images/lightmodelogo.png') }}";
+                    }
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
     })();
+
+
 </script>
