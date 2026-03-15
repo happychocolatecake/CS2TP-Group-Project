@@ -42,6 +42,7 @@
                     $price = number_format($product->product_price, 2);
                     $stock = $product->product_stock;
                     $colour = $product->product_colour;
+                    $pcPart = $product->product_part;
                     //we will only use approved review stats for the products
                     $approvedReviews = $reviews;
 
@@ -53,7 +54,7 @@
 
                 <div class="flex flex-col pt-2">
 
-                    <x-product-page-header :title=$title :brandName=$brandName :avgRating="$avgRating" :totalReviews="$totalReviews" />
+                    <x-product-page-header :title=$title :pcPart=$pcPart :brandName=$brandName :avgRating="$avgRating" :totalReviews="$totalReviews" />
 
                     <x-product-page-variant-selecter :variant1="$colour" />
 
