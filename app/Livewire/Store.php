@@ -21,10 +21,12 @@ class Store extends Component
     public $minPrice;
     public $maxPrice;
 
-    #[Url(except: '')]
-    public $selectedMaxPrice = null;
-    #[Url(except: '')]
-    public $selectedMinPrice = null;
+    //have to manually update this with smallest and largest prices
+    //url doesnt take variables
+    #[Url(except: 2500)]
+    public $selectedMaxPrice = 2500;
+    #[Url(except: 10)]
+    public $selectedMinPrice = 10;
     public $categories;
 
 
@@ -129,8 +131,8 @@ class Store extends Component
         $this->selectedColours = [];
         $this->selectedPCParts = [];
 
-        $this->selectedMinPrice = null;
-        $this->selectedMaxPrice = null;
+        $this->selectedMinPrice = $this->minPrice;
+        $this->selectedMaxPrice = $this->maxPrice;
 
         $this->resetPage();
     }

@@ -49,15 +49,15 @@
                 <x-filter-group title="Price" open>
                     <div class="px-1 space-y-2">
 
-                        <div wire:key="price-range-{{ $selectedMinPrice}}-{{ $selectedMaxPrice}}">
+                        <div wire:key="price-range-{{ $selectedMinPrice ?? 'min' }}-{{ $selectedMaxPrice ?? 'max'}}">
                             <div class="relative h-10 w-full flex items-center justify-center">
                                 <div class="absolute w-full h-1.5 bg-gray-200 rounded-lg"></div>
 
-                                <input type="range" wire:key="min-slider-{{ $selectedMinPrice ?? 'default' }}" min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMinPrice" value="{{ $selectedMinPrice ?? $minPrice }}"
+                                <input type="range" wire:key="min-slider" min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMinPrice" value="{{ $selectedMinPrice ?? $minPrice }}"
                                     class="absolute w-full appearance-none bg-transparent pointer-events-none cursor-pointer accent-indigo-600 z-20 [&::-webkit-slider-thumb]:pointer-events-auto"
                                 >
 
-                                <input type="range" wire:key="min-slider-{{ $selectedMaxPrice ?? 'default' }}"  min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMaxPrice" value="{{ $selectedMaxPrice ?? $maxPrice }}"
+                                <input type="range" wire:key="max-slider"  min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMaxPrice" value="{{ $selectedMaxPrice ?? $maxPrice }}"
                                     class="absolute w-full appearance-none bg-transparent pointer-events-none cursor-pointer accent-indigo-600 z-10 [&::-webkit-slider-thumb]:pointer-events-auto"
                                 >
                             </div>
