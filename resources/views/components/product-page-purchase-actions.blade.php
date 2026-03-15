@@ -1,9 +1,8 @@
 <!--Quantity, price. add to basket-->
 <div class="purchase-block">
-    <hr class="border-black mb-6">
 
     <div class="mb-4">
-        <div class="flex justify-between items-end">
+        <div class="flex justify-between items-end border-t border-b border-gray-800 py-10">
 
             <div class="flex items-center gap-6 text-4xl font-light select-none">
 
@@ -41,8 +40,6 @@
             </div>
         </div>
     </div>
-
-    <hr class="border-black mb-8">
 
     <button type="submit" class="w-48 bg-gray-800 text-white py-3 px-6 rounded text-lg font-medium hover:bg-black transition duration-200 shadow-sm">
         Add to basket
