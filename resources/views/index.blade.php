@@ -103,14 +103,14 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center w-full justify-center">
                 <div class="-mt-12">
-                    <img src="{{asset('images/reviewmouse.png')}}" class="w-40 h-40 object-contain">
+                    <img src="{{asset('images/reviewmouse.png')}}" class="w-40 h-40 object-scale-down">
                 </div>
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-gray-900">What Our Users Say</h2>
                     <p class="text-gray-600 mt-2">Real feedback from our community.</p>
                 </div>
                 <div class="-mt-12">
-                    <img src="{{asset('images/reviewmouse.png')}}" class="w-40 h-40 object-contain -scale-x-100">
+                    <img src="{{asset('images/reviewmouse.png')}}" class="w-40 h-40 object-scale-down -scale-x-100">
                 </div>
             </div>
 
