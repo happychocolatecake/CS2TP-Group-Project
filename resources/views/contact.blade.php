@@ -1,7 +1,8 @@
 <x-header></x-header>
 <x-layout>
     <div class="max-w-2xl mx-auto px-4 py-12">
-        <div class="bg-white p-8 md:p-12 rounded-xl border border-gray-100 shadow-2xl">
+        <!--tweaked the div colours so that it would look better in dark mode-->
+        <div class="bg-gray-50 p-8 md:p-12 rounded-xl border border-gray-100 dark:border-gray-800 shadow-2xl">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
         <p class="text-gray-600 mb-8">
             Have a question or need help with a build? Send us a message below!
@@ -35,7 +36,7 @@
             </div>
 
             <div>
-                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 dark:bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     Send Message
                 </button>
             </div>
