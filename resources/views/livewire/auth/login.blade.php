@@ -5,7 +5,7 @@
     <div class="flex justify-center items-stretch gap-6 ">
 
         <!-- left flex box -->
-    <div class="flex justify-center gap-6 w-1/2 "> 
+    <div class="flex justify-center gap-6 w-1/2 ">
     <div class="border border-gray-300 bg-white rounded-3xl shadow-2xl p-8 flex flex-col justify-center h-full dark:border-gray-700 dark:bg-gray-900">
     <div class="flex flex-col gap-6 ">
         <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
@@ -59,7 +59,7 @@
 
         <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
             @csrf
-            
+
             <div class="flex flex-col gap-2">
                 <flux:button variant="filled" href="{{ route('google.login') }}" class="w-full bg-white text-gray-800 border border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
