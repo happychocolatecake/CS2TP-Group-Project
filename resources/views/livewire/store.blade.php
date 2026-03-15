@@ -1,3 +1,4 @@
+
 <div>
       @if (session('success'))
         <div class="container mx-auto px-6 mt-4">
@@ -24,10 +25,15 @@
 
             <!-- Sidebar Filter -->
             <aside class="md:col-span-1">
-                <h2 class="text-2xl font-bold mb-4">Filter</h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold">Filter</h2>
+                    <button wire:click="resetFilters" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors uppercase tracking-wider">
+                        Reset All
+                    </button>
+                </div>
                 <x-filter-group title="Category" open>
                     @foreach ($categories as $category)
-                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                        <label wire:key="cat-{{ $category->id }}-{{ count($selectedCategories) }}"  class="flex items-center space-x-3 mb-2 cursor-pointer">
                             <input
                                 type="checkbox"
                                 wire:click="toggleCategory({{ $category->id}})"
@@ -41,29 +47,50 @@
                 </x-filter-group>
 
                 <x-filter-group title="Price" open>
+                    <div class="px-1 space-y-2">
 
-                    <div class="px-1">
-                        <div class="px-2 space-y-2">
-                                <input type="range" id="price-range" name="max_price" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="£{{ $selectedMaxPrice }}"
-                                wire:model.lazy="selectedMaxPrice"
-                                class="w-full h-2 bg-gray-200 rounded-lh accent-indigo-600" oninput="document.getElementById('price-display').innerText = '£' + this.value">
+                        <div wire:key="price-range-{{ $selectedMinPrice}}-{{ $selectedMaxPrice}}">
+                            <div class="relative h-10 w-full flex items-center justify-center">
+                                <div class="absolute w-full h-1.5 bg-gray-200 rounded-lg"></div>
 
-                                <div class="flex justify-between text-sm text-gray-700 font-semibold">
+                                <input type="range" wire:key="min-slider-{{ $selectedMinPrice ?? 'default' }}" min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMinPrice" value="{{ $selectedMinPrice ?? $minPrice }}"
+                                    class="absolute w-full appearance-none bg-transparent pointer-events-none cursor-pointer accent-indigo-600 z-20 [&::-webkit-slider-thumb]:pointer-events-auto"
+                                >
 
-                                        <span>£{{ $minPrice }}</span>
-                                        <span id="price-display">£{{ $selectedMaxPrice }}</span>
+                                <input type="range" wire:key="min-slider-{{ $selectedMaxPrice ?? 'default' }}"  min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="selectedMaxPrice" value="{{ $selectedMaxPrice ?? $maxPrice }}"
+                                    class="absolute w-full appearance-none bg-transparent pointer-events-none cursor-pointer accent-indigo-600 z-10 [&::-webkit-slider-thumb]:pointer-events-auto"
+                                >
+                            </div>
 
-                                </div>
+                            <div class="flex justify-between text-sm text-gray-700 font-semibold">
+                                <span>£{{$minPrice }}</span>
+                                <span>£{{$maxPrice }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center px-1 flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
+                                <span class=" text-gray-400 text-xs">£</span>
+                                <input type="number" wire:model.live.debounce.500ms="selectedMinPrice" value="{{ $selectedMinPrice ?? $minPrice }}" placeholder="{{ $minPrice }}"
+                                    class="w-full bg-transparent text-xs border-none focus:ring-0 p-1 outline-none text-gray-700">
+                            </div>
+                            <div class="py-1">
+                            <span class="text-gray-400 text-xs font-bold uppercase tracking-tighter shrink-0">to</span>
+                            </div>
+                            <div class="flex items-center px-1 flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
+                                <span class=" text-gray-400 text-xs">£</span>
+                                <input type="number" wire:model.live.debounce.500ms="selectedMaxPrice" value="{{ $selectedMaxPrice ?? $maxPrice }}" placeholder="{{ $maxPrice }}"
+                                    class="w-full bg-transparent text-xs border-none focus:ring-0 p-1 outline-none text-gray-700 text-right">
+                            </div>
                         </div>
                     </div>
-
                 </x-filter-group>
 
                 <x-filter-group title="Primary Colour" open>
                     @foreach ($colours as $colour)
                         <!-- displays all available colours except for the objects that have a irrelevant colour -->
                         @if ($colour != 'N/A')
-                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                        <label wire:key="col-{{ Str::slug($colour) }}-{{ count($selectedColours) }}" class="flex items-center space-x-3 mb-2 cursor-pointer">
                             <input
                                 type="checkbox"
                                 wire:click="toggleColours('{{ $colour }}')"
@@ -81,7 +108,7 @@
                     @foreach ($pcParts as $part)
                         <!-- displays all available colours except for the objects that have a irrelevant colour -->
                         @if ($part != 'N/A')
-                        <label class="flex items-center space-x-3 mb-2 cursor-pointer">
+                        <label wire:key="part-{{ Str::slug($part) }}-{{ count($selectedPCParts) }}" class="flex items-center space-x-3 mb-2 cursor-pointer">
                             <input
                                 type="checkbox"
                                 wire:click="togglePcParts('{{ $part }}')"
