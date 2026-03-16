@@ -58,7 +58,7 @@ class ReturnController extends Controller
         $returnOrder = ReturnOrder::create([
             'return_date' => now(),
             'reason' => $request->reason,
-            'return_status' => 'Pending Partial Return',
+            'return_status' => 'Pending Return',
             'return_quantity' => $quantityToReturn,
             'product_id' => $productId,
             'order_id' => $orderId,
@@ -77,14 +77,15 @@ class ReturnController extends Controller
         if ($totalUnitsReturned >= $totalUnitsOrdered) {
             //every single item is coming back from the order
             $order->update(['order_status' => 'Pending Full Return']);
-            //its still part of a full order so returnOrder will view it as a partial return
-            $returnOrder->update(['return_status' => 'Pending Partial Return']);
+            //returnOrders will not have a status like normalOrders (no specifying pending)
+            $returnOrder->update(['return_status' => 'Pending Return']);
             $message = 'Entire order is now pending full return.';
         } else {
             //user is still holding onto some items
             $order->update(['order_status' => 'Pending Partial Return']);
             $message = 'Item(s) added to return. Return request updated.';
         }
+
 
         return redirect()->route('profile.orders.show', $orderId)->with('success', $message);
     }
@@ -115,7 +116,7 @@ class ReturnController extends Controller
                     'product_id' => $item->product_id,
                     'return_date' => now(),
                     'reason' => 'Full order return requested.',
-                    'return_status' => 'Pending Full Return',
+                    'return_status' => 'Pending Return',
                     'user_id' => Auth::id(),
                     'return_quantity' => $remainingToReturn,
                     'created_at' => now(),
@@ -175,6 +176,8 @@ class ReturnController extends Controller
             }
         });
 
+        $this->syncOrderStatus($order);
+
         return back()->with('success', 'Order #'. $order->id .' has been cancelled.');
     }
 
@@ -207,7 +210,7 @@ class ReturnController extends Controller
     public function approveReturn(ReturnOrder $returnOrder)
     {
         DB::transaction(function () use ($returnOrder) {
-            $returnOrder->update(['return_status' => 'Approved']);
+            $returnOrder->update(['return_status' => 'Returned']);
 
             //put the specific returned quantity back into stock
             $returnOrder->product->increment('product_stock', $returnOrder->return_quantity);
@@ -223,9 +226,9 @@ class ReturnController extends Controller
         //calculate total units ordered
         $totalOrdered = $order->orderDetails()->sum('quantity');
 
-        //caclulate returned orders that have been approved to return
+        //caclulate returned orders that have been approved to return // set it to returned
         $totalReturned = $order->returns()
-            ->where('return_status', 'Approved')
+            ->where('return_status', 'Returned')
             ->sum('return_quantity');
 
         //calculate returned orders that are still either pending full/partial returns
@@ -235,10 +238,28 @@ class ReturnController extends Controller
 
         //update the order status
         if ($totalReturned >= $totalOrdered) {
+            //if all the order details (products) are returned
             $order->update(['order_status' => 'Fully Returned']);
-        } elseif ($totalReturned > 0 || $totalPending > 0) {
+            return;
+        }
+
+        if (($totalPending + $totalReturned) >= $totalOrdered) {
+            //if all the products are awaiting return
+            $order->update(['order_status' => 'Pending Full Return']);
+            return;
+        }
+        if ($totalPending > 0) {
+            //if any products are pending return (not all of them from before checks) then it is partial pending
+            $order->update(['order_status' => 'Pending Partial Return']);
+            return;
+        }
+        if ($totalReturned > 0) {
             //if anything is pending or some is returned it is at least a Partial Return
             $order->update(['order_status' => 'Partially Returned']);
+            return;
         }
+
+        //otherwise status should be set to delivered as there are no returns (return requests could be cancelled)
+        $order->update(['order_status' => 'Delivered']);
     }
 }

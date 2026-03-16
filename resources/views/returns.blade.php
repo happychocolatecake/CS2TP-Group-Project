@@ -1,5 +1,6 @@
 <x-header></x-header>
 <x-layout>
+
     <!-- The box for the return-->
     <div class="max-w-2xl mx-auto px-4 py-12">
         <div class="bg-white p-8 md:p-12 rounded-xl border border-gray-100 shadow-2x1 items-center">
@@ -32,7 +33,7 @@
             </div>
             <label class="block mb-4 font-bold text-gray-700"> Reason for Return </label>
             <!-- select the option for return -->
-            <select name="reason" class="w-full border rounded-lg p-3 mb-4">
+            <select name="reason" class="w-full border rounded-lg p-3 mb-4" required>
                 <option disabled selected> Select an option </option>
                 <option> Wrong item received </option>
                 <option> Wrong size/fit </option>

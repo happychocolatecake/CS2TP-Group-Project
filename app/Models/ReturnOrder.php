@@ -22,7 +22,7 @@ class ReturnOrder extends Model
     {
         return self::where('order_id', $orderId)
             ->where('product_id', $productId)
-            ->whereIn('return_status', ['Pending Partial Return', 'Pending Full Return'])
+            ->whereIn('return_status', ['Pending Return'])
             ->sum('return_quantity');
     }
 
@@ -30,7 +30,7 @@ class ReturnOrder extends Model
     {
         return self::where('order_id', $orderId)
             ->where('product_id', $productId)
-            ->whereIn('return_status', ['Partially Returned', 'Fully Returned'])
+            ->whereIn('return_status', ['Returned'])
             ->sum('return_quantity');
     }
 

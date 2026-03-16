@@ -264,7 +264,8 @@
                 </div>
 
                 <div class="divide-y divide-gray-100 max-h-[400px] overflow-y-auto border border-t-0 rounded-b-lg shadow-inner custom-scrollbar">
-                    <div class="space-y-4">@foreach($returns as $return)
+                    <div class="space-y-4">
+                        @foreach($returns as $return)
                         <div class="flex items-center gap-4 p-4 border rounded-xl bg-gray-50">
                             <div class="grid grid-cols-12 items-center gap-4 p-4 border border-gray-200 rounded-xl bg-gray-50 shadow-sm">
                             <div class="col-span-6 flex items-center gap-3">
