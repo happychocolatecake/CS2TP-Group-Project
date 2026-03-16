@@ -29,7 +29,7 @@ class="absolute bottom-16 right-0 w-80 h-96 bg-white rounded-lg shadow-xl flex f
 @foreach ($messages as $message)
 @if ($message['role'] === 'assistant')
 <div class="flex justify-start">
-<div class="bg-gray-100 rounded-lg p-3 max-w-[85%] text-sm text-gray-800 prose prose-sm leading-relaxed">
+<div class="bg-gray-200 rounded-lg p-3 max-w-[85%] text-sm text-gray-800 prose prose-sm leading-relaxed">
 {{-- If you have a markdown package installed: --}}
 @markdown($message['content'])
 {{-- If you don't, temporarily use: {!! nl2br(e($message['content'])) !!} --}}
