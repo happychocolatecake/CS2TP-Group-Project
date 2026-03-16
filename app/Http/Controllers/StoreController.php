@@ -27,8 +27,11 @@ class StoreController extends Controller
 
     public function removeItem(Request $request)
     {
+        // Validations
         $request->validate([
-            'basket_item_id' => 'required|integer|exists:basket_items,id',
+            'product_id' => 'required|integer|exists:products,id',
+            // Added max:99 to prevent users from requesting absurdly large bulk numbers in a single request
+            'quantity' => 'required|integer|min:1|max:99',
         ]);
 
         BasketItem::destroy($request->input('basket_item_id'));
