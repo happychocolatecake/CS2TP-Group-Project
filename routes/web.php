@@ -129,6 +129,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');
     Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
 
+    // Buy Now
+    Route::get('/checkout/direct', [App\Http\Controllers\CheckoutController::class, 'directCheckout'])->name('checkout.direct');
+    Route::post('/checkout/process-direct', [CheckoutController::class, 'processDirectOrder'])->name('checkout.processDirect');
+
     // Profile Tabs & Actions
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');

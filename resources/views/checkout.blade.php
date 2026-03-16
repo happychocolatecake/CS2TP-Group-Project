@@ -18,7 +18,14 @@
             This allows the inputs to be on the left, and the submit button
             to be in the sidebar on the right.
         --}}
-        <form action="{{ route('checkout.process') }}" method="POST">
+        <form action="{{ isset($isDirectCheckout) && $isDirectCheckout ? route('checkout.processDirect') : route('checkout.process') }}" method="POST">
+            @csrf
+
+            {{-- If this is a direct checkout, silently pass the product ID and quantity to the final processor --}}
+            @if(isset($isDirectCheckout) && $isDirectCheckout)
+                <input type="hidden" name="product_id" value="{{ $directProductId }}">
+                <input type="hidden" name="quantity" value="{{ $directQuantity }}">
+            @endif
             @csrf
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

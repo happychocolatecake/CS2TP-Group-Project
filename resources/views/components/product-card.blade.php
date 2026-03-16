@@ -13,16 +13,21 @@
 
     @if($context !== 'index')
         <div class="mt-auto w-full">
-            <span class="block text-lg font-bold mb-2">£{{ $price }}</span>
-            <button class="w-full bg-gray-800 text-white px-8 py-2 rounded hover:bg-gray-700 transition">
-                Buy now
-            </button>
-        </div>
+            @if($context !== 'index')
+            <div class="mt-auto w-full flex flex-col gap-2">
+                <span class="block text-lg font-bold mb-2">£{{ $price }}</span>
 
-        <div class="mt-auto w-full">
-            <button type="submit" class="w-full mt-2 p-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
-                Add to Basket
-            </button>
+                {{-- BUY NOW: Uses formaction to hijack the parent form and go to checkout --}}
+                <button type="submit" formmethod="GET" formaction="{{ route('checkout.direct') }}" class="w-full bg-gray-800 text-white px-8 py-2 rounded hover:bg-gray-700 transition">
+                    Buy now
+                </button>
+
+                {{-- ADD TO BASKET: No formaction, so it uses the form's default basket.add route --}}
+                <button type="submit" class="w-full p-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
+                    Add to Basket
+                </button>
+            </div>
+            @endif
         </div>
     @endif
 
