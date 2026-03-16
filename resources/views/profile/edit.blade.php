@@ -1,7 +1,7 @@
 <x-header></x-header>
 <x-layout>
 
-<div class="bg-gray-100 font-sans leading-normal tracking-normal">
+<div class="bg-gray-100 dark:bg-gray-800 font-sans leading-normal tracking-normal">
 
     <div class="container mx-auto p-6">
 
