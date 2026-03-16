@@ -44,15 +44,20 @@ class CheckoutController extends Controller
     public function processOrder(Request $request)
     {
 
-        // Valid data
+        // Valid data with strict enhancements
         $validatedData = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'address_line_1' => 'required|string|max:255',
+            'full_name' => 'required|string|min:2|max:255|regex:/^[a-zA-Z\s\-\']+$/',
+            'address_line_1' => 'required|string|min:5|max:255',
             'address_line_2' => 'nullable|string|max:255',
-            'city' => 'required|string|max:100',
-            'postcode' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'city' => 'required|string|min:2|max:100|regex:/^[a-zA-Z\s\-]+$/',
+            'postcode' => 'required|string|min:4|max:10|regex:/^[a-zA-Z0-9\s\-]+$/', // Validates general UK/Global alphanumeric postcodes
+            'email' => 'required|email:rfc,dns|max:255', // Checks domain validity
             'delivery_method' => 'required|in:standard,express',
+        ], [
+            // Custom messages for the user
+            'full_name.regex' => 'Your full name must only contain letters, spaces, and hyphens.',
+            'city.regex' => 'The city name is invalid.',
+            'postcode.regex' => 'Please enter a valid alphanumeric postcode.',
         ]);
 
         // Get users basket from database
@@ -64,20 +69,25 @@ class CheckoutController extends Controller
         }
 
             //checks stock is validated
+        return DB::transaction(function () use ($basket, $validatedData, $user) {
+
+        $subtotal = 0;
+
         foreach ($basket->items as $item) {
+
             if ($item->product->product_stock == 0){
-                return redirect()->route('basket.view')->with('error','The '.$item->product->product_name. 'is out of stock.');
+                throw new \Exception("The item {$item->product->product_name} is no longer in stock.");
             }
             if ($item->product->product_stock < $item->quantity) {
                 return redirect()->route('basket.view')->with('error','There are only '.$item->product->product_stock.' available '. $item->product->product_name . 's');
             }
-        }
 
-        // calculate total cost from the servers side
-        $subtotal = 0;
-        foreach ($basket->items as $item) {
+            $item->product->decrement('product_stock', $item->quantity);
+            // calculate total cost from the servers side
             $subtotal += $item->product->product_price * $item->quantity;
         }
+
+
 
         //calculate shipping cost based on method picked
         $shippingCost = $validatedData['delivery_method'] === 'express' ? 6.95 : 3.95;
@@ -124,6 +134,7 @@ class CheckoutController extends Controller
             'success' => 'Thank you for your order!',
             'order_total' => $grandTotal
         ]);
+        }, 5);
     }
 
 

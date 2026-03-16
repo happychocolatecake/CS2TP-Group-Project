@@ -53,6 +53,7 @@
                                 <label for="address_line_1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
                                 <input type="text" id="address_line_1" name="address_line_1" required value="{{ old('address_line_1') }}"
                                     class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                @error('address_line_1') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- Address Line 2 --}}
@@ -60,6 +61,7 @@
                                 <label for="address_line_2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
                                 <input type="text" id="address_line_2" name="address_line_2" value="{{ old('address_line_2') }}"
                                     class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                @error('address_line_2') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- City & Postcode Row --}}
@@ -68,11 +70,13 @@
                                     <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Town/City *</label>
                                     <input type="text" id="city" name="city" required value="{{ old('city') }}"
                                         class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                    @error('city') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                                 </div>
                                 <div>
                                     <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode *</label>
                                     <input type="text" id="postcode" name="postcode" required value="{{ old('postcode') }}"
                                         class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-4 border">
+                                @error('postcode') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                                 </div>
                             </div>
 

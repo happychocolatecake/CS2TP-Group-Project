@@ -20,7 +20,7 @@
         <div class="bg-black flex items-center justify-center min-h-[300px]">
             @if($review->review_image)
                 <img src="{{ asset('images/reviews/' . $review->review_image) }}"
-                     class="w-full h-auto max-h-[70vh] object-contain mx-auto"
+                     class="w-full h-auto max-h-[70vh] object-scale-down mx-auto"
                      alt="Expanded review image">
             @else
                 <div class="flex flex-col items-center justify-center text-gray-500 py-20">

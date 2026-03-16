@@ -65,13 +65,13 @@
 <body class="bg-gray-100 text-gray-900 transition-colors duration-300 dark:bg-slate-900 dark:text-gray-100">
 
     <main>
-        {{ $slot }} 
-    </main> 
-    
-    
+        {{ $slot }}
+    </main>
+
+
 
     @livewireScripts
-    <livewire:chatbot /> 
+    <livewire:chatbot />
     <script>
         window.toggleTheme = function () {
             var root = document.documentElement;

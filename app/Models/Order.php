@@ -26,13 +26,42 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function returns()
+    {
+        return $this->hasMany(ReturnOrder::class);
+    }
+
+    public function isReturnable(): bool
+    {
+        //makes sure the order this return request belongs to is delivered
+        $validStatus = [
+        'Delivered',
+        'Shipped',
+        'Partially Returned',
+        'Pending Partial Return',
+        'Pending Full Return'
+        ];
+
+        return in_array($this->order_status, $validStatus);
+    }
+
+    public function isCancellable(): bool
+    {
+    //make sure the order this return request belonds to is not shipped
+    return $this->order_status === 'Placed';
+    }
+
     public function getColourStatus()
     {
         return match($this->order_status) {
-            'Delivered'  => 'bg-green-500 text-white',
-            'Shipped'    => 'bg-blue-500 text-white',
-            'Returned'   => 'bg-red-600 text-white',
-            default      => 'bg-indigo-600 text-white',
+            'Delivered' => 'bg-green-500 text-white',
+            'Shipped' => 'bg-blue-500 text-white',
+            'Pending Full Return' => 'bg-yellow-500 text-white',
+            'Pending Partial Return' => 'bg-orange-400 text-white',
+            'Partially Returned' => 'bg-purple-700 text-white',
+            'Fully Returned' => 'bg-slate-600 text-white',
+            'Cancelled' => 'bg-red-600 text-white',
+            default => 'bg-indigo-600 text-white',
         };
     }
 

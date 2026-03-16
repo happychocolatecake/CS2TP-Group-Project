@@ -1,8 +1,8 @@
 @props(['title', 'tagline', 'price', 'image', 'context'])
 
 <div class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center h-full">
-    <div class="w-full bg-gray-200 h-48 rounded mb-6 overflow-hidden">
-        <img src="{{ $image ?? '' }}" alt="{{ $title }}" class="w-full h-full object-cover">
+    <div class="w-full bg-white h-48 rounded mb-6 overflow-hidden flex items-center justify-center">
+        <img src="{{ $image ?? '' }}" alt="{{ $title }}" class="max-w-full max-h-full object-scale-down">
     </div>
 
     <h3 class="text-xl font-bold mb-2">{{ $title }}</h3>

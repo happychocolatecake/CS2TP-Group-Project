@@ -7,8 +7,10 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\WebsiteReviewController;
 use App\Livewire\PartPicker;
 
 // Public Routes
@@ -84,8 +86,10 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.in
 Route::post('/checkout/process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 
-// Authenticated Routes (Requires Login)
+//Website Reviews
+Route::get('/website-reviews', [WebsiteReviewController::class, 'index'])->name('website-reviews.index');
 
+// Authenticated Routes (Requires Login)
 Route::middleware(['auth'])->group(function () {
 
     Route::redirect('settings', 'settings/profile');
@@ -96,6 +100,21 @@ Route::middleware(['auth'])->group(function () {
     //View past order
     // past order details route
     Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
+
+    //Return
+    Route::get('/order/{order}/return-item/{product}', [ReturnController::class, 'showReturnForm'])->name('orders.return.item');
+    Route::post('/order/{order}/return-all', [ReturnController::class, 'returnEntireOrder'])->name('orders.return.all');
+    Route::post('/order/{order}/return-item/{product}/process', [ReturnController::class, 'processReturn'])->name('orders.return.process');
+    Route::delete('/returns/{return}/cancel-pending', [ReturnController::class, 'cancelPendingReturn'])->name('orders.return.cancel');
+
+    //website review
+    Route::post('/website-reviews', [WebsiteReviewController::class, 'store'])->name('website-reviews.store');
+    Route::get('/website-reviews/{websiteReview}/edit', [WebsiteReviewController::class, 'edit'])->name('website-reviews.edit');
+    Route::put('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'update'])->name('website-reviews.update');
+    Route::delete('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'destroy'])->name('website-reviews.destroy');
+
+    //Cancelling Order
+    Route::post('/order/{order}/cancel', [ReturnController::class, 'cancel'])->name('orders.cancel');
 
     //Review Routes
     Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');
