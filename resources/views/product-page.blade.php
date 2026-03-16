@@ -65,9 +65,12 @@
                             Specifications
                         </h3>
 
+                        @if($specs->isEmpty())
+                            <p class="text-gray-500 italic">No specific technical data available for this model.</p>
+                        @else
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             @foreach($specs as $spec)
-                                <div class="bg-gray-50/50 border border-gray-200 p-5 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 group">
+                                <div class="bg-gray-50/50 border border-gray-800 p-5 rounded-2xl hover:bg-white dark:hover:bg-white/70 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 group">
                                     <p class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-black mb-1 group-hover:text-indigo-500 transition-colors">
                                         {{ str_replace('_', ' ', $spec->spec_key) }}
                                     </p>
@@ -77,10 +80,8 @@
                                 </div>
                             @endforeach
 
-                            @if($specs->isEmpty())
-                                <p class="text-gray-500 italic">No specific technical data available for this model.</p>
-                            @endif
                         </div>
+                        @endif
                     </div>
 
                     <x-product-page-purchase-actions :stock=$stock :price=$price />

@@ -17,7 +17,7 @@
         </div>
 
         <div class="max-w-4xl w-full bg-black rounded-xl shadow-2xl overflow-hidden border border-gray-700">
-        <div class="bg-black flex items-center justify-center min-h-[300px]">
+        <div class="bg-gray-900 flex items-center justify-center min-h-[300px]">
             @if($review->review_image)
                 <img src="{{ asset('images/reviews/' . $review->review_image) }}"
                      class="w-full h-auto max-h-[70vh] object-scale-down mx-auto"

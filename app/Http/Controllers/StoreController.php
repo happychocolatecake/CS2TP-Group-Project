@@ -86,7 +86,7 @@ class StoreController extends Controller
 
     public function bestSeller() {
 
-        $bestSellers = Product::whereIn('id', [13, 1, 22])->get();
+        $bestSellers = Product::whereIn('id', [13, 3, 22])->get();
         $websiteReviews = WebsiteReview::where('review_status', 'Approved')->latest()->paginate(3);
 
         $userReview = null;
