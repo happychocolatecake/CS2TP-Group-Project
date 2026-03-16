@@ -1,5 +1,13 @@
 
-<div>
+<div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        <video
+            autoplay muted loop playsinline
+            class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
+            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+<div class="relative z-10">
       @if (session('success'))
         <div class="container mx-auto px-6 mt-4">
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
@@ -234,4 +242,5 @@
             </main>
         </div>
     </div>
+</div>
 </div>

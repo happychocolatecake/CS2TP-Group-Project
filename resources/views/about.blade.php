@@ -1,12 +1,18 @@
 <x-header></x-header>
 <x-layout>
-    <div class= "text-gray-800 font-sans flex flex-col min-h-screen">
 
+    <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        <video
+            autoplay muted loop playsinline
+            class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
+            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-
+    <div class= "relative z-10 text-gray-800 font-sans flex flex-col min-h-screen">
     <main class="flex-grow pt-16">
 
-        <div class="bg-white">
+        <div class="bg-gray-50">
             <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
@@ -19,7 +25,7 @@
             </div>
         </div>
 
-        <div class="bg-happy-gray py-16">
+        <div class="relative z-10 bg-happy-gray py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
                     <div>
@@ -46,7 +52,7 @@
             </div>
         </div>
 
-        <div class="bg-white py-16 border-t border-gray-200">
+        <div class="relative z-10 bg-gray-50 py-16 border-t border-gray-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Meet Team 27</h2>
@@ -148,7 +154,9 @@
                 </ul>
             </div>
         </div>
+        <br><br>
     </main>
+    </div>
     </div>
 </x-layout>
 <x-footer></x-footer>
