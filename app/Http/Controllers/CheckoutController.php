@@ -44,15 +44,20 @@ class CheckoutController extends Controller
     public function processOrder(Request $request)
     {
 
-        // Valid data
+        // Valid data with strict enhancements
         $validatedData = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'address_line_1' => 'required|string|max:255',
+            'full_name' => 'required|string|min:2|max:255|regex:/^[a-zA-Z\s\-\']+$/',
+            'address_line_1' => 'required|string|min:5|max:255',
             'address_line_2' => 'nullable|string|max:255',
-            'city' => 'required|string|max:100',
-            'postcode' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'city' => 'required|string|min:2|max:100|regex:/^[a-zA-Z\s\-]+$/',
+            'postcode' => 'required|string|min:4|max:10|regex:/^[a-zA-Z0-9\s\-]+$/', // Validates general UK/Global alphanumeric postcodes
+            'email' => 'required|email:rfc,dns|max:255', // Checks domain validity
             'delivery_method' => 'required|in:standard,express',
+        ], [
+            // Custom messages for the user
+            'full_name.regex' => 'Your full name must only contain letters, spaces, and hyphens.',
+            'city.regex' => 'The city name is invalid.',
+            'postcode.regex' => 'Please enter a valid alphanumeric postcode.',
         ]);
 
         // Get users basket from database
