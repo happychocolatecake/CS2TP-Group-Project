@@ -1,6 +1,13 @@
 <x-header></x-header>
 <x-layout>
-    <div class="max-w-2xl mx-auto px-4 py-12">
+    <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        <video
+            autoplay muted loop playsinline
+            class="absolute inset-0 z-0 w-full h-full object-cover opacity-30 pointer-events-none">
+            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    <div class="relative z-10 max-w-2xl mx-auto px-4 py-12">
         <!--tweaked the div colours so that it would look better in dark mode-->
         <div class="bg-gray-50 p-8 md:p-12 rounded-xl border border-gray-100 dark:border-gray-800 shadow-2xl">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
@@ -47,7 +54,9 @@
                 </div>
             @endif
         </form>
-    </div> </div>
+        </div>
+    </div>
+ </div>
 </x-layout>
 
 <x-footer></x-footer>
