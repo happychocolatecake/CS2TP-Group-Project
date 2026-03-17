@@ -211,6 +211,8 @@
                                     $image = $item->product_image;
                                     $price = number_format($item->product_price, 2);
                                     $tagline = !empty($item->product_tagline) ? $item->product_tagline : 'This item is still in development.';
+                                    $avgRating = $item->reviews_avg_rating ?? 0;
+
                                 @endphp
 
                                 <div class="h-full transform transition duration-200 hover:scale-105 hover:shadow-lg flex flex-col">
@@ -220,6 +222,7 @@
                                             :tagline="$tagline"
                                             :price="$price"
                                             :image="$image"
+                                            :avgRating="$avgRating"
                                             :context="'store'"
 
                                         />

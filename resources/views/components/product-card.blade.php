@@ -1,4 +1,4 @@
-@props(['title', 'tagline', 'price', 'image', 'context'])
+@props(['title', 'tagline', 'price', 'image', 'context', 'avgRating' => 0])
 
 <div class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center h-full">
     <div class="w-full bg-white h-48 rounded mb-6 overflow-hidden flex items-center justify-center">
@@ -12,11 +12,13 @@
     </p>
 
     <!-- product stars and rating on the store page -->
-    <div class="text-sm mb-3"> 
-        <span class="text-yellow-400"> stars </span>
+    <div class="text-sm mb-3">
+        @for ($i = 1; $i <= 5; $i++)
+            <span class="text-yellow-400"> {{ $i <= $avgRating ? '★' : '☆' }} </span>
+        @endfor
         <span class="text-gray-400"> | </span>
-        <span class="text-white"> 4.5 / 5 </span>
-</div> 
+        <span class="text-gray-800"> {{ number_format($avgRating, 1) }} / 5 </span>
+    </div>
 
     @if($context !== 'index')
         <div class="mt-auto w-full">

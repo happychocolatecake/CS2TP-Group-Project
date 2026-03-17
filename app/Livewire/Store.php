@@ -140,7 +140,11 @@ class Store extends Component
     public function render()
     {
         //split up filters and use queries
-        $query = Product::query();
+        //we reference the reviews here so that the store page always has access to its review average
+        $query = Product::query()
+        ->withAvg(['reviews' => function ($query) {
+            $query->where('review_status', 'Approved');
+        }], 'rating');
 
         if (!empty($this->search)){
             $query->where(function ($q) {

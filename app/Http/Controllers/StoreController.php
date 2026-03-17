@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Basket;
 use App\Models\BasketItem;
 use App\Models\Category;
+use App\Models\Review;
 use App\Models\WebsiteReview;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,7 +76,10 @@ class StoreController extends Controller
     // Fetches all products and displays the store page
     public function index()
     {
-        $products = Product::all();
+        //gets products alongside their average ratings
+        $products = Product::withAvg(['reviews' => function ($query) {
+        $query->where('review_status', 'Approved');
+        }], 'rating')->paginate(12);
         $categories = Category::all();
         $colours = Product::select('product_colour')->distinct()->pluck('product_colour');
         $pcParts = Product::select('product_part')->distinct()->pluck('product_part');
