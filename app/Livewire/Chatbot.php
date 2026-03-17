@@ -13,7 +13,6 @@ class Chatbot extends Component
     public string $userInput = '';
     public bool $isTyping = false;
 
-    // Add your predefined prompts and their exact answers here
     public array $suggestedPrompts = [
         'Shipping costs?' => 'Standard shipping (3-5 days) is £3.95. Express shipping (1-2 days) is £6.95.',
         'Return policy?' => 'We happily accept returns within 30 days of purchase. Just ensure items are in their original condition.',
@@ -23,35 +22,45 @@ class Chatbot extends Component
 
     public function mount()
     {
-        $this->messages[] = [
-            'role' => 'assistant',
-            'content' => 'Hi there! Welcome to Happy HardWare 😁. How can I help you today?'
-        ];
+        // 1. Check if we already have a saved conversation in the session
+        if (session()->has('chatbot_messages')) {
+            $this->messages = session('chatbot_messages');
+        } else {
+            // 2. If not, add the initial greeting and save it to the session
+            $this->messages[] = [
+                'role' => 'assistant',
+                'content' => 'Hi there! Welcome to Happy HardWare 😁. How can I help you today?'
+            ];
+            session()->put('chatbot_messages', $this->messages);
+        }
     }
 
     public function toggleChat()
     {
         $this->isOpen = !$this->isOpen;
+        // Scroll to bottom when opening an existing chat
+        if ($this->isOpen) {
+            $this->dispatch('messages-updated');
+        }
     }
 
-    // New method to handle clicking a predefined bubble
     public function sendPredefinedMessage($question)
     {
         if (!array_key_exists($question, $this->suggestedPrompts)) return;
 
-        // 1. Add the user's clicked question
         $this->messages[] = [
             'role' => 'user',
             'content' => $question
         ];
 
-        // 2. Instantly add the pre-written answer (bypassing the API)
         $this->messages[] = [
             'role' => 'assistant',
             'content' => $this->suggestedPrompts[$question]
         ];
 
-        // 3. Scroll to bottom
+        // 3. Save the updated conversation to the session
+        session()->put('chatbot_messages', $this->messages);
+
         $this->dispatch('messages-updated');
     }
 
@@ -65,6 +74,9 @@ class Chatbot extends Component
             'role' => 'user',
             'content' => $this->userInput
         ];
+
+        // 4. Save the user's message to the session before making the API call
+        session()->put('chatbot_messages', $this->messages);
 
         $this->userInput = '';
         $this->isTyping = true;
@@ -110,6 +122,9 @@ class Chatbot extends Component
             if ($response->successful()) {
                 $reply = $response->json('choices.0.message.content');
                 $this->messages[] = ['role' => 'assistant', 'content' => $reply];
+
+                // 5. Save the AI's response to the session
+                session()->put('chatbot_messages', $this->messages);
             } else {
                 Log::error('DeepSeek API Error', $response->json());
                 $this->messages[] = ['role' => 'assistant', 'content' => 'Sorry, I am having trouble connecting to my servers right now. Please try again later.'];
@@ -121,6 +136,14 @@ class Chatbot extends Component
 
         $this->isTyping = false;
         $this->dispatch('messages-updated');
+    }
+
+    // Optional: A method to clear the chat history completely
+    public function clearChat()
+    {
+        session()->forget('chatbot_messages');
+        $this->messages = [];
+        $this->mount(); // Re-run mount to get the initial greeting back
     }
 
     public function render()
