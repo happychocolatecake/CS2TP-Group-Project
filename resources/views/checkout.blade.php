@@ -90,9 +90,47 @@
                         </div>
                     </div>
 
+                     {{-- Card details --}}
+                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> 2. Payment Details </h2>
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label for="card_number" class="block text-sm font-medium text-gray-700 mb-1"> Card Number *</label>
+                                <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
+                                type="text" id="card" placeholder="1234 5678 9012 3456" required value="{{ old('cardnumber') }}" />
+                                @error('cardnumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                     {{-- Exipry date and CVV --}}
+                            <div>
+                                <label for="exiprynumber" class="block text-sm font-medium text-gray-700 mb-1"> Exipry Date *</label>
+                                <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
+                                type="text" id="exipry" placeholder="MM/YY" required value="{{ old('exiprynumber') }}" />
+                                @error('exiprynumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+</div>
+                            <div>
+                                <label for="cvvnumber" class="block text-sm font-medium text-gray-700 mb-1"> CVV *</label>
+                                <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
+                                type="text" id="cvv" placeholder="123" required value="{{ old('cvvnumber') }}" />
+                                @error('cvvnumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+    </div>
+</div>
+                    {{-- Name on Card --}}
+                    <div>
+                                <label for="cardname" class="block text-sm font-medium text-gray-700 mb-1"> Name on Card *</label>
+                                <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
+                                type="text" id="cardname" required value="{{ old('cardname') }}" />
+                                @error('cardname') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+</div>
+
+    </div>
+</div>
+
                     {{-- Card: Shipping Method --}}
                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">2. Delivery Method</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">3. Delivery Method</h2>
 
                         <div class="space-y-4">
                             <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition">
@@ -119,7 +157,7 @@
                 {{-- RIGHT COLUMN: ORDER SUMMARY (STICKY) --}}
                 <aside class="lg:col-span-1 space-y-6">
                     <div class="bg-white p-6 border rounded-xl shadow-lg sticky top-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">3. Order Summary</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3"> 4. Order Summary</h2>
 
                         {{-- Item List (Mini) --}}
                         <div class="max-h-60 overflow-y-auto mb-4 pr-2 space-y-3 custom-scrollbar">
