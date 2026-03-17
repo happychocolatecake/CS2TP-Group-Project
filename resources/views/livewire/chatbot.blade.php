@@ -55,18 +55,20 @@
                 </div>
             </div>
 
-            <div class="shrink-0 px-3 pt-2 pb-1 bg-gray-50 border-t border-gray-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
-                <div class="flex space-x-2">
-                    @foreach($suggestedPrompts as $question => $answer)
-                        <button type="button"
-                                wire:click="sendPredefinedMessage('{{ addslashes($question) }}')"
-                                class="inline-block bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 text-xs px-3 py-1.5 rounded-full transition-colors duration-150 shadow-sm disabled:opacity-50"
-                                wire:loading.attr="disabled">
-                            {{ $question }}
-                        </button>
-                    @endforeach
+            @if(count($messages) <= 1)
+                <div class="shrink-0 px-3 pt-2 pb-1 bg-gray-50 border-t border-gray-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                    <div class="flex space-x-2">
+                        @foreach($suggestedPrompts as $question => $answer)
+                            <button type="button"
+                                    wire:click="sendPredefinedMessage('{{ addslashes($question) }}')"
+                                    class="inline-block bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 text-xs px-3 py-1.5 rounded-full transition-colors duration-150 shadow-sm disabled:opacity-50"
+                                    wire:loading.attr="disabled">
+                                {{ $question }}
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="shrink-0 p-3 bg-gray-50 border-t border-gray-200">
                 <form wire:submit="sendMessage" class="flex gap-2">
