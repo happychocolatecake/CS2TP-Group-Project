@@ -11,6 +11,13 @@
         {{ $tagline }}
     </p>
 
+    <!-- product stars and rating on the store page -->
+    <div class="text-sm mb-3"> 
+        <span class="text-yellow-400"> stars </span>
+        <span class="text-gray-400"> | </span>
+        <span class="text-white"> 4.5 / 5 </span>
+</div> 
+
     @if($context !== 'index')
         <div class="mt-auto w-full">
             @if($context !== 'index')
