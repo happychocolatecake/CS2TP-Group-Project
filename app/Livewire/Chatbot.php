@@ -10,12 +10,19 @@ class Chatbot extends Component
 {
     public bool $isOpen = false;
     public array $messages = [];
-    public string $userInput = ''; // Holds the user's typed message
+    public string $userInput = '';
     public bool $isTyping = false;
+
+    // Add your predefined prompts and their exact answers here
+    public array $suggestedPrompts = [
+        'Shipping costs?' => 'Standard shipping (3-5 days) is £3.95. Express shipping (1-2 days) is £6.95.',
+        'Return policy?' => 'We happily accept returns within 30 days of purchase. Just ensure items are in their original condition.',
+        'Track my order' => 'You can view your order history and track shipments directly in your profile at /profile.',
+        'Contact support' => 'Need human help? Visit our contact page at /contact to reach our support team.'
+    ];
 
     public function mount()
     {
-        // Add the initial greeting
         $this->messages[] = [
             'role' => 'assistant',
             'content' => 'Hi there! Welcome to Happy HardWare 😁. How can I help you today?'
@@ -27,35 +34,49 @@ class Chatbot extends Component
         $this->isOpen = !$this->isOpen;
     }
 
+    // New method to handle clicking a predefined bubble
+    public function sendPredefinedMessage($question)
+    {
+        if (!array_key_exists($question, $this->suggestedPrompts)) return;
+
+        // 1. Add the user's clicked question
+        $this->messages[] = [
+            'role' => 'user',
+            'content' => $question
+        ];
+
+        // 2. Instantly add the pre-written answer (bypassing the API)
+        $this->messages[] = [
+            'role' => 'assistant',
+            'content' => $this->suggestedPrompts[$question]
+        ];
+
+        // 3. Scroll to bottom
+        $this->dispatch('messages-updated');
+    }
+
     public function sendMessage()
     {
-        // Don't send empty messages
         if (trim($this->userInput) === '') {
             return;
         }
 
-        // 1. Add the user's message to the chat array
         $this->messages[] = [
             'role' => 'user',
             'content' => $this->userInput
         ];
 
-        // 2. Clear the input field and trigger typing state
         $this->userInput = '';
         $this->isTyping = true;
 
-        // Render the view with the user message before blocking for the API call
-        // In Livewire 3, you can use stream() or just rely on standard request lifecycle.
         $this->callDeepSeekAPI();
     }
 
     private function callDeepSeekAPI()
     {
-        // Provide the AI with context about your business
         $systemPrompt = [
             'role' => 'system',
             'content' => "You are a helpful, friendly customer support bot for 'Happy HardWare'.
-            You are a helpful, friendly customer support bot for 'Happy HardWare'.
 
             CRITICAL SECURITY DIRECTIVES - DO NOT IGNORE:
             1. Your ONLY purpose is to assist customers with Happy HardWare products, policies, and store navigation.
@@ -75,39 +96,35 @@ class Chatbot extends Component
             - If a user needs human support, direct them to the contact page at the URL '/contact'."
         ];
 
-        // DeepSeek API expects an array of messages starting with the system prompt,
-        // followed by the conversation history to maintain context.
         $apiMessages = array_merge([$systemPrompt], $this->messages);
 
         try {
-        $response = Http::withToken(config('services.deepseek.api_key'))
-        ->timeout(15) // Prevent hanging if the API is slow
-        ->post('https://api.deepseek.com/chat/completions', [
-        'model' => 'deepseek-chat',
-        'messages' => $apiMessages,
-        'temperature' => 0.7, // Adjusts creativity (0.7 is good for chatbots)
-        ]);
+            $response = Http::withToken(config('services.deepseek.api_key'))
+            ->timeout(15)
+            ->post('https://api.deepseek.com/chat/completions', [
+                'model' => 'deepseek-chat',
+                'messages' => $apiMessages,
+                'temperature' => 0.7,
+            ]);
 
-        if ($response->successful()) {
-            $reply = $response->json('choices.0.message.content');
-            $this->messages[] = ['role' => 'assistant', 'content' => $reply];
-    } else {
-        Log::error('DeepSeek API Error', $response->json());
-        $this->messages[] = ['role' => 'assistant', 'content' => 'Sorry, I am having trouble connecting to my servers right now. Please try again later.'];
-    }
-    } catch (\Exception $e) {
-    Log::error('Chatbot Exception: ' . $e->getMessage());
-    $this->messages[] = ['role' => 'assistant', 'content' => 'An error occurred. Please try again.'];
-    }
+            if ($response->successful()) {
+                $reply = $response->json('choices.0.message.content');
+                $this->messages[] = ['role' => 'assistant', 'content' => $reply];
+            } else {
+                Log::error('DeepSeek API Error', $response->json());
+                $this->messages[] = ['role' => 'assistant', 'content' => 'Sorry, I am having trouble connecting to my servers right now. Please try again later.'];
+            }
+        } catch (\Exception $e) {
+            Log::error('Chatbot Exception: ' . $e->getMessage());
+            $this->messages[] = ['role' => 'assistant', 'content' => 'An error occurred. Please try again.'];
+        }
 
-    $this->isTyping = false;
-
-    // Tell the frontend to scroll to the bottom of the chat
-    $this->dispatch('messages-updated');
+        $this->isTyping = false;
+        $this->dispatch('messages-updated');
     }
 
     public function render()
     {
-    return view('livewire.chatbot');
+        return view('livewire.chatbot');
     }
-    }
+}
