@@ -77,9 +77,7 @@ class StoreController extends Controller
     public function index()
     {
         //gets products alongside their average ratings
-        $products = Product::withAvg(['reviews' => function ($query) {
-        $query->where('review_status', 'Approved');
-        }], 'rating')->paginate(12);
+        $products = Product::withAvg(['reviews' => function ($query) { $query->where('review_status', 'Approved'); }], 'rating')->paginate(12);
         $categories = Category::all();
         $colours = Product::select('product_colour')->distinct()->pluck('product_colour');
         $pcParts = Product::select('product_part')->distinct()->pluck('product_part');
@@ -90,7 +88,7 @@ class StoreController extends Controller
 
     public function bestSeller() {
 
-        $bestSellers = Product::whereIn('id', [13, 3, 22])->get();
+        $bestSellers = Product::whereIn('id', [13, 3, 22])->withAvg(['reviews' => function ($query) { $query->where('review_status', 'Approved'); }], 'rating')->get();
         $websiteReviews = WebsiteReview::where('review_status', 'Approved')->latest()->paginate(3);
 
         $userReview = null;

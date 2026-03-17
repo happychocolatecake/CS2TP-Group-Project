@@ -75,6 +75,10 @@
 
                 @foreach ( $bestSellers as $product )
 
+                    @php
+                        $avgRating = $product->reviews_avg_rating ?? 0;
+                    @endphp
+
                     <form method="POST" action="{{ route('basket.add') }}">
 
                         <input type="hidden" name="product_id" value="{{$product->id}}">
@@ -87,7 +91,9 @@
                                        tagline="{{$product->product_tagline}}"
                                         price="{{$product->product_price}}"
                                         image="{{$product->product_image}}"
+                                        :avgRating="$avgRating"
                                         :context="'index'"
+
                                     />
                                 </a>
                             </div>
