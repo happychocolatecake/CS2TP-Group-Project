@@ -46,21 +46,21 @@
             <a href="/store?selectedCategories[0]=2" class="block group">
                 <div class="transform transition duration-300 hover:translate-y-1 hover:shadow-lg">
                     <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
-                        <span class="text-gray-500 font-bold text-xl">Bundles</span>
+                        <span class="text-gray-500 font-bold text-xl">Pre-Built</span>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-semibold">Save with Bundles</h3>
+                <h3 class="text-lg font-semibold">Ready to Game</h3>
             </a>
 
             <a href="/store?selectedCategories[0]=3" class="block group">
                 <div class="transform transition duration-300 hover:translate-y-2 hover:shadow-lg">
                     <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
-                        <span class="text-gray-500 font-bold text-xl">Pre-Builts</span>
+                        <span class="text-gray-500 font-bold text-xl">Bundles</span>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-semibold">Ready to Game</h3>
+                <h3 class="text-lg font-semibold">Save with Bundles</h3>
             </a>
         </div>
 
