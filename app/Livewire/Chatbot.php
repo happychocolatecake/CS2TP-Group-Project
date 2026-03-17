@@ -111,27 +111,59 @@ class Chatbot extends Component
         $apiMessages = array_merge([$systemPrompt], $this->messages);
 
         try {
+            // 1. Tell Laravel HTTP client and the DeepSeek API to stream the response
             $response = Http::withToken(config('services.deepseek.api_key'))
-            ->timeout(15)
+            ->withOptions(['stream' => true])
             ->post('https://api.deepseek.com/chat/completions', [
                 'model' => 'deepseek-chat',
                 'messages' => $apiMessages,
                 'temperature' => 0.7,
+                'stream' => true, // Triggers Server-Sent Events (SSE)
             ]);
 
-            if ($response->successful()) {
-                $reply = $response->json('choices.0.message.content');
-                $this->messages[] = ['role' => 'assistant', 'content' => $reply];
+            $body = $response->toPsrResponse()->getBody();
+            $fullResponse = '';
+            $buffer = '';
 
-                // 5. Save the AI's response to the session
-                session()->put('chatbot_messages', $this->messages);
-            } else {
-                Log::error('DeepSeek API Error', $response->json());
-                $this->messages[] = ['role' => 'assistant', 'content' => 'Sorry, I am having trouble connecting to my servers right now. Please try again later.'];
+            // 2. Read the stream chunk by chunk as it arrives
+            while (!$body->eof()) {
+                $buffer .= $body->read(1024);
+
+                // Process complete lines from the buffer
+                while (($pos = strpos($buffer, "\n")) !== false) {
+                    $line = substr($buffer, 0, $pos);
+                    $buffer = substr($buffer, $pos + 1);
+                    $line = trim($line);
+
+                    // 3. DeepSeek sends data starting with "data: "
+                    if (str_starts_with($line, 'data: ')) {
+                        $data = substr($line, 6);
+
+                        if ($data === '[DONE]') {
+                            break 2; // Stream is finished
+                        }
+
+                        $decoded = json_decode($data, true);
+                        if (isset($decoded['choices'][0]['delta']['content'])) {
+                            $content = $decoded['choices'][0]['delta']['content'];
+                            $fullResponse .= $content;
+
+                            // 4. Send this exact piece of text directly to the browser!
+                            $this->stream('bot-reply', $content);
+                        }
+                    }
+                }
             }
+
+            // 5. Once finished, save the full assembled message to our array and session
+            if (!empty($fullResponse)) {
+                $this->messages[] = ['role' => 'assistant', 'content' => $fullResponse];
+                session()->put('chatbot_messages', $this->messages);
+            }
+
         } catch (\Exception $e) {
-            Log::error('Chatbot Exception: ' . $e->getMessage());
-            $this->messages[] = ['role' => 'assistant', 'content' => 'An error occurred. Please try again.'];
+            Log::error('Chatbot Stream Exception: ' . $e->getMessage());
+            $this->messages[] = ['role' => 'assistant', 'content' => 'An error occurred while connecting. Please try again.'];
         }
 
         $this->isTyping = false;

@@ -51,14 +51,13 @@
                     @endif
                 @endforeach
 
-                <div x-show="$wire.isTyping" class="flex justify-start">
-                    <div class="bg-gray-100 rounded-lg p-3 max-w-xs text-sm flex items-center space-x-2">
-                        <span class="text-gray-500">Thinking</span>
-                        <div class="flex space-x-1">
-                            <div class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-150"></div>
-                            <div class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-300"></div>
-                            <div class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-500"></div>
-                        </div>
+                <div wire:loading.flex wire:target="sendMessage" class="w-full justify-start">
+                    <div class="bg-gray-100 rounded-lg p-3 max-w-[85%] text-sm text-gray-800 leading-relaxed flex items-center">
+                        {{-- Livewire will magically append text chunks to this span --}}
+                        <span wire:stream="bot-reply"></span>
+
+                        {{-- A cool blinking cursor to show it's actively typing --}}
+                        <span class="animate-pulse inline-block w-1.5 h-4 bg-indigo-400 ml-1 translate-y-0.5"></span>
                     </div>
                 </div>
             </div>
@@ -121,25 +120,38 @@
     </style>
 
     <script>
-        document.addEventListener('livewire:initialized', () => {
-            const scroll = () => {
-                const chatWindow = document.getElementById('chat-messages');
-                if (chatWindow && document.querySelector('[x-show]').style.display !== 'none') {
-                    chatWindow.scrollTop = chatWindow.scrollHeight;
-                }
-            };
+    document.addEventListener('livewire:initialized', () => {
+        const chatWindow = document.getElementById('chat-messages');
 
-            // Scroll when Livewire updates the DOM
-            Livewire.hook('morph.updated', ({ component }) => {
-                if (component.name === 'chatbot') {
-                    scroll();
+        const scroll = () => {
+            if (chatWindow && document.querySelector('[x-show]').style.display !== 'none') {
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+        };
+
+        // Scroll when Livewire natively updates the DOM
+        Livewire.hook('morph.updated', ({ component }) => {
+            if (component.name === 'chatbot') {
+                scroll();
+            }
+        });
+
+        Livewire.on('messages-updated', scroll);
+        scroll();
+
+        // NEW: This watches the chat window for changes during the live stream
+        // and forces the scrollbar to stay at the bottom as new words appear!
+        if (chatWindow) {
+            const observer = new MutationObserver(() => {
+                // Only auto-scroll if the user hasn't manually scrolled up to read history
+                if (chatWindow.scrollHeight - chatWindow.scrollTop <= chatWindow.clientHeight + 100) {
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
                 }
             });
 
-            Livewire.on('messages-updated', scroll);
-
-            // Initial scroll check
-            scroll();
-        });
+            // Watch for new text nodes being added by the stream
+            observer.observe(chatWindow, { childList: true, subtree: true, characterData: true });
+        }
+    });
     </script>
 </div>
