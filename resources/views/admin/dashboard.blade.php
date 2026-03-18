@@ -34,6 +34,33 @@
             </div>
         @endif
 
+        <section class="rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900">Basket Popularity (Live)</h2>
+                    <p class="mt-1 text-sm text-gray-500">Top items currently in user baskets, ranked by quantity.</p>
+                </div>
+                <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Top 10</span>
+            </div>
+
+            @if ($basketPopularity->isEmpty())
+                <p class="text-sm text-gray-500">No items are currently in any basket.</p>
+            @else
+                <div class="h-80">
+                    <canvas id="basketPopularityChart"></canvas>
+                </div>
+
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+                    @foreach ($basketPopularity as $item)
+                        <div class="rounded-md bg-gray-50 border border-gray-200 px-3 py-2 flex items-center justify-between">
+                            <span class="text-gray-700 truncate pr-3">{{ $item->product_name }}</span>
+                            <span class="font-semibold text-gray-900">{{ $item->popularity }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </section>
+
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <section class="xl:col-span-2 rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
                 <div class="flex items-center justify-between gap-4 mb-4">
@@ -225,4 +252,62 @@
             </div>
         </section>
     </section>
+
+    @if ($basketPopularity->isNotEmpty())
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            (function () {
+                const canvas = document.getElementById('basketPopularityChart');
+                if (!canvas) {
+                    return;
+                }
+
+                const labels = @json($basketChartLabels);
+                const values = @json($basketChartValues);
+
+                new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Items in baskets',
+                            data: values,
+                            backgroundColor: 'rgba(31, 41, 55, 0.75)',
+                            borderColor: 'rgba(17, 24, 39, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0,
+                                    stepSize: 1,
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Quantity in baskets',
+                                },
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Products',
+                                },
+                            },
+                        },
+                    },
+                });
+            })();
+        </script>
+    @endif
 </x-admin-layout>

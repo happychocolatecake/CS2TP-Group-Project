@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.store');
-    });
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.store');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -160,3 +158,4 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['password.confirm'])
         ->name('two-factor.show');
 });
+
