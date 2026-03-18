@@ -1,7 +1,9 @@
 <x-header></x-header>
 <x-layout>
+    <div>
+        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
     <body class="bg-gray-100 min-h-screen flex flex-col">
-    <div class="bg-slate-200 min-h-screen py-12">
+    <div class="min-h-screen py-12">
 
         <main class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-white">
@@ -54,5 +56,6 @@
             </div>
     </div>
     </body>
+    </div>
 </x-layout>
 <x-footer></x-footer>

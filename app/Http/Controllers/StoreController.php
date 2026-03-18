@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Basket;
 use App\Models\BasketItem;
 use App\Models\Category;
+use App\Models\Review;
+use App\Models\WebsiteReview;
 use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
@@ -26,8 +28,11 @@ class StoreController extends Controller
 
     public function removeItem(Request $request)
     {
+        // Validations
         $request->validate([
-            'basket_item_id' => 'required|integer|exists:basket_items,id',
+            'product_id' => 'required|integer|exists:products,id',
+            // Added max:99 to prevent users from requesting absurdly large bulk numbers in a single request
+            'quantity' => 'required|integer|min:1|max:99',
         ]);
 
         BasketItem::destroy($request->input('basket_item_id'));
@@ -71,7 +76,8 @@ class StoreController extends Controller
     // Fetches all products and displays the store page
     public function index()
     {
-        $products = Product::all();
+        //gets products alongside their average ratings
+        $products = Product::withAvg(['reviews' => function ($query) { $query->where('review_status', 'Approved'); }], 'rating')->paginate(12);
         $categories = Category::all();
         $colours = Product::select('product_colour')->distinct()->pluck('product_colour');
         $pcParts = Product::select('product_part')->distinct()->pluck('product_part');
@@ -82,8 +88,15 @@ class StoreController extends Controller
 
     public function bestSeller() {
 
-        $bestSellers = Product::whereIn('id', [13, 1, 22])->get();
-        return view('index', compact('bestSellers'));
+        $bestSellers = Product::whereIn('id', [13, 3, 22])->withAvg(['reviews' => function ($query) { $query->where('review_status', 'Approved'); }], 'rating')->get();
+        $websiteReviews = WebsiteReview::where('review_status', 'Approved')->latest()->paginate(3);
+
+        $userReview = null;
+        if (Auth::check()) {
+            //finds the users review (pending or approved)
+            $userReview = WebsiteReview::where('user_id', Auth::id())->first();
+        }
+        return view('index', compact('bestSellers', 'websiteReviews', 'userReview'));
 
     }
 

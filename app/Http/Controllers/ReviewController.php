@@ -68,6 +68,7 @@ class ReviewController extends Controller
         $review->rating = $request->rating;
         $review->review_text = $request->review_text;
         $review->created_at = now();
+        $review->updated_at = now();
 
         //image upload onto the github and phpmyadmin database
         if ($request->hasFile('review_image')) {

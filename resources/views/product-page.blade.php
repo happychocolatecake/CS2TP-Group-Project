@@ -42,6 +42,7 @@
                     $price = number_format($product->product_price, 2);
                     $stock = $product->product_stock;
                     $colour = $product->product_colour;
+                    $pcPart = $product->product_part;
                     //we will only use approved review stats for the products
                     $approvedReviews = $reviews;
 
@@ -53,14 +54,39 @@
 
                 <div class="flex flex-col pt-2">
 
-                    <x-product-page-header :title=$title :brandName=$brandName :avgRating="$avgRating" :totalReviews="$totalReviews" />
-
-                    <p class="text-gray-700 text-lg mb-10">{{ $description }}</p>
+                    <x-product-page-header :title=$title :pcPart=$pcPart :brandName=$brandName :avgRating="$avgRating" :totalReviews="$totalReviews" />
 
                     <x-product-page-variant-selecter :variant1="$colour" />
 
+                    <p class="text-gray-700 text-lg mb-5">{{ $description }}</p>
+
+                    <div class="mt-1 py-3 pb-5 border-t border-gray-800">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+                            Specifications
+                        </h3>
+
+                        @if($specs->isEmpty())
+                            <p class="text-gray-500 italic">No specific technical data available for this model.</p>
+                        @else
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            @foreach($specs as $spec)
+                                <div class="bg-gray-50/50 border border-gray-800 p-5 rounded-2xl hover:bg-white dark:hover:bg-white/70 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 group">
+                                    <p class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-black mb-1 group-hover:text-indigo-500 transition-colors">
+                                        {{ str_replace('_', ' ', $spec->spec_key) }}
+                                    </p>
+                                    <p class="text-lg font-semibold text-gray-800">
+                                        {{ $spec->spec_value }}
+                                    </p>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        @endif
+                    </div>
+
                     <x-product-page-purchase-actions :stock=$stock :price=$price />
                 </div>
+
             </div>
         </form>
 

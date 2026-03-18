@@ -1,7 +1,7 @@
 <x-header></x-header>
 <x-layout>
 
-<div class="bg-gray-100 font-sans leading-normal tracking-normal">
+<div class="bg-gray-100 dark:bg-gray-800 font-sans leading-normal tracking-normal">
 
     <div class="container mx-auto p-6">
 
@@ -22,22 +22,22 @@
                     <nav class="flex flex-col">
 
                         <a href="{{ route('profile.index') }}"
-                            class="{{ request()->routeIs('profile.index') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
+                            class="{{ request()->routeIs('profile.index') ? 'bg-indigo-100 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-user-circle mr-2"></i> Profile Information
                         </a>
 
                         <a href="{{ route('profile.security') }}"
-                            class="{{ request()->routeIs('profile.security') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
+                            class="{{ request()->routeIs('profile.security') ? 'bg-indigo-100 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-lock mr-2"></i> Security Information
                         </a>
 
                         <a href="{{ route('profile.orders') }}"
-                            class="{{ request()->routeIs('profile.orders') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
+                            class="{{ request()->routeIs('profile.orders') ? 'bg-indigo-100 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-box-open mr-2"></i> Order History
                         </a>
 
                         <a href="{{ route('profile.reviews') }}"
-                            class="{{ request()->routeIs('profile.reviews') ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
+                            class="{{ request()->routeIs('profile.reviews') ? 'bg-indigo-100 text-indigo-700 border-l-4 border-indigo-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent' }} text-left px-6 py-4 font-medium transition-colors duration-200 focus:outline-none">
                             <i class="fas fa-box-open mr-2"></i> Reviews
                         </a>
                     </nav>

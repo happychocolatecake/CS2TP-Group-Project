@@ -6,8 +6,10 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\WebsiteReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -67,13 +69,8 @@ Route::get('/build-guide', function () {
 })->name('build-guide');
 
 Route::get('/part-picker', function () {
-    return view('partpicker-link'); // This points to your partpicker-link.blade.php file
+    return view('partpicker-link');
 })->name('part-picker');
-
-Route::get('/returns', function () {
-    return view('returns'); // This points to your return.blade.php file
-})->name('returns');
-
 
 Route::get('/faq', function () {
     return view('faq');
@@ -88,6 +85,7 @@ Route::post('/contact', function (Request $request) {
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
     ]);
+
     return back()->with('status', 'Message sent successfully!');
 });
 
@@ -102,18 +100,33 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.in
 Route::post('/checkout/process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 
+//Website Reviews
+Route::get('/website-reviews', [WebsiteReviewController::class, 'index'])->name('website-reviews.index');
+
 // Authenticated Routes (Requires Login)
-
 Route::middleware(['auth'])->group(function () {
-
     Route::redirect('settings', 'settings/profile');
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
     //View past order
-    // past order details route
-    Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
+    Route::get('orders/{order}', [ProfileController::class, 'viewOrder'])->name('profile.orders.show');
+
+    //Return
+    Route::get('/order/{order}/return-item/{product}', [ReturnController::class, 'showReturnForm'])->name('orders.return.item');
+    Route::post('/order/{order}/return-all', [ReturnController::class, 'returnEntireOrder'])->name('orders.return.all');
+    Route::post('/order/{order}/return-item/{product}/process', [ReturnController::class, 'processReturn'])->name('orders.return.process');
+    Route::delete('/returns/{return}/cancel-pending', [ReturnController::class, 'cancelPendingReturn'])->name('orders.return.cancel');
+
+    //website review
+    Route::post('/website-reviews', [WebsiteReviewController::class, 'store'])->name('website-reviews.store');
+    Route::get('/website-reviews/{websiteReview}/edit', [WebsiteReviewController::class, 'edit'])->name('website-reviews.edit');
+    Route::put('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'update'])->name('website-reviews.update');
+    Route::delete('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'destroy'])->name('website-reviews.destroy');
+
+    //Cancelling Order
+    Route::post('/order/{order}/cancel', [ReturnController::class, 'cancel'])->name('orders.cancel');
 
     //Review Routes
     Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');
@@ -127,6 +140,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/basket/add', [StoreController::class, 'addToBasket'])->name('basket.add');
     Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');
     Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
+
+    // Buy Now
+    Route::get('/checkout/direct', [CheckoutController::class, 'directCheckout'])->name('checkout.direct');
+    Route::post('/checkout/process-direct', [CheckoutController::class, 'processDirectOrder'])->name('checkout.processDirect');
 
     // Profile Tabs & Actions
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -158,4 +175,3 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['password.confirm'])
         ->name('two-factor.show');
 });
-

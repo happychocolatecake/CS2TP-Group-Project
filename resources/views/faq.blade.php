@@ -1,9 +1,12 @@
 <x-header></x-header>
 <x-layout>
-    <body class="bg-gray-100 min-h-screen flex flex-col">
-    <div class="bg-slate-200 min-h-screen py-12">
+    <div>
+        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
 
-        <main class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+    <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="min-h-screen py-12">
+
+        <main class="relative max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-white">
                 <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
                     <div class="text-center">
@@ -87,5 +90,6 @@
         </main>
     </div>
     </body>
+    </div>
 </x-layout>
 <x-footer></x-footer>
