@@ -1,17 +1,31 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
-use Illuminate\Http\Request;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\WebsiteReviewController;
-use App\Livewire\PartPicker;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.store');
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::post('/products', [AdminDashboardController::class, 'storeProduct'])->name('products.store');
+        Route::delete('/products/{product}', [AdminDashboardController::class, 'destroyProduct'])->name('products.destroy');
+        Route::patch('/order-items/{orderDetail}/delivery-status', [AdminDashboardController::class, 'updateDeliveryStatus'])->name('order-items.delivery-status');
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    });
+});
 
 // Public Routes
 
@@ -55,9 +69,8 @@ Route::get('/build-guide', function () {
 })->name('build-guide');
 
 Route::get('/part-picker', function () {
-    return view('partpicker-link'); // This points to your partpicker-link.blade.php file
+    return view('partpicker-link');
 })->name('part-picker');
-
 
 Route::get('/faq', function () {
     return view('faq');
@@ -72,6 +85,7 @@ Route::post('/contact', function (Request $request) {
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
     ]);
+
     return back()->with('status', 'Message sent successfully!');
 });
 
@@ -91,15 +105,13 @@ Route::get('/website-reviews', [WebsiteReviewController::class, 'index'])->name(
 
 // Authenticated Routes (Requires Login)
 Route::middleware(['auth'])->group(function () {
-
     Route::redirect('settings', 'settings/profile');
 
     // Profile Dashboard & Tabs
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
     //View past order
-    // past order details route
-    Route::get('orders/{order}', [ProfileController::class,'viewOrder'])->name('profile.orders.show');
+    Route::get('orders/{order}', [ProfileController::class, 'viewOrder'])->name('profile.orders.show');
 
     //Return
     Route::get('/order/{order}/return-item/{product}', [ReturnController::class, 'showReturnForm'])->name('orders.return.item');
@@ -130,7 +142,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
 
     // Buy Now
-    Route::get('/checkout/direct', [App\Http\Controllers\CheckoutController::class, 'directCheckout'])->name('checkout.direct');
+    Route::get('/checkout/direct', [CheckoutController::class, 'directCheckout'])->name('checkout.direct');
     Route::post('/checkout/process-direct', [CheckoutController::class, 'processDirectOrder'])->name('checkout.processDirect');
 
     // Profile Tabs & Actions
