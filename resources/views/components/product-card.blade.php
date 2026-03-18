@@ -13,11 +13,20 @@
 
     <!-- product stars and rating on the store page -->
     <div class="text-sm mb-3">
-        @for ($i = 1; $i <= 5; $i++)
-            <span class="text-yellow-400"> {{ $i <= $avgRating ? '★' : '☆' }} </span>
-        @endfor
-        <span class="text-gray-400"> | </span>
-        <span class="text-gray-800"> {{ number_format($avgRating, 1) }} / 5 </span>
+        @if($avgRating > 0)
+            @for ($i = 1; $i <= 5; $i++)
+                <span class="text-yellow-400"> {{ $i <= $avgRating ? '★' : '☆' }} </span>
+            @endfor
+            <span class="text-gray-400"> | </span>
+            <span class="text-gray-800"> {{ number_format($avgRating, 1) }} / 5 </span>
+        @else
+        <div>
+            <div class="flex items-center justify-center text-gray-300">
+            <span>☆ ☆ ☆ ☆ ☆</span>
+            <span class="ml-2 text-gray-400 italic text-xs">No reviews yet</span>
+            </div>
+        </div>
+        @endif
     </div>
 
     @if($context !== 'index')
