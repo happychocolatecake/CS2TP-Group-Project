@@ -9,7 +9,7 @@ class Product extends Model
     public $timestamps = false;
 
     protected $fillable  = ['product_name',
-    'product_model', 'product_price', 'product_description',
+    'product_model', 'product_price', 'product_part', 'product_description',
     'product_tagline', 'product_image', 'product_createdate',
     'product_stock', 'category_id'];
 

@@ -125,7 +125,7 @@ class ProductSeeder extends Seeder
             [
                 'product_name' => 'NZXT H710 Case',
                 'product_model' => 'H710 Matte Black',
-                'product_part' => 'PC case',
+                'product_part' => 'Case',
                 'product_colour' => 'Black',
                 'category_id' => 1,
                 'product_price' => 200,
@@ -534,7 +534,7 @@ class ProductSeeder extends Seeder
             [
                 'product_name'=>'Lian Li Lancool 216',
                 'product_model'=>'LANCOOL 216RC-X',
-                'product_part'=>'PC Case',
+                'product_part'=>'Case',
                 'product_colour'=>'Black',
                 'category_id'=>1,
                 'product_price'=>95,
@@ -547,7 +547,7 @@ class ProductSeeder extends Seeder
             [
                 'product_name'=>'Fractal Design Pop Air',
                 'product_model'=>'PopAir',
-                'product_part'=>'PC Case',
+                'product_part'=>'Case',
                 'product_colour'=>'Black',
                 'category_id'=>1,
                 'product_price'=>90,

@@ -7,7 +7,9 @@
         </div>
 @endif
 
+
 <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+    <!-- video background area -->
         <video
             autoplay muted loop playsinline
             class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
@@ -43,13 +45,13 @@
             <!-- Parts Table -->
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm divide-y">
 
-                @foreach($categories as $key => $label)
+                @foreach($categories as $key => $data)
                     <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition">
 
                         <!-- Left Side -->
                         <div>
                             <div class="font-semibold text-gray-900">
-                                {{ $label }}
+                                {{ $data['label'] }}
                             </div>
 
                             @if(isset($selected[$key]))
@@ -70,7 +72,7 @@
                         <div class="flex gap-3">
 
                             <button
-                                wire:click="selectPart('{{ $key }}')"
+                                wire:click="selectCategory('{{ $key }}')"
                                 class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition"
                             >
                                 {{ isset($selected[$key]) ? 'Change' : 'Choose' }}
@@ -87,6 +89,22 @@
 
                         </div>
                     </div>
+                    <!--this area manages listing each product and selecting it-->
+                    @if($activeCategory === $key)
+                        @forelse($availableProducts as $product)
+                            <div class="flex items-center p-3 bg-white border rounded-lg shadow-sm hover:border-blue-500 transition cursor-pointer"
+                                wire:click="selectPart('{{ $key }}', {{ $product->id }})">
+
+                                <img src="{{ $product->product_image }}" class="w-12 h-12 object-cover rounded">
+                                <div class="ml-4 flex-1">
+                                    <div class="text-sm font-bold">{{ $product->product_name }}</div>
+                                    <div class="text-xs text-gray-500">£{{ number_format($product->product_price, 2) }}</div>
+                                </div>
+                                <div class="text-blue-600 text-xs font-bold">Select</div>
+                            </div>
+                        @empty
+                        @endforelse
+                    @endif
                 @endforeach
 
             </div>
