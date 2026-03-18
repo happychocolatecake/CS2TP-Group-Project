@@ -26,7 +26,7 @@
                 <input type="hidden" name="product_id" value="{{ $directProductId }}">
                 <input type="hidden" name="quantity" value="{{ $directQuantity }}">
             @endif
-            @csrf
+            
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -98,31 +98,31 @@
                             <div>
                                 <label for="card_number" class="block text-sm font-medium text-gray-700 mb-1"> Card Number *</label>
                                 <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
-                                type="text" id="card" placeholder="1234 5678 9012 3456" required value="{{ old('cardnumber') }}" />
-                                @error('cardnumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+                                type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" required value="{{ old('card_number') }}" />
+                                @error('card_number') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                     {{-- Exipry date and CVV --}}
+                     {{-- Expiry date and CVV --}}
                             <div>
-                                <label for="exiprynumber" class="block text-sm font-medium text-gray-700 mb-1"> Exipry Date *</label>
+                                <label for="expiry_number" class="block text-sm font-medium text-gray-700 mb-1"> Expiry Date *</label>
                                 <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
-                                type="text" id="exipry" placeholder="MM/YY" required value="{{ old('exiprynumber') }}" />
-                                @error('exiprynumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+                                type="text" id="expiry_number" name="expiry_number" placeholder="MM/YY" required value="{{ old('expiry_number') }}" />
+                                @error('expiry_number') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
 </div>
                             <div>
-                                <label for="cvvnumber" class="block text-sm font-medium text-gray-700 mb-1"> CVV *</label>
+                                <label for="cvv_number" class="block text-sm font-medium text-gray-700 mb-1"> CVV *</label>
                                 <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
-                                type="text" id="cvv" placeholder="123" required value="{{ old('cvvnumber') }}" />
-                                @error('cvvnumber') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+                                type="text" id="cvv_number" name="cvv_number" placeholder="123" required value="{{ old('cvv_number') }}" />
+                                @error('cvv_number') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
     </div>
 </div>
                     {{-- Name on Card --}}
                     <div>
-                                <label for="cardname" class="block text-sm font-medium text-gray-700 mb-1"> Name on Card *</label>
+                                <label for="card_name" class="block text-sm font-medium text-gray-700 mb-1"> Name on Card *</label>
                                 <input class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 px-3 border"
-                                type="text" id="cardname" required value="{{ old('cardname') }}" />
-                                @error('cardname') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
+                                type="text" id="card_name" name="card_name" required value="{{ old('card_name') }}" />
+                                @error('card_name') <p class="text-red-500  text-sm mt-1"> {{ $message }} </p> @enderror
 </div>
 
     </div>

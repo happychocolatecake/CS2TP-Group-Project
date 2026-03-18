@@ -54,6 +54,11 @@ class CheckoutController extends Controller
             'postcode' => 'required|string|min:4|max:10|regex:/^[a-zA-Z0-9\s\-]+$/', // Validates general UK/Global alphanumeric postcodes
             'email' => 'required|email:rfc,dns|max:255', // Checks domain validity
             'delivery_method' => 'required|in:standard,express',
+
+            'card_number' => 'nullable|min:16',
+            'expiry' => 'nullable|min:4|max:4',
+            'cvv' => 'nullable|min:3|max:4',
+            'card_name' => 'nullable|string|max:255',
         ], [
             // Custom messages for the user
             'full_name.regex' => 'Your full name must only contain letters, spaces, and hyphens.',
@@ -192,7 +197,12 @@ class CheckoutController extends Controller
             'email' => 'required|email:rfc,dns|max:255', // Checks domain validity
             'delivery_method' => 'required|in:standard,express',
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
+
+            'card_number' => 'nullable|min:16',
+            'expiry' => 'nullable|min:4|max:4',
+            'cvv' => 'nullable|min:3|max:4',
+            'card_name' => 'nullable|string|max:255',
         ], [
             // Custom messages for the user
             'full_name.regex' => 'Your full name must only contain letters, spaces, and hyphens.',
