@@ -1,15 +1,11 @@
 <x-header></x-header>
 <x-layout>
 
-<div class="bg-gray-100 min-h-screen flex flex-col">
+<div class="bg-gray-100 min-h-screen flex flex-col pt-6">
 
-    <nav class="w-full bg-white shadow-md p-4 mb-8 text-center border-b border-gray-200">
-        {{-- Nav content if needed --}}
-    </nav>
+    <main class="flex-grow container mx-auto px-4 max-w-6xl pb-24">
 
-    <main class="flex-grow container mx-auto px-4 max-w-6xl">
-
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center pt-8">
             Complete Your Order
         </h1>
 
@@ -35,7 +31,7 @@
 
                     {{-- Card: Customer Details --}}
                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">1. Shipping Information</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Shipping Information</h2>
 
                         <div class="grid grid-cols-1 gap-6">
 
@@ -92,7 +88,7 @@
 
                      {{-- Card details --}}
                      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> 2. Payment Details </h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Payment Details </h2>
 
                         <div class="grid grid-cols-1 gap-6">
                             <div>
@@ -130,7 +126,7 @@
 
                     {{-- Card: Shipping Method --}}
                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">3. Delivery Method</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Delivery Method</h2>
 
                         <div class="space-y-4">
                             <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition">
@@ -157,7 +153,7 @@
                 {{-- RIGHT COLUMN: ORDER SUMMARY (STICKY) --}}
                 <aside class="lg:col-span-1 space-y-6">
                     <div class="bg-white p-6 border rounded-xl shadow-lg sticky top-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3"> 4. Order Summary</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3"> Order Summary</h2>
 
                         {{-- Item List (Mini) --}}
                         <div class="max-h-60 overflow-y-auto mb-4 pr-2 space-y-3 custom-scrollbar">
