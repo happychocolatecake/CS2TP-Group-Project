@@ -19,10 +19,11 @@ class DashboardController extends Controller
     {
         $products = Product::with('category')->latest('id')->get();
         $categories = Category::orderBy('category_name')->get();
+        //used paginate here to make sure the admin page is easy to view even with a lot of useres
         $users = User::with([
             'orders' => fn ($query) => $query->latest('id'),
             'orders.orderDetails.product',
-        ])->orderBy('id')->get();
+        ])->orderBy('id')->paginate(10);
 
         $basketPopularity = BasketItem::query()
             ->join('products', 'products.id', '=', 'basket_items.product_id')
@@ -92,6 +93,11 @@ class DashboardController extends Controller
             'delivery_status' => $validated['delivery_status'],
         ]);
 
+        //checks who owns the order and then uses it to locate where to scroll back to after updating
+        //$userId = $orderDetail->order->user_id;
+
+        //this is the redirect for the scroll thing
+        //return redirect()->to(route('admin.dashboard') . '#user-' . $userId)->with('success', 'Delivery status updated.');
         return redirect()->route('admin.dashboard')->with('success', 'Delivery status updated.');
     }
 
