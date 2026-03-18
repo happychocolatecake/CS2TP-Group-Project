@@ -1,13 +1,8 @@
 
 <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-        <video
-            autoplay muted loop playsinline
-            class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
-            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-30" />
 
-<div class="relative z-10">
+<div class="relative">
       @if (session('success'))
         <div class="container mx-auto px-6 mt-4">
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
@@ -177,7 +172,7 @@
                             wire:model.live="search"
                             type="text"
                             placeholder="Search products..."
-                            class="w-full pl-12 pr-11 px-4 py-2 leading-5 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
+                            class="w-full pl-12 pr-11 px-4 py-2 leading-5 border dark:bg-white/10 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
                         >
                         <!-- adds an x button that clears the search-->
                         @if($search)

@@ -7,16 +7,12 @@
         </div>
 @endif
 
+<div class="relative min-h-screen w-full">
 
+    <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
 <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-    <!-- video background area -->
-        <video
-            autoplay muted loop playsinline
-            class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
-            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    <div class="relative z-10 min-h-screen py-10 px-4">
+
+    <div class="min-h-screen py-10 px-4">
 
         <div class="max-w-6xl mx-auto space-y-8">
 
@@ -111,4 +107,5 @@
 
         </div>
     </div>
+</div>
 </div>

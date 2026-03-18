@@ -1,13 +1,8 @@
 <x-header></x-header>
 <x-layout>
     <div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-        <video
-            autoplay muted loop playsinline
-            class="absolute inset-0 z-0 w-full h-full object-cover opacity-30 pointer-events-none">
-            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    <div class="relative z-10 max-w-2xl mx-auto px-4 py-12">
+        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
+    <div class="relative max-w-2xl mx-auto px-4 py-12">
         <!--tweaked the div colours so that it would look better in dark mode-->
         <div class="bg-gray-50 p-8 md:p-12 rounded-xl border border-gray-100 dark:border-gray-800 shadow-2xl">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
@@ -25,7 +20,7 @@
                     name="subject"
                     id="subject"
                     required
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 p-2 border"
+                    class="w-full rounded-md border-gray-300 shadow-sm dark:bg-white/10 focus:border-gray-500 focus:ring-gray-500 p-2 border"
                     placeholder="What is this regarding?"
                 >
             </div>
@@ -37,7 +32,7 @@
                     id="message"
                     rows="5"
                     required
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 p-2 border"
+                    class="w-full rounded-md border-gray-300 shadow-sm dark:bg-white/10 focus:border-gray-500 focus:ring-gray-500 p-2 border"
                     placeholder="How can we help you today?"
                 ></textarea>
             </div>

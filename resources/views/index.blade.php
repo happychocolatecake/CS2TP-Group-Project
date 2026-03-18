@@ -1,7 +1,7 @@
 <x-header></x-header>
 
 <x-layout>
-
+        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
     <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-12">
 
 
