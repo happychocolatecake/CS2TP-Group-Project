@@ -111,6 +111,7 @@ class CheckoutController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
+                'delivery_status' => 'Pending',
                 'order_price' => $item->product->product_price,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -135,3 +136,4 @@ class CheckoutController extends Controller
         return view('checkout-success');
     }
 }
+

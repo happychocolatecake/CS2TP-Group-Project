@@ -1,15 +1,29 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
-use Illuminate\Http\Request;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\GoogleAuthController;
-use App\Livewire\PartPicker;
+use App\Http\Controllers\StoreController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.store');
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::post('/products', [AdminDashboardController::class, 'storeProduct'])->name('products.store');
+        Route::delete('/products/{product}', [AdminDashboardController::class, 'destroyProduct'])->name('products.destroy');
+        Route::patch('/order-items/{orderDetail}/delivery-status', [AdminDashboardController::class, 'updateDeliveryStatus'])->name('order-items.delivery-status');
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    });
+});
 
 // Public Routes
 
@@ -144,3 +158,4 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['password.confirm'])
         ->name('two-factor.show');
 });
+
