@@ -56,7 +56,7 @@ class CheckoutController extends Controller
             'delivery_method' => 'required|in:standard,express',
 
             'card_number' => 'nullable|min:16',
-            'expiry' => 'nullable|min:4|max:4',
+            'expiry' => 'nullable|regex:/^(0[1-9]|1[0-2])\/\d{2}$/',
             'cvv' => 'nullable|min:3|max:4',
             'card_name' => 'nullable|string|max:255',
         ], [
