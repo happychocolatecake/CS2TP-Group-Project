@@ -1,25 +1,13 @@
 <x-header></x-header>
 <x-layout>
-<<<<<<< HEAD
     <div class="relative min-h-screen w-full overflow-hidden">
         <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
-    <div class="relative max-w-2xl mx-auto px-4 py-8 sm:py-12">
-        <!--tweaked the div colours so that it would look better in dark mode-->
-        <div class="bg-gray-50 p-5 sm:p-8 md:p-12 rounded-xl border border-gray-100 dark:border-gray-800 shadow-2xl">
-        <h1 class="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6 text-gray-900">Contact Us</h1>
-        <p class="text-gray-600 mb-8">
-            Have a question or need help with a build? Send us a message below!
-        </p>
-=======
-    <div class="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
-        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
-        <div class="relative mx-auto max-w-2xl px-4 py-12">
-            <div class="rounded-xl border border-gray-100 bg-gray-50 p-8 shadow-2xl dark:border-gray-800">
-                <h1 class="mb-6 text-3xl font-bold text-gray-900">Contact Us</h1>
+        <div class="relative mx-auto max-w-2xl px-4 py-8 sm:py-12">
+            <div class="rounded-xl border border-gray-100 bg-gray-50 p-5 shadow-2xl dark:border-gray-800 sm:p-8 md:p-12">
+                <h1 class="mb-5 text-2xl font-bold text-gray-900 sm:mb-6 sm:text-3xl">Contact Us</h1>
                 <p class="mb-8 text-gray-600">
-                    Have a question or need help with a build? Send us a message below.
+                    Have a question or need help with a build? Send us a message below!
                 </p>
->>>>>>> AdminNavBar
 
                 <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                     @csrf
@@ -99,5 +87,3 @@
 </x-layout>
 
 <x-footer></x-footer>
-
-
