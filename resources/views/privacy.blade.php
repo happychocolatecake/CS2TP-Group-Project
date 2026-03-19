@@ -10,7 +10,7 @@
                     <div class="text-center">
 
                         <div class="flex justify-center mb-6">
-                            <img src="{{ asset('mouse.jpeg') }}" alt="Happy Hardware" class="h-20 w-auto rounded-md">
+                            <img src="{{ asset('mouse.png') }}" alt="Happy Hardware" class="h-20 w-auto rounded-md">
                         </div>
 
                         <h1 class="text-3xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
