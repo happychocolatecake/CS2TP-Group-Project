@@ -27,15 +27,9 @@
                         <br>
 
                         <div>
-<<<<<<< HEAD
                             <div class="bg-gray-800 p-8 space-y-6  shadow-xl rounded-lg">
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
                                     <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
-=======
-                            <div class="bg-gray-800 p-4 sm:p-8 space-y-4 sm:space-y-6 border-8 sm:border-[2vw] shadow-xl rounded-lg">
-                                <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
->>>>>>> fc6c73754012045c4b56da711edd4d3fc1467209
                                         <span>Can I Purchase Hardware For My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -45,11 +39,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-<<<<<<< HEAD
                                     <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
-=======
-                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
->>>>>>> fc6c73754012045c4b56da711edd4d3fc1467209
                                         <span>How Do I Construct My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -61,11 +51,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-<<<<<<< HEAD
                                     <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
-=======
-                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
->>>>>>> fc6c73754012045c4b56da711edd4d3fc1467209
                                         <span>What Is The Meaning of Life??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -110,10 +96,8 @@
             </div>
         </main>
     </div>
-<<<<<<< HEAD
     </body>
-=======
     </div>
->>>>>>> fc6c73754012045c4b56da711edd4d3fc1467209
+
 </x-layout>
 <x-footer></x-footer>
