@@ -1,14 +1,13 @@
 <x-header></x-header>
 <x-layout>
-    <div>
+    <div class="relative min-h-screen">
         <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
 
-    <body class="bg-gray-100 min-h-screen flex flex-col">
-    <div class="min-h-screen py-12">
+    <div class="min-h-screen py-8 sm:py-12 px-4">
 
         <main class="relative max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-white">
-                <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:px-8">
                     <div class="text-center">
 
                         <div class="flex justify-center mb-6">
@@ -16,11 +15,11 @@
                         </div>
 
                         <div>
-                            <h1 class="text-4xl font-extrabold text-center mb-10 sm:text-5xl text-gray-900 uppercase tracking-widest">
+                            <h1 class="text-3xl font-extrabold text-center mb-8 sm:mb-10 sm:text-5xl text-gray-900 uppercase tracking-widest">
                                 FAQ PAGE
                             </h1>
 
-                            <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                            <p class="mt-5 max-w-xl mx-auto text-base sm:text-xl text-gray-500">
                                 <strong> Here to answer your questions about Happy Hardware!!! </strong>
                             </p>
                         </div>
@@ -28,9 +27,9 @@
                         <br>
 
                         <div>
-                            <div class="bg-gray-800 p-8 space-y-6 border-[2vw] shadow-xl rounded-lg">
+                            <div class="bg-gray-800 p-4 sm:p-8 space-y-4 sm:space-y-6 border-8 sm:border-[2vw] shadow-xl rounded-lg">
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
                                         <span>Can I Purchase Hardware For My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -40,7 +39,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
                                         <span>How Do I Construct My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -52,7 +51,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
                                         <span>What Is The Meaning of Life??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -62,7 +61,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
                                         <span>How Can I Check What Have I Ordered??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -72,7 +71,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center gap-3 p-4 sm:p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
                                         <span>How Can I Contact You Concerning Something??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -89,7 +88,6 @@
             </div>
         </main>
     </div>
-    </body>
     </div>
 </x-layout>
 <x-footer></x-footer>

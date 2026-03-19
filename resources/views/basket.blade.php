@@ -3,7 +3,7 @@
     <section class="bg-gray-100 py-10 transition-colors duration-300 dark:bg-gray-950 md:py-12">
         <main class="container mx-auto max-w-6xl px-4">
             <div class="mb-8 md:mb-10">
-                <h1 class="text-center text-4xl font-extrabold text-gray-800 dark:text-white">Your Shopping Basket</h1>
+                <h1 class="text-center text-3xl sm:text-4xl font-extrabold text-gray-800 dark:text-white">Your Shopping Basket</h1>
                 <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">Review your items and continue to checkout when ready.</p>
             </div>
 
@@ -43,7 +43,7 @@
                                 $total += $itemPrice;
                             @endphp
 
-                            <div class="flex flex-col items-start gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800 md:flex-row">
+                            <div class="flex flex-col items-start gap-5 rounded-xl border border-gray-200 bg-white p-4 sm:p-6 shadow-lg transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800 md:flex-row">
                                 <div class="shrink-0">
                                     <img src="{{ $item->product->product_image }}" alt="{{ $item->product->product_name }}" class="h-24 w-24 rounded-lg object-cover shadow-sm">
                                 </div>
@@ -63,7 +63,7 @@
                                     </form>
                                 </div>
 
-                                <div class="flex flex-col items-end gap-2 md:w-40 md:items-center md:gap-4">
+                                <div class="w-full md:w-40 flex flex-row md:flex-col items-center md:items-center justify-between gap-3 md:gap-4">
                                     <div class="text-lg font-bold text-gray-800 dark:text-gray-100">
                                         £{{ number_format($itemPrice, 2) }}
                                     </div>
@@ -104,7 +104,7 @@
                     </div>
 
                     <aside class="space-y-6 lg:col-span-1">
-                        <div class="sticky top-8 rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
+                        <div class="rounded-xl lg:sticky lg:top-8 border border-gray-200 bg-white p-5 sm:p-6 shadow-lg transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
                             <h2 class="mb-4 border-b border-gray-200 pb-3 text-2xl font-bold text-gray-800 dark:border-gray-700 dark:text-gray-100">Order Summary</h2>
 
                             <div class="mb-2 flex justify-between text-gray-600 dark:text-gray-300">

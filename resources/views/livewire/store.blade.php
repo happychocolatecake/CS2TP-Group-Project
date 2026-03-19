@@ -1,8 +1,8 @@
 
-<div class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="relative min-h-screen w-full overflow-hidden">
     <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-30" />
 
-<div class="relative">
+<div class="relative z-10">
       @if (session('success'))
         <div class="container mx-auto px-6 mt-4">
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
@@ -21,13 +21,19 @@
         </div>
     @endif
 
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6">Store</h1>
+        <div class="container mx-auto px-4 py-6 sm:px-6">
+        <h1 class="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6">Store</h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="mb-4">
+            <button id="store-filters-toggle" type="button" class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 shadow-sm dark:bg-white/10 dark:text-gray-100">
+                Show Filters
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:gap-8">
 
             <!-- Sidebar Filter -->
-            <aside class="md:col-span-1">
+            <aside id="store-filters-panel" class="hidden">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-2xl font-bold">Filter</h2>
                     <button wire:click="resetFilters" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors uppercase tracking-wider">
@@ -72,7 +78,7 @@
                         </div>
 
                         <div class="flex items-center justify-between gap-4">
-                            <div class="flex items-center px-1 flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
+                            <div class="flex items-center flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
                                 <span class=" text-gray-400 text-xs">£</span>
                                 <input type="number" wire:model.live.debounce.500ms="selectedMinPrice" value="{{ $selectedMinPrice ?? $minPrice }}" placeholder="{{ $minPrice }}"
                                     class="w-full bg-transparent text-xs border-none focus:ring-0 p-1 outline-none text-gray-700">
@@ -80,7 +86,7 @@
                             <div class="py-1">
                             <span class="text-gray-400 text-xs font-bold uppercase tracking-tighter shrink-0">to</span>
                             </div>
-                            <div class="flex items-center px-1 flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
+                            <div class="flex items-center flex-1 bg-white border border-gray-200 rounded-full px-3 transition-all focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10">
                                 <span class=" text-gray-400 text-xs">£</span>
                                 <input type="number" wire:model.live.debounce.500ms="selectedMaxPrice" value="{{ $selectedMaxPrice ?? $maxPrice }}" placeholder="{{ $maxPrice }}"
                                     class="w-full bg-transparent text-xs border-none focus:ring-0 p-1 outline-none text-gray-700 text-right">
@@ -128,7 +134,7 @@
                 <h2 class="text-2xl font-bold mb-4">Sort By</h2>
 
                 <x-filter-group title="Filters">
-                        <div class="relative inline-block text-left">
+                        <div class="relative inline-block text-left w-full">
                         <label>
 
                                 <button wire:click="sortBy('product_name', 'asc')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100
@@ -157,10 +163,10 @@
             </aside>
 
             <!-- Main Content Area -->
-            <main class="md:col-span-3">
+            <main>
 
                 <!--Top Bar: Searching & Sorting-->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
                     <div class="relative w-full md:w-2/3 group">
                         <!-- the search icon -->
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -172,7 +178,7 @@
                             wire:model.live="search"
                             type="text"
                             placeholder="Search products..."
-                            class="w-full pl-12 pr-11 px-4 py-2 leading-5 border dark:bg-white/10 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
+                            class="w-full pl-12 pr-11 px-4 py-2.5 leading-5 border dark:bg-white/10 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
                         >
                         <!-- adds an x button that clears the search-->
                         @if($search)
@@ -192,7 +198,7 @@
 
                 <!-- Product Grid -->
                 @if($products->count() > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                         @foreach($products as $item)
 
                             <form method="POST" action="{{ route('basket.add') }}">
@@ -227,7 +233,7 @@
                             </form>
                         @endforeach
                     </div>
-                     <div class="mt-4">
+                     <div class="mt-6">
                             {{ $products->links() }}
                     </div>
                 @else
@@ -242,3 +248,29 @@
     </div>
 </div>
 </div>
+
+<script>
+    (function () {
+        function bindStoreFilterToggle() {
+            var toggleButton = document.getElementById('store-filters-toggle');
+            var filtersPanel = document.getElementById('store-filters-panel');
+            if (!toggleButton || !filtersPanel || toggleButton.dataset.bound === 'true') {
+                return;
+            }
+
+            toggleButton.dataset.bound = 'true';
+            toggleButton.setAttribute('aria-expanded', 'false');
+
+            toggleButton.addEventListener('click', function () {
+                var willShow = filtersPanel.classList.contains('hidden');
+                filtersPanel.classList.toggle('hidden', !willShow);
+                toggleButton.textContent = willShow ? 'Hide Filters' : 'Show Filters';
+                toggleButton.setAttribute('aria-expanded', willShow ? 'true' : 'false');
+            });
+        }
+
+        bindStoreFilterToggle();
+        document.addEventListener('livewire:navigated', bindStoreFilterToggle);
+        document.addEventListener('livewire:initialized', bindStoreFilterToggle);
+    })();
+</script>

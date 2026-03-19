@@ -1,11 +1,11 @@
 <x-header></x-header>
 <x-layout>
 
-<div class="bg-gray-100 min-h-screen flex flex-col pt-6">
+<div class="bg-gray-100 min-h-screen flex flex-col pt-4 sm:pt-6">
 
-    <main class="flex-grow container mx-auto px-4 max-w-6xl pb-24">
+    <main class="flex-grow container mx-auto px-4 sm:px-6 max-w-6xl pb-20 sm:pb-24">
 
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center pt-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-6 sm:mb-8 text-center pt-4 sm:pt-8">
             Complete Your Order
         </h1>
 
@@ -30,7 +30,7 @@
                 <div class="lg:col-span-2 space-y-6">
 
                     {{-- Card: Customer Details --}}
-                    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <div class="bg-white rounded-xl shadow-lg p-5 sm:p-6 border border-gray-200">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Shipping Information</h2>
 
                         <div class="grid grid-cols-1 gap-6">
@@ -87,7 +87,7 @@
                     </div>
 
                      {{-- Card details --}}
-                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                     <div class="bg-white rounded-xl shadow-lg p-5 sm:p-6 border border-gray-200">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Payment Details </h2>
 
                         <div class="grid grid-cols-1 gap-6">
@@ -125,7 +125,7 @@
 </div>
 
                     {{-- Card: Shipping Method --}}
-                    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <div class="bg-white rounded-xl shadow-lg p-5 sm:p-6 border border-gray-200">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2"> Delivery Method</h2>
 
                         <div class="space-y-4">
@@ -152,15 +152,15 @@
 
                 {{-- RIGHT COLUMN: ORDER SUMMARY (STICKY) --}}
                 <aside class="lg:col-span-1 space-y-6">
-                    <div class="bg-white p-6 border rounded-xl shadow-lg sticky top-8">
+                    <div class="bg-white p-5 sm:p-6 border rounded-xl shadow-lg lg:sticky lg:top-8">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3"> Order Summary</h2>
 
                         {{-- Item List (Mini) --}}
-                        <div class="max-h-60 overflow-y-auto mb-4 pr-2 space-y-3 custom-scrollbar">
+                        <div class="max-h-60 overflow-y-auto mb-4 pr-1 sm:pr-2 space-y-3 custom-scrollbar">
                             @forelse ($cartItems as $item)
                                 <div class="flex justify-between items-center text-sm">
                                     <div class="flex-1">
-                                        <div class="font-medium text-gray-800 truncate w-40">{{ $item['name'] }}</div>
+                                        <div class="font-medium text-gray-800 truncate w-32 sm:w-40">{{ $item['name'] }}</div>
                                         <div class="text-gray-500">Qty: {{ $item['quantity'] }}</div>
                                     </div>
                                     <div class="font-semibold text-gray-700">
@@ -202,8 +202,9 @@
                             </p>
                         </div>
                     </div>
-                        <a href="/basket"
-                        class="block w-full ...">
+                    <a href="/basket"
+                        class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-sm font-bold text-gray-700 shadow-sm transition hover:bg-gray-100">
+                        Back to Basket
                     </a>
                 </aside>
 

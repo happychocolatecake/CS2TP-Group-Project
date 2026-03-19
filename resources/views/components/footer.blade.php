@@ -1,17 +1,17 @@
 <!--The footer-->
     <footer class="bg-gray-800 text-white border-t border-gray-700">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-10 md:py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 <div>
                     <p class="text-sm text-gray-300">Let's stay in touch! Sign up to get the best deals!</p>
-                    <div class="flex space-x-4 mt-2">
+                    <div class="flex flex-wrap gap-4 mt-2">
                         <a href="#" class="text-gray-400 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Instagram</a>
                         <a href="#" class="text-gray-400 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Facebook</a>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-4">
                     <div>
                         <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Help</h3>
                         <ul role="list" class="mt-4 space-y-4">
