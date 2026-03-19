@@ -1,18 +1,15 @@
 <x-header></x-header>
 <x-layout>
-    <div>
-        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
-
     <body class="bg-gray-100 min-h-screen flex flex-col">
-    <div class="min-h-screen py-12">
+    <div class="bg-slate-200 min-h-screen py-12">
 
-        <main class="relative max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <main class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-white">
                 <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
                     <div class="text-center">
 
                         <div class="flex justify-center mb-6">
-                            <img src="{{ asset('mouse.jpeg') }}" alt="Happy Hardware" class="h-20 w-auto rounded-md">
+                            <img src="{{ asset('mouse.png') }}" alt="Happy Hardware" class="h-20 w-auto rounded-md">
                         </div>
 
                         <div>
@@ -28,9 +25,9 @@
                         <br>
 
                         <div>
-                            <div class="bg-gray-800 p-8 space-y-6 border-[2vw] shadow-xl rounded-lg">
+                            <div class="bg-gray-800 p-8 space-y-6  shadow-xl rounded-lg">
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
                                         <span>Can I Purchase Hardware For My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -40,7 +37,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
                                         <span>How Do I Construct My PC??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -52,7 +49,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
                                         <span>What Is The Meaning of Life??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -62,7 +59,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
                                         <span>How Can I Check What Have I Ordered??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -72,7 +69,7 @@
                                 </div>
 
                                 <div x-data="{ open: false }" class="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
-                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50 transition">
+                                    <button @click="open = !open" class="w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 hover:bg-gray-50  dark:hover:bg-gray-600 transition">
                                         <span>How Can I Contact You Concerning Something??</span>
                                         <span class="text-2xl font-light" x-text="open ? '−' : '+'"></span>
                                     </button>
@@ -90,6 +87,5 @@
         </main>
     </div>
     </body>
-    </div>
 </x-layout>
 <x-footer></x-footer>
