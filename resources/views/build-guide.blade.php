@@ -5,23 +5,23 @@
 
 
 <!-- Hero Section -->
-<div class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-16">
+<div class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-12 sm:py-16">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
             Let's Build Your Dream PC
         </h1>
-        <p class="text-xl text-indigo-100 max-w-2xl mx-auto">
+        <p class="text-base sm:text-lg md:text-xl text-indigo-100 max-w-2xl mx-auto">
             Feeling nervous? Don't be! We're here to hold your hand through every click, screw, and plug. It's just like LEGOs, but expensive!
         </p>
     </div>
 </div>
 
 <!-- Main Content -->
-<main class="container mx-auto px-4 py-12 max-w-5xl">
+<main class="container mx-auto px-4 py-8 sm:py-12 max-w-5xl">
 
     <!-- Pre-Flight Check -->
     <div class="mb-12">
-        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
             <i data-lucide="wrench" class="text-indigo-600"></i>
             The Pre-Flight Check
         </h2>
@@ -93,7 +93,7 @@
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">1</div>
-                    <h3 class="text-xl font-bold text-slate-800">Prep the Case</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-800">Prep the Case</h3>
                 </div>
                 <i data-lucide="wrench" class="text-slate-400 w-6 h-6"></i>
             </div>
@@ -116,12 +116,11 @@
         </div>
 
         <!-- Step 2 -->
-        [Image of installing cpu on motherboard]
         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">2</div>
-                    <h3 class="text-xl font-bold text-slate-800">The Motherboard (The Core)</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-800">The Motherboard (The Core)</h3>
                 </div>
                 <i data-lucide="cpu" class="text-slate-400 w-6 h-6"></i>
             </div>
@@ -155,7 +154,7 @@
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">3</div>
-                    <h3 class="text-xl font-bold text-slate-800">Moving In</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-800">Moving In</h3>
                 </div>
                 <i data-lucide="arrow-right" class="text-slate-400 w-6 h-6"></i>
             </div>
@@ -177,7 +176,7 @@
                 <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">4</div>
-                        <h3 class="text-xl font-bold text-slate-800">Storage</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-800">Storage</h3>
                     </div>
                     <i data-lucide="hard-drive" class="text-slate-400 w-6 h-6"></i>
                 </div>
@@ -193,7 +192,7 @@
                 <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">5</div>
-                        <h3 class="text-xl font-bold text-slate-800">Power Supply</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-800">Power Supply</h3>
                     </div>
                     <i data-lucide="zap" class="text-slate-400 w-6 h-6"></i>
                 </div>
@@ -214,7 +213,7 @@
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">6</div>
-                    <h3 class="text-xl font-bold text-slate-800">The Graphics Card</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-800">The Graphics Card</h3>
                 </div>
                 <i data-lucide="monitor" class="text-slate-400 w-6 h-6"></i>
             </div>
@@ -241,7 +240,7 @@
             <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">7</div>
-                    <h3 class="text-xl font-bold text-slate-800">Blast Off!</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-800">Blast Off!</h3>
                 </div>
                 <i data-lucide="check-circle" class="text-slate-400 w-6 h-6"></i>
             </div>
