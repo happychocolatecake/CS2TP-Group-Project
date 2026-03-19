@@ -5,7 +5,7 @@
                 {{-- Logo & Nav Links --}}
                 <div class="flex items-center space-x-8">
                     <a href="/" class="shrink-0">
-                        <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-16 w-auto drop-shadow-lg" >
+                        <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-10 w-auto drop-shadow-lg md:h-12" >
                     </a>
 
                     <div id="main-nav-links" class="relative hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
@@ -156,3 +156,4 @@
 
 
 </script>
+
