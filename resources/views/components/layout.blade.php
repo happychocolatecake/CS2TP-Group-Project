@@ -5,11 +5,7 @@
                 {{-- Logo & Nav Links --}}
                 <div class="flex items-center gap-3 md:gap-8">
                     <a href="/" class="shrink-0">
-<<<<<<< HEAD
-                        <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-10 w-auto drop-shadow-lg md:h-12" >
-=======
                         <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-12 w-auto drop-shadow-lg sm:h-14 md:h-16" >
->>>>>>> 5581103 (mobile changes)
                     </a>
 
                     <div id="main-nav-links" class="relative hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
