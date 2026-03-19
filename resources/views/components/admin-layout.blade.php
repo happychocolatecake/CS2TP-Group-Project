@@ -6,45 +6,113 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title ?? 'Admin Panel' }}</title>
 
+    <script>
+        (function () {
+            try {
+                var storedTheme = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var useDark = storedTheme ? storedTheme === 'dark' : prefersDark;
+                document.documentElement.classList.toggle('dark', useDark);
+            } catch (error) {
+                document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+            }
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        };
+    </script>
     <link rel="icon" href="{{ asset('mouse.jpeg') }}">
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-    <nav class="bg-gray-800 text-white p-4 shadow-md">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div class="flex items-center gap-5">
-                <a href="/" class="flex-shrink-0">
-                    <img src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-14 w-auto">
+<body class="min-h-screen bg-gray-100 text-gray-900 transition-colors duration-300 dark:bg-slate-950 dark:text-gray-100">
+    @php
+        $navItems = [
+            ['label' => 'Overview', 'route' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
+            ['label' => 'Products', 'route' => route('admin.products.index'), 'active' => request()->routeIs('admin.products.*')],
+            ['label' => 'Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*') || request()->routeIs('admin.order-items.*')],
+            ['label' => 'Messages', 'route' => route('admin.messages.index'), 'active' => request()->routeIs('admin.messages.*')],
+        ];
+    @endphp
+
+    <nav class="sticky top-0 z-50 bg-white text-gray-900 shadow-lg transition-colors duration-300 dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+            <div class="flex items-center gap-8">
+                <a href="{{ route('admin.dashboard') }}" class="shrink-0">
+                    <img id="admin-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-10 w-auto drop-shadow-lg md:h-12">
                 </a>
-                <div class="hidden sm:block border-l border-gray-600 pl-4">
-                    <p class="text-sm text-gray-300">Happy Hardware</p>
-                    <p class="font-semibold">Admin Portal</p>
+
+                <div id="admin-nav-links" class="relative hidden items-center space-x-1 rounded-full bg-gray-100 px-2 py-1 md:flex dark:bg-white/5">
+                    <span id="admin-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gray-200 transition-all duration-300 ease-out dark:bg-white/10"></span>
+                    @foreach ($navItems as $item)
+                        <a href="{{ $item['route'] }}" data-nav-link data-active="{{ $item['active'] ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ $item['active'] ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">
+                            {{ $item['label'] }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 text-sm">
-                <a href="{{ route('home') }}" class="rounded-md px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white">Store Home</a>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('home') }}" class="hidden rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 dark:border-white/20 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white md:inline-flex">
+                    Store Home
+                </a>
 
-                @if (auth('admin')->check())
-                    <a href="{{ route('admin.dashboard') }}" class="rounded-md px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white">Dashboard</a>
-                    <form method="POST" action="{{ route('admin.logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-white hover:bg-red-500">Logout</button>
-                    </form>
-                @endif
+                <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="rounded-full border border-gray-300 p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden size-6 dark:block">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block size-6 dark:hidden">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                    </svg>
+                </button>
+
+                <form method="POST" action="{{ route('admin.logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="rounded-full bg-gray-900 px-5 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-gray-700 dark:bg-white dark:text-gray-900">
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
 
-    <main class="flex-1">
+    <main class="pb-12">
         {{ $slot }}
     </main>
 
-    <footer class="bg-gray-800 text-white border-t border-gray-700 mt-12">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-            <p class="text-sm text-gray-400">Admin control panel for Happy Hardware.</p>
-            <p class="text-sm text-gray-400">&copy; 2026 Group 27</p>
-        </div>
-    </footer>
+    <script>
+        (function () {
+            var root = document.documentElement;
+            window.toggleTheme = function () {
+                var willBeDark = !root.classList.contains('dark');
+                root.classList.toggle('dark', willBeDark);
+                try {
+                    localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+                } catch (error) {
+                }
+            };
+
+            var navContainer = document.getElementById('admin-nav-links');
+            var indicator = document.getElementById('admin-nav-active-pill');
+            if (navContainer && indicator) {
+                var navLinks = navContainer.querySelectorAll('[data-nav-link]');
+                var moveIndicator = function (targetLink) {
+                    if (!targetLink) return;
+                    indicator.style.width = targetLink.offsetWidth + 'px';
+                    indicator.style.transform = 'translateX(' + targetLink.offsetLeft + 'px)';
+                };
+                var activeLink = navContainer.querySelector('[data-active="true"]') || navLinks[0];
+                requestAnimationFrame(function () {
+                    moveIndicator(activeLink);
+                });
+                window.addEventListener('resize', function () {
+                    moveIndicator(navContainer.querySelector('[data-active="true"]') || activeLink);
+                });
+            }
+        })();
+    </script>
+
+    @stack('scripts')
 </body>
 </html>
