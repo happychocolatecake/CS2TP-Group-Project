@@ -178,7 +178,7 @@
                             wire:model.live="search"
                             type="text"
                             placeholder="Search products..."
-                            class="w-full pl-12 pr-11 px-4 py-2.5 leading-5 border dark:bg-white/10 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
+                            class="w-full pl-12 pr-11 px-4 py-2.5 leading-5 border dark:bg-gray-800 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
                         >
                         <!-- adds an x button that clears the search-->
                         @if($search)
