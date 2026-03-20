@@ -1,6 +1,6 @@
 <x-header></x-header>
 
-<div class="min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col bg-gray-200/50 dark:bg-gray-800/50">
     <x-layout>
     <x-video-background lightOpacity="opacity-100" darkOpacity="opacity-100" />
         <main class="flex-grow flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">

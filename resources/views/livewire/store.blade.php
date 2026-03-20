@@ -1,5 +1,5 @@
 
-<div class="relative min-h-screen w-full overflow-hidden">
+<div class="relative min-h-screen w-full overflow-hidden bg-gray-200/50 dark:bg-gray-800/50">
     <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-30" />
 
 <div class="relative z-10">

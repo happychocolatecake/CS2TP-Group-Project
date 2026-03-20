@@ -1,5 +1,4 @@
 @props(['lightOpacity', 'darkOpacity'])
-<div class="bg-gray-200/50 dark:bg-gray-800/50">
 <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden transition-colors duration-700 ease-in-out">
     <style>
         @keyframes diagonalMouseDrift {
@@ -39,6 +38,6 @@
     <div class="absolute inset-0 bg-white/28 transition-colors duration-700 ease-in-out dark:bg-slate-950/24"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/12 to-white/18 transition-colors duration-700 ease-in-out dark:via-slate-950/12 dark:to-slate-950/22"></div>
 </div>
-</div>
+
 
 

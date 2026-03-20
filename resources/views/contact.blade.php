@@ -1,6 +1,6 @@
 <x-header></x-header>
 <x-layout>
-    <div class="relative min-h-screen w-full overflow-hidden">
+    <div class="relative min-h-screen w-full overflow-hidden bg-gray-200/50 dark:bg-gray-800/50">
         <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
         <div class="relative mx-auto max-w-2xl px-4 py-8 sm:py-12">
             <div class="rounded-xl border border-gray-100 bg-gray-50 p-5 shadow-2xl dark:border-gray-800 sm:p-8 md:p-12">

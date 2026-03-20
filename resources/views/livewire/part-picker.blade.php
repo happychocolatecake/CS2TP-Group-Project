@@ -7,7 +7,7 @@
         </div>
 @endif
 
-<div class="relative min-h-screen w-full">
+<div class="relative min-h-screen w-full bg-gray-200/50 dark:bg-gray-800/50">
 
     <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
 <div class="relative min-h-screen w-full overflow-hidden">
