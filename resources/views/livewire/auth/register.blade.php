@@ -2,7 +2,8 @@
 
 <div class="min-h-screen flex flex-col">
     <x-layout>
-        <main class="flex-grow flex items-center justify-center bg-gradient-to-t from-gray-100 via-gray-200 to-gray-100 px-4 py-12 transition-colors dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 sm:px-6 lg:px-8">
+    <x-video-background lightOpacity="opacity-100" darkOpacity="opacity-100" />
+        <main class="flex-grow flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
             <div class="flex w-full max-w-3xl flex-col justify-center gap-6">
                 <div class="rounded-3xl border border-gray-300 bg-white p-8 text-gray-800 shadow-2xl dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                     <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
@@ -106,3 +107,4 @@
 </div>
 
 <x-footer></x-footer>
+
