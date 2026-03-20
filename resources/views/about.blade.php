@@ -1,13 +1,8 @@
 <x-header></x-header>
 <x-layout>
 
-    <div class="relative min-h-screen w-full overflow-hidden">
-        <video
-            autoplay muted loop playsinline
-            class="absolute inset-0 z-0 w-full h-full object-cover opacity-20 pointer-events-none">
-            <source src="{{ asset('videos/testhigh.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <div class="relative min-h-screen w-full overflow-hidden bg-gray-200/50 dark:bg-gray-800/50">
+        <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
 
     <div class= "relative z-10 text-gray-800 font-sans flex flex-col min-h-screen">
     <main class="grow pt-8 sm:pt-12 md:pt-16">
