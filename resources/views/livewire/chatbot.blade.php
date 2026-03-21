@@ -38,7 +38,7 @@
                 @foreach ($messages as $message)
                     @if ($message['role'] === 'assistant')
                         <div class="flex justify-start">
-                            <div class="bg-gray-100 rounded-lg p-3 max-w-[85%] text-sm text-gray-800 prose prose-sm leading-relaxed">
+                            <div class="bg-gray-100 rounded-lg p-3 max-w-[85%] text-sm text-gray-800 whitespace-pre-wrap prose prose-sm leading-relaxed">
                                 @markdown($message['content'])
                             </div>
                         </div>
