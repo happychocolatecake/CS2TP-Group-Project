@@ -91,25 +91,62 @@ class Chatbot extends Component
         $lastMessage = end($this->messages);
         $userQuery = $lastMessage['role'] === 'user' ? $lastMessage['content'] : '';
 
-        // 2. Fetch relevant products from the DB using a basic keyword search
-        $keywords = array_filter(explode(' ', preg_replace('/[^A-Za-z0-9 ]/', '', $userQuery)), function($word) {
-            return strlen($word) > 2; // Ignore very short words like "a", "is", "it"
-        });
+        // 1. Use the smart keyword matching idea
+        $categoryKeywords = [
+            'gpu' => 'GPU', 'graphics card' => 'GPU', 'rtx' => 'GPU', 'radeon' => 'GPU',
+            'cpu' => 'CPU', 'processor' => 'CPU', 'ryzen' => 'CPU', 'intel' => 'CPU',
+            'ram' => 'RAM', 'memory' => 'RAM',
+            'storage' => 'Storage', 'ssd' => 'Storage', 'hdd' => 'Storage',
+            'motherboard' => 'Motherboard', 'mobo' => 'Motherboard',
+            'psu' => 'PSU', 'power supply' => 'PSU',
+        ];
 
-        $query = Product::where('product_stock', '>', 0); // Only recommend in-stock items
+        $matchedPart = null;
+        $isGeneralBuild = false; // NEW: Flag for broad questions
 
-        if (!empty($keywords)) {
-            $query->where(function($q) use ($keywords) {
-                foreach ($keywords as $word) {
-                    $q->orWhere('product_name', 'LIKE', '%' . $word . '%')
-                    ->orWhere('product_part', 'LIKE', '%' . $word . '%')
-                    ->orWhere('product_category', 'LIKE', '%' . $word . '%'); // Search relevant columns
-                }
-            });
+        foreach ($categoryKeywords as $keyword => $partType) {
+            if (str_contains($userQuery, $keyword)) {
+                $matchedPart = $partType;
+                break;
+            }
         }
 
-        // Get the top 3-5 matches so we don't overload the LLM's context window
-        $relevantProducts = $query->limit(4)->get();
+        // NEW: If they didn't ask for a specific part, check if they are asking for a general build
+        if (!$matchedPart && (str_contains($userQuery, 'build') || str_contains($userQuery, 'parts') || str_contains($userQuery, 'pc'))) {
+            $isGeneralBuild = true;
+        }
+
+        // 2. Query the database
+        $query = \App\Models\Product::where('product_stock', '>', 0);
+
+        if ($matchedPart) {
+            // SCENARIO A: They asked for a specific part (e.g., "I need a GPU")
+            $query->where('product_part', $matchedPart);
+            $relevantProducts = $query->limit(4)->get();
+
+        } elseif ($isGeneralBuild) {
+            // SCENARIO B: They want a general PC build.
+            // Give the AI a sampler of core components to recommend!
+            $relevantProducts = $query->whereIn('product_part', ['CPU', 'GPU', 'Motherboard', 'RAM'])
+            ->inRandomOrder() // Mix it up so it's not always the same 5 items
+            ->limit(5)
+            ->get();
+        } else {
+            // SCENARIO C: Fallback general text search
+            // We filter out common words so "work together" doesn't trigger "workstation"
+            $stopWords = ['want', 'build', 'please', 'give', 'list', 'stock', 'high', 'work', 'together', 'that', 'with'];
+            $words = explode(' ', preg_replace('/[^a-z0-9 ]/', '', $userQuery));
+
+            $query->where(function($q) use ($words, $stopWords) {
+                foreach (array_filter($words, fn($w) => strlen($w) > 2 && !in_array($w, $stopWords)) as $word) {
+                    $q->orWhere('product_name', 'LIKE', '%' . $word . '%')
+                    ->orWhere('product_part', 'LIKE', '%' . $word . '%');
+                }
+            });
+            $relevantProducts = $query->limit(4)->get();
+        }
+
+        // ... [Continue to build $inventoryContext exactly as you did before] ...
 
         // 3. Format these products into a readable text block for the LLM
         $inventoryContext = "LIVE STORE INVENTORY MATCHES:\n";
