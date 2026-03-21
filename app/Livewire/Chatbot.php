@@ -150,6 +150,8 @@ class Chatbot extends Component
 
         // 3. Format these products into a readable text block for the LLM
         $inventoryContext = "LIVE STORE INVENTORY MATCHES:\n";
+        $totalPrice = 0;
+
         if ($relevantProducts->isEmpty()) {
             $inventoryContext .= "No specific product matches found for the user's current query.\n";
         } else {
@@ -159,7 +161,13 @@ class Chatbot extends Component
                 $inventoryContext .= "  Part Type: {$product->product_part}\n";
                 $inventoryContext .= "  Price: £{$product->product_price}\n";
                 $inventoryContext .= "  Tagline/Details: {$product->product_tagline}\n\n";
+
+                // NEW: Add this product's price to the total
+                $totalPrice += $product->product_price;
             }
+
+            // NEW: Inject the perfectly calculated total at the bottom of the context
+            $inventoryContext .= "=> PRE-CALCULATED TOTAL FOR ALL ABOVE ITEMS: £" . number_format($totalPrice, 2) . "\n";
         }
 
         // 4. Inject this data into the System Prompt
