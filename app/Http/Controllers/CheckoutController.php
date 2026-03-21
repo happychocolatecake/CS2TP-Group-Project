@@ -255,6 +255,7 @@ class CheckoutController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'quantity' => $quantity,
+                'delivery_status' => 'Pending',
                 'order_price' => $product->product_price,
                 'created_at' => now(),
                                                'updated_at' => now(),
@@ -269,4 +270,3 @@ class CheckoutController extends Controller
         }, 5);
     }
 }
-
