@@ -21,12 +21,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/orders', [AdminDashboardController::class, 'orders'])->name('orders.index');
         Route::get('/products', [AdminDashboardController::class, 'products'])->name('products.index');
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('users.index');
         Route::get('/messages', [AdminDashboardController::class, 'messages'])->name('messages.index');
+        Route::get('/messages/{message}', [AdminDashboardController::class, 'showMessage'])->name('messages.show');
+        Route::post('/messages/{message}/reply', [AdminDashboardController::class, 'replyToMessage'])->name('messages.reply');
+        Route::get('/returns', [AdminDashboardController::class, 'returns'])->name('returns.index');
+        Route::patch('/orders/{order}', [AdminDashboardController::class, 'updateOrderStatus'])->name('orders.update');
+        Route::post('/orders/{order}/items/{orderDetail}/support-resolution', [AdminDashboardController::class, 'resolveSupportItem'])->name('orders.items.resolve');
         Route::post('/products', [AdminDashboardController::class, 'storeProduct'])->name('products.store');
         Route::delete('/products/{product}', [AdminDashboardController::class, 'destroyProduct'])->name('products.destroy');
         Route::patch('/order-items/{orderDetail}/delivery-status', [AdminDashboardController::class, 'updateDeliveryStatus'])->name('order-items.delivery-status');
+        Route::patch('/returns/{returnOrder}', [AdminDashboardController::class, 'updateReturnStatus'])->name('returns.update');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });
@@ -42,9 +49,7 @@ Route::get('/search', function () {
     return view('store');
 })->name('search');
 
-Route::get('/help', function () {
-    return view('contact');
-})->name('help');
+Route::get('/help', [ContactController::class, 'show'])->name('help');
 
 Route::get('/cc', function () {
     return view('cc');
@@ -54,9 +59,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/build-guide', function () {
@@ -88,6 +91,15 @@ Route::get('/website-reviews', [WebsiteReviewController::class, 'index'])->name(
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
+    Route::get('/profile/reviews', [ProfileController::class, 'reviews'])->name('profile.reviews');
+    Route::get('/profile/messages', [ProfileController::class, 'messages'])->name('profile.messages');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::get('/profile/verify-email-change', [ProfileController::class, 'verifyEmailPage'])->name('profile.verify-email');
+    Route::post('/profile/verify-email-change', [ProfileController::class, 'verifyEmailAction'])->name('profile.verify-email.store');
     Route::get('orders/{order}', [ProfileController::class, 'viewOrder'])->name('profile.orders.show');
     Route::get('/order/{order}/return-item/{product}', [ReturnController::class, 'showReturnForm'])->name('orders.return.item');
     Route::post('/order/{order}/return-all', [ReturnController::class, 'returnEntireOrder'])->name('orders.return.all');
@@ -109,15 +121,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/basket/update', [StoreController::class, 'updateQuantity'])->name('basket.update');
     Route::get('/checkout/direct', [CheckoutController::class, 'directCheckout'])->name('checkout.direct');
     Route::post('/checkout/process-direct', [CheckoutController::class, 'processDirectOrder'])->name('checkout.processDirect');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
-    Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
-    Route::get('/profile/reviews', [ProfileController::class, 'reviews'])->name('profile.reviews');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
-    Route::get('/profile/verify-email-change', [ProfileController::class, 'verifyEmailPage'])->name('profile.verify-email');
-    Route::post('/profile/verify-email-change', [ProfileController::class, 'verifyEmailAction'])->name('profile.verify-email.store');
     Route::get('/basket', [StoreController::class, 'viewBasket'])->name('basket.view');
     Route::post('/basket/add', [StoreController::class, 'addToBasket'])->name('basket.add');
     Route::post('/basket/remove', [StoreController::class, 'removeItem'])->name('basket.remove');

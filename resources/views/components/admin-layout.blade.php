@@ -1,10 +1,12 @@
+@props(['title' => 'Admin Panel', 'showNav' => null])
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <title>{{ $title }}</title>
 
     <script>
         (function () {
@@ -20,37 +22,40 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        };
+        tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="icon" href="{{ asset('mouse.jpeg') }}">
 </head>
 <body class="min-h-screen bg-gray-100 text-gray-900 transition-colors duration-300 dark:bg-slate-950 dark:text-gray-100">
     @php
+        $showNav = $showNav ?? auth('admin')->check();
         $navItems = [
             ['label' => 'Overview', 'route' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
+            ['label' => 'Orders', 'route' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
             ['label' => 'Products', 'route' => route('admin.products.index'), 'active' => request()->routeIs('admin.products.*')],
             ['label' => 'Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*') || request()->routeIs('admin.order-items.*')],
             ['label' => 'Messages', 'route' => route('admin.messages.index'), 'active' => request()->routeIs('admin.messages.*')],
+            ['label' => 'Returns', 'route' => route('admin.returns.index'), 'active' => request()->routeIs('admin.returns.*')],
         ];
     @endphp
 
     <nav class="sticky top-0 z-50 bg-white text-gray-900 shadow-lg transition-colors duration-300 dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
             <div class="flex items-center gap-8">
-                <a href="{{ route('admin.dashboard') }}" class="shrink-0">
+                <a href="{{ $showNav ? route('admin.dashboard') : route('admin.login') }}" class="shrink-0">
                     <img id="admin-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-10 w-auto drop-shadow-lg md:h-12">
                 </a>
 
-                <div id="admin-nav-links" class="relative hidden items-center space-x-1 rounded-full bg-gray-100 px-2 py-1 md:flex dark:bg-white/5">
-                    <span id="admin-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gray-200 transition-all duration-300 ease-out dark:bg-white/10"></span>
-                    @foreach ($navItems as $item)
-                        <a href="{{ $item['route'] }}" data-nav-link data-active="{{ $item['active'] ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ $item['active'] ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">
-                            {{ $item['label'] }}
-                        </a>
-                    @endforeach
-                </div>
+                @if ($showNav)
+                    <div id="admin-nav-links" class="relative hidden items-center space-x-1 rounded-full bg-gray-100 px-2 py-1 md:flex dark:bg-white/5">
+                        <span id="admin-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gray-200 transition-all duration-300 ease-out dark:bg-white/10"></span>
+                        @foreach ($navItems as $item)
+                            <a href="{{ $item['route'] }}" data-nav-link data-active="{{ $item['active'] ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ $item['active'] ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">
+                                {{ $item['label'] }}
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             <div class="flex items-center gap-3">
@@ -67,12 +72,14 @@
                     </svg>
                 </button>
 
-                <form method="POST" action="{{ route('admin.logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="rounded-full bg-gray-900 px-5 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-gray-700 dark:bg-white dark:text-gray-900">
-                        Logout
-                    </button>
-                </form>
+                @if ($showNav)
+                    <form method="POST" action="{{ route('admin.logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="rounded-full bg-gray-900 px-5 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-gray-700 dark:bg-white dark:text-gray-900">
+                            Logout
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     </nav>
@@ -96,18 +103,27 @@
             var navContainer = document.getElementById('admin-nav-links');
             var indicator = document.getElementById('admin-nav-active-pill');
             if (navContainer && indicator) {
-                var navLinks = navContainer.querySelectorAll('[data-nav-link]');
+                var hideIndicator = function () {
+                    indicator.style.width = '0px';
+                    indicator.style.transform = 'translateX(0px)';
+                };
+
                 var moveIndicator = function (targetLink) {
-                    if (!targetLink) return;
+                    if (!targetLink) {
+                        hideIndicator();
+                        return;
+                    }
+
                     indicator.style.width = targetLink.offsetWidth + 'px';
                     indicator.style.transform = 'translateX(' + targetLink.offsetLeft + 'px)';
                 };
-                var activeLink = navContainer.querySelector('[data-active="true"]') || navLinks[0];
+
                 requestAnimationFrame(function () {
-                    moveIndicator(activeLink);
+                    moveIndicator(navContainer.querySelector('[data-active="true"]'));
                 });
+
                 window.addEventListener('resize', function () {
-                    moveIndicator(navContainer.querySelector('[data-active="true"]') || activeLink);
+                    moveIndicator(navContainer.querySelector('[data-active="true"]'));
                 });
             }
         })();
