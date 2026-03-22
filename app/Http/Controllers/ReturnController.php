@@ -64,6 +64,7 @@ class ReturnController extends Controller
             'updated_at' => now(),
         ]);
 
+        $order->orderDetails()->where('product_id', $productId)->update(['delivery_status' => 'Pending Return']);
         $totalUnitsOrdered = $order->orderDetails->sum('quantity');
         $totalUnitsReturned = ReturnOrder::where('order_id', $orderId)->sum('return_quantity');
 
@@ -110,6 +111,7 @@ class ReturnController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+                $item->update(['delivery_status' => 'Pending Return']);
                 $createdAny = true;
             }
         }
@@ -171,7 +173,16 @@ class ReturnController extends Controller
             return back()->with('error', 'This return has already been processed and cannot be cancelled.');
         }
 
-        $return->delete();
+        DB::transaction(function () use ($return) {
+            $order = $return->order;
+            $productId = $return->product_id;
+
+            $return->delete();
+
+            //reset item back to delivered after cancel
+            $order->orderDetails()->where('product_id', $productId)->update(['delivery_status' => 'Delivered']);
+            $this->syncOrderStatus($order);
+        });
 
         $remainingReturnsCount = ReturnOrder::where('order_id', $return->order->id)->count();
 
@@ -197,6 +208,7 @@ class ReturnController extends Controller
                 'stock_restored' => true,
             ]);
 
+            $returnOrder->order->orderDetails()->where('product_id', $returnOrder->product_id)->update(['delivery_status' => 'Returned']);
             $this->syncOrderStatus($returnOrder->order);
         });
 
