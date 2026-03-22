@@ -3,10 +3,10 @@
 <div class="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
 
     <div class="relative dark:bg-slate-900 py-16 sm:py-24 overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-indigo-500/50 dark:from-indigo-500/20  to-transparent pointer-events-none"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b dark:from-violet-500/50  from-orange-500/20  to-transparent pointer-events-none"></div>
         <div class="container mx-auto px-6 relative z-10 text-center">
             <h1 class="text-4xl md:text-6xl font-black text-slate-800 dark:text-white mb-6 tracking-tight leading-tight">
-                Build Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-800">Dream PC</span>
+                Build Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-700 dark:from-violet-600 dark:to-indigo-800 text-stroke">Dream PC</span>
             </h1>
             <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
                 Feeling nervous? Don't be! We're here to hold your hand through every click, screw, and plug. It's just like LEGOs, but expensive!

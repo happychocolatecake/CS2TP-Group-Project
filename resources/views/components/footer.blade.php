@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                        <a href="/sitemap" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                             Sitemap
                         </a>
                     </li>
