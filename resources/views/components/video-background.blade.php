@@ -20,7 +20,7 @@
     //amount of mice
     const COUNT = 14;
     const SIZE_MIN = 52;
-    const SIZE_MAX = 95;
+    const SIZE_MAX = 70;
     //movement variables
     const FALL_MIN = 0.2;
     const FALL_MAX = 1.05;
@@ -28,7 +28,7 @@
     const SPINNY_MIN  = 0.12;
     const SPINNY_MAX  = 0.24;
     //area where cursor take effect on mice
-    const REPEL_RADIUS = 130;
+    const REPEL_RADIUS = 100;
     //how strong they get knocked back and how quick it loses speed
     const REPEL_FORCE  = 4.5;
     const FRICTION  = 0.88;
@@ -90,6 +90,12 @@
         const img = isDark() ? darkImg : lightImg;
 
         mice.forEach(m => {
+
+            //take into aspect the images size
+            const aspect = img.naturalWidth / img.naturalHeight;
+            const halfW = (m.size * aspect) / 2;
+            const halfH = m.size / 2;
+
             //rrepulsing mice
             const dx = m.x - cursorX;
             const dy = m.y - cursorY;
@@ -102,13 +108,13 @@
                 m.vy += (dy / dist) * strength;
 
                 //makes the mice seem squishy when u hit them, more satisfying
-                const squish = 1 - (1 - dist / REPEL_RADIUS) * 0.35;
-                m.scaleX = 1 + (1 - squish) * 0.5;
+                const squish = 1 - (1 - dist / REPEL_RADIUS) * 0.2;
+                m.scaleX = 1 + (1 - squish) * 0.15;
                 m.scaleY = squish;
             } else {
                 //after it done squishing it should go to normal size
-                m.scaleX += (1 - m.scaleX) * 0.12;
-                m.scaleY += (1 - m.scaleY) * 0.12;
+                m.scaleX += (1 - m.scaleX) * 0.08;
+                m.scaleY += (1 - m.scaleY) * 0.08;
             }
 
             //friction calculations with the velocity so it seems more realistic
@@ -128,9 +134,9 @@
                 ctx.translate(m.x, m.y);
                 ctx.rotate(m.rot);
                 ctx.scale(m.scaleX, m.scaleY);
-                ctx.drawImage(
-                    img, 0, 0, img.naturalWidth, img.naturalHeight,-m.size / 2, -m.size / 2, m.size, m.size
-                );
+                //since the image is not a perfect square and rectangle sometimes it stretches out and makes it enormous
+                //tracking aspect and using it in calculation when making image should stop the bug
+                ctx.drawImage(img,0, 0, img.naturalWidth, img.naturalHeight,-halfW, -halfH, m.size * aspect, m.size);
                 ctx.restore();
             }
 
