@@ -90,16 +90,16 @@
             </div>
         </form>
 
-        @if ($approvedReviews->where('review_status', 'Approved')->count() > 0)
-            <div class="w-full p-4 sm:p-5 border-2 border-grey-500 rounded-lg mt-10">
+                @if ($approvedReviews->where('review_status', 'Approved')->count() > 0)
+            <div class="w-full p-4 border-2 border-grey-500 rounded-lg mt-10">
                 <h3 class="text-lg font-bold mb-4 text-center"> Customer Reviews </h3>
 
                 <!--we filter the collection here so the loop only runs for approved items -->
                 @foreach ($approvedReviews->where('review_status', 'Approved') as $review)
                     <div class="flex flex-col gap-4 mb-8 border-b border-gray-100 pb-6 last:border-b-0">
-                        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                        <div class="flex gap-6">
                             <!-- photo displaying area -->
-                            <div class="w-24 flex-shrink-0 mx-auto sm:mx-0">
+                            <div class="w-24 flex-shrink-0">
                                 @if ($review->review_image)
                                     <a href="{{ route('reviews.image.show', $review->id) }}" class="block group">
                                         <img src="{{ asset('images/reviews/' . $review->review_image) }}"
@@ -114,43 +114,41 @@
 
                             <!-- text area of the review -->
                             <div class="flex-1">
-                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-1">
+                                <div class="flex justify-between items-start mb-1">
                                     <div>
-                                        <span class="font-semibold text-base sm:text-lg block">{{ $review->user->first_name }} {{ $review->user->last_name }}</span>
+                                        <span class="font-semibold text-lg block">{{ $review->user->first_name }} {{ $review->user->last_name }}</span>
                                         <div class="flex text-yellow-400 text-sm">
                                             @for ($i = 1; $i <= 5; $i++)
                                                 <span>{{ $i <= $review->rating ? '★' : '☆' }}</span>
                                             @endfor
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-gray-500">{{ $review->created_at->format('d F Y') }}</span>
-                                </div>
-
-                                @if(strlen($review->review_text) > 150)
-                                        <p class="text-sm text-gray-600 italic"> "{{ \Illuminate\Support\Str::limit($review->review_text, 110, '...') }}" </p>
-                                        <a href="{{ route('reviews.image.show', $review->id) }}"
-                                            class="text-indigo-600 font-medium hover:underline ml-1">
-                                            Read full review
-                                        </a>
-                                @elseif (empty($review->review_text))
-                                        <p class="text-xs text-gray-400 italic">No written comment provided.</p>
-                                @else
-                                    <p class="text-sm text-gray-600 italic">"{{ $review->review_text }}"</p>
-                                        <a href="{{ route('reviews.image.show', $review->id) }}"
-                                        class="text-indigo-600 font-medium hover:underline ml-1">
-                                            Read full review
-                                        </a>
-                                @endif
-
-                                <div class="mt-4 flex items-center gap-3">
-                                    <span class="text-[10px] font-bold uppercase text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
-                                        Verified Purchase
-                                    </span>
                                 </div>
                             </div>
+                            <span class="text-xs text-gray-500">{{ $review->created_at->format('d F Y') }}</span>
+                        </div>
+
+                        @if(strlen($review->review_text) > 150)
+                            <p class="text-sm text-gray-600 italic">"{{ \Illuminate\Support\Str::limit($review->review_text, 110, '...') }}"</p>
+                        @elseif(empty($review->review_text))
+                            <p class="text-xs text-gray-600 italic">No written comment provided.</p>
+                        @else
+                            <p class="text-sm text-gray-600 italic">"{{ $review->review_text }}"</p>
+                        @endif
+
+                        <div class="mt-4 flex items-center gap-3">
+                            <span class="text-[10px] font-bold uppercase text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">
+                                Verified Purchase
+                            </span>
+                            @if(!empty($review->review_text))
+                                <a href="{{ route('reviews.image.show', $review->id) }}"
+                                   class="text-xs text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1 hover:bg-indigo-500 hover:text-white hover:border-indigo-500">
+                                   Read full review
+                                </a>
+                            @endif
                         </div>
                     </div>
-                @endforeach
+                </div>
+            </div>
+        @endforeach
 
                 <!--pagination links-->
                 @if($reviews->hasPages())

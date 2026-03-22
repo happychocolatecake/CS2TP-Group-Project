@@ -72,9 +72,9 @@
                     <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-10 rounded-lg">
                         <span class="text-white text-[10px] font-black uppercase tracking-widest bg-red-600 px-2 py-1 rounded shadow">Returned</span>
                     </div>
-                @elseif($order->order_status === 'Cancelled')
+                @elseif(in_array($order->order_status, ['Cancelled', 'Refunded'], true))
                     <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-lg">
-                        <span class="text-white text-[10px] font-black uppercase tracking-widest bg-gray-700 px-2 py-1 rounded shadow">Cancelled</span>
+                        <span class="text-white text-[10px] font-black uppercase tracking-widest bg-gray-700 px-2 py-1 rounded shadow">{{ $order->order_status }}</span>
                     </div>
                 @endif
         </div>
@@ -98,7 +98,7 @@
             </div>
 
             <div class="w-full space-y-2">
-            @if($order->order_status == 'Delivered' || $order->isReturnable())
+            @if($order->order_status === 'Delivered')
                 @php
                     //find and check if a review already exists for this item in this order
                     $existingReview = \App\Models\Review::where('order_id', $order->id)->where('product_id', $item->product_id)->first();
@@ -121,11 +121,13 @@
                     </div>
             @endif
 
-            @if ($order->isReturnable() && $order->order_status !== 'Cancelled')
+            @if ($order->isReturnable())
                 @php
                     //calculates if there is still quantity within a product that you can return
                     $totalReturnedForThisItem = \App\Models\ReturnOrder::where('order_id', $order->id)
-                    ->where('product_id', $item->product_id)->sum('return_quantity');
+                    ->where('product_id', $item->product_id)
+                    ->whereIn('return_status', ['Processing', 'Approved'])
+                    ->sum('return_quantity');
 
 
                     //calculates the amount of quantity within the product that is pending return or completed return
@@ -153,13 +155,13 @@
 
                         @if($returnedQty > 0)
                             <span class="px-3 py-1 w-full block text-center bg-green-100 text-green-700 rounded-full text-xs font-bold border border-green-200">
-                                {{ $returnedQty }} returned
+                                {{ $returnedQty }} approved return
                             </span>
                         @endif
 
                         @if($pendingQty > 0)
                             <span class="px-3 py-1 w-full block text-center bg-orange-100 text-orange-600 rounded-full text-xs font-bold border border-orange-200">
-                                {{ $pendingQty }} pending return
+                                {{ $pendingQty }} processing return
                             </span>
                         @endif
                        </div>
@@ -297,6 +299,9 @@
                                 @endif
                                 <div class="col-span-12 pt-2 border-t border-gray-100">
                                     <p class="text-xs text-gray-500 italic truncate">"{{ $return->reason }}"</p>
+                                    @if($return->admin_comment)
+                                        <p class="mt-1 text-xs text-gray-600">Admin comment: {{ $return->admin_comment }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -318,4 +323,5 @@
 </div>
 </x-layout>
 <x-footer></x-footer>
+
 

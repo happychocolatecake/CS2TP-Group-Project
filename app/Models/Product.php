@@ -37,4 +37,9 @@ class Product extends Model
     {
         return $this->hasMany(Review::class)->latest();
     }
+
+    public function specs()
+    {
+        return $this->hasMany(ProductSpec::class);
+    }
 }

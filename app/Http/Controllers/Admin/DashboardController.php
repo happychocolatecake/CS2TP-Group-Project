@@ -9,6 +9,7 @@ use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ReturnOrder;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,21 +67,130 @@ class DashboardController extends Controller
 
     public function users(): View
     {
+        $search = trim((string) request('search', ''));
+
         $users = User::with([
             'orders' => fn ($query) => $query->latest('id'),
             'orders.orderDetails.product',
-        ])->orderBy('id')->paginate(10);
+        ])
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($userQuery) use ($search) {
+                    $userQuery->where('email', 'like', '%' . $search . '%')
+                        ->orWhereHas('orders', function ($orderQuery) use ($search) {
+                            if (ctype_digit($search)) {
+                                $orderQuery->where('id', (int) $search)
+                                    ->orWhereHas('orderDetails', function ($detailQuery) use ($search) {
+                                        $detailQuery->where('product_id', (int) $search);
+                                    });
+                            }
+                        });
+                });
+            })
+            ->orderBy('id')
+            ->paginate(10)
+            ->withQueryString();
 
         $deliveryStatuses = $this->deliveryStatuses();
 
-        return view('admin.users', compact('users', 'deliveryStatuses'));
+        return view('admin.users', compact('users', 'deliveryStatuses', 'search'));
     }
 
-    public function messages(): View
+    public function orders(Request $request): View
     {
-        $messages = ContactMessage::with('user')->latest()->paginate(12);
+        $filter = $request->string('filter')->toString() ?: 'open';
 
-        return view('admin.messages', compact('messages'));
+        $openStatuses = ['Placed', 'Packed', 'Shipped', 'Out for Delivery'];
+
+        $orders = Order::query()
+            ->with(['user', 'orderDetails.product'])
+            ->when($filter === 'open', fn ($query) => $query->whereIn('order_status', $openStatuses))
+            ->when($filter !== 'all' && $filter !== 'open', fn ($query) => $query->where('order_status', ucfirst($filter)))
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        $orderStatuses = $this->orderStatuses();
+        $orderStats = [
+            'open' => Order::query()->whereIn('order_status', $openStatuses)->count(),
+            'all' => Order::query()->count(),
+            'delivered' => Order::query()->where('order_status', 'Delivered')->count(),
+            'refunded' => Order::query()->where('order_status', 'Refunded')->count(),
+        ];
+
+        return view('admin.orders', compact('orders', 'filter', 'orderStatuses', 'orderStats'));
+    }
+
+    public function messages(Request $request): View
+    {
+        $filter = $request->string('filter')->toString() ?: 'all';
+        $messages = ContactMessage::with('user')
+            ->with('order')
+            ->when($filter === 'new', fn ($query) => $query->whereNull('admin_read_at'))
+            ->when($filter === 'unreplied', fn ($query) => $query->whereNull('admin_reply'))
+            ->when($filter === 'replied', fn ($query) => $query->whereNotNull('admin_reply'))
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $messageStats = [
+            'all' => ContactMessage::query()->count(),
+            'new' => ContactMessage::query()->whereNull('admin_read_at')->count(),
+            'unreplied' => ContactMessage::query()->whereNull('admin_reply')->count(),
+            'replied' => ContactMessage::query()->whereNotNull('admin_reply')->count(),
+        ];
+
+        return view('admin.messages', compact('messages', 'filter', 'messageStats'));
+    }
+
+    public function showMessage(ContactMessage $message): View
+    {
+        if (! $message->admin_read_at) {
+            $message->forceFill(['admin_read_at' => now()])->save();
+        }
+
+        return view('admin.message-show', [
+            'message' => $message->load(['user', 'order']),
+        ]);
+    }
+
+    public function replyToMessage(Request $request, ContactMessage $message): RedirectResponse
+    {
+        $validated = $request->validate([
+            'admin_reply' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $message->update([
+            'admin_read_at' => $message->admin_read_at ?? now(),
+            'admin_reply' => $validated['admin_reply'],
+            'admin_replied_at' => now(),
+            'customer_seen_reply' => false,
+        ]);
+
+        return redirect()
+            ->route('admin.messages.show', $message)
+            ->with('success', 'Reply sent to customer message.');
+    }
+
+    public function returns(Request $request): View
+    {
+        $filter = $request->string('filter')->toString() ?: 'processing';
+
+        $returns = ReturnOrder::query()
+            ->with(['user', 'order', 'product'])
+            ->when($filter !== 'all', fn ($query) => $query->where('return_status', ucfirst($filter)))
+            ->latest('created_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        $returnStats = [
+            'all' => ReturnOrder::query()->count(),
+            'processing' => ReturnOrder::query()->where('return_status', 'Processing')->count(),
+            'approved' => ReturnOrder::query()->where('return_status', 'Approved')->count(),
+            'rejected' => ReturnOrder::query()->where('return_status', 'Rejected')->count(),
+            'refunded' => ReturnOrder::query()->where('return_status', 'Refunded')->count(),
+        ];
+
+        return view('admin.returns', compact('returns', 'filter', 'returnStats'));
     }
 
     public function storeProduct(Request $request): RedirectResponse
@@ -136,9 +246,160 @@ class DashboardController extends Controller
         return back()->with('success', 'Delivery status updated.');
     }
 
+    public function updateOrderStatus(Request $request, Order $order): RedirectResponse
+    {
+        $validated = $request->validate([
+            'order_status' => ['required', 'string', 'in:' . implode(',', $this->orderStatuses())],
+        ]);
+
+        $order->update([
+            'order_status' => $validated['order_status'],
+        ]);
+
+        $mappedDeliveryStatus = match ($validated['order_status']) {
+            'Placed' => 'Pending',
+            'Packed' => 'Packed',
+            'Shipped' => 'Shipped',
+            'Out for Delivery' => 'Out for Delivery',
+            'Delivered' => 'Delivered',
+            'Cancelled', 'Refunded' => 'Cancelled',
+            default => null,
+        };
+
+        if ($mappedDeliveryStatus) {
+            $order->orderDetails()->update([
+                'delivery_status' => $mappedDeliveryStatus,
+            ]);
+        }
+
+        return back()->with('success', 'Order status updated.');
+    }
+
+    public function updateReturnStatus(Request $request, ReturnOrder $returnOrder): RedirectResponse
+    {
+        $validated = $request->validate([
+            'return_status' => ['required', 'in:Approved,Rejected'],
+            'admin_comment' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        if ($returnOrder->return_status !== 'Processing') {
+            return back()->with('error', 'This return request has already been processed.');
+        }
+
+        DB::transaction(function () use ($returnOrder, $validated) {
+            $shouldRestoreStock = $validated['return_status'] === 'Approved';
+
+            if ($shouldRestoreStock) {
+                $product = $returnOrder->product()->lockForUpdate()->first();
+                if ($product) {
+                    $product->increment('product_stock', $returnOrder->return_quantity);
+                }
+            }
+
+            $returnOrder->update([
+                'return_status' => $validated['return_status'],
+                'admin_comment' => $validated['admin_comment'] ?? null,
+                'admin_processed_at' => now(),
+                'stock_restored' => $shouldRestoreStock,
+            ]);
+
+            $this->syncReturnOrderStatus($returnOrder->order);
+        });
+
+        return back()->with('success', 'Return request updated.');
+    }
+
+    public function resolveSupportItem(Request $request, Order $order, OrderDetail $orderDetail): RedirectResponse
+    {
+        $validated = $request->validate([
+            'resolution' => ['required', 'in:return,refund'],
+            'admin_comment' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        if ($orderDetail->order_id !== $order->id) {
+            abort(404);
+        }
+
+        if ($order->order_status !== 'Delivered') {
+            return back()->with('error', 'Support returns or refunds can only be created for delivered items.');
+        }
+
+        $existingResolvedQuantity = ReturnOrder::query()
+            ->where('order_id', $order->id)
+            ->where('product_id', $orderDetail->product_id)
+            ->whereIn('return_status', ['Processing', 'Approved', 'Refunded'])
+            ->sum('return_quantity');
+
+        $remainingQuantity = max(0, $orderDetail->quantity - $existingResolvedQuantity);
+
+        if ($remainingQuantity < 1) {
+            return back()->with('error', 'This item already has a full return or refund resolution recorded.');
+        }
+
+        DB::transaction(function () use ($validated, $order, $orderDetail, $remainingQuantity) {
+            $isReturn = $validated['resolution'] === 'return';
+
+            ReturnOrder::create([
+                'order_id' => $order->id,
+                'product_id' => $orderDetail->product_id,
+                'user_id' => $order->user_id,
+                'return_date' => now(),
+                'reason' => $isReturn ? 'Admin-approved support return.' : 'Admin-issued support refund.',
+                'admin_comment' => $validated['admin_comment'] ?? null,
+                'admin_processed_at' => now(),
+                'return_status' => $isReturn ? 'Approved' : 'Refunded',
+                'return_quantity' => $remainingQuantity,
+                'stock_restored' => $isReturn,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            if ($isReturn && $orderDetail->product) {
+                $orderDetail->product->increment('product_stock', $remainingQuantity);
+                $this->syncReturnOrderStatus($order);
+            }
+        });
+
+        return back()->with('success', 'Support resolution saved for the selected item.');
+    }
+
     private function deliveryStatuses(): array
     {
         return ['Pending', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
+    }
+
+    private function orderStatuses(): array
+    {
+        return ['Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled', 'Refunded'];
+    }
+
+    private function syncReturnOrderStatus(Order $order): void
+    {
+        $totalOrdered = $order->orderDetails()->sum('quantity');
+        $totalApproved = $order->returns()->where('return_status', 'Approved')->sum('return_quantity');
+        $totalProcessing = $order->returns()->where('return_status', 'Processing')->sum('return_quantity');
+
+        if ($totalApproved >= $totalOrdered && $totalOrdered > 0) {
+            $order->update(['order_status' => 'Fully Returned']);
+            return;
+        }
+
+        if (($totalApproved + $totalProcessing) >= $totalOrdered && $totalOrdered > 0) {
+            $order->update(['order_status' => 'Pending Full Return']);
+            return;
+        }
+
+        if ($totalProcessing > 0) {
+            $order->update(['order_status' => 'Pending Partial Return']);
+            return;
+        }
+
+        if ($totalApproved > 0) {
+            $order->update(['order_status' => 'Partially Returned']);
+            return;
+        }
+
+        $order->update(['order_status' => 'Delivered']);
     }
 
     private function salesChart(): array

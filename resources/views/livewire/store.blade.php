@@ -1,5 +1,4 @@
-
-<div class="relative min-h-screen w-full overflow-hidden">
+<div class="relative min-h-screen w-full overflow-hidden bg-gray-200/50 dark:bg-gray-800/50">
     <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-30" />
 
 <div class="relative z-10">
@@ -24,16 +23,15 @@
         <div class="container mx-auto px-4 py-6 sm:px-6">
         <h1 class="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6">Store</h1>
 
-        <div class="mb-4">
+        <div class="mb-4 md:hidden">
             <button id="store-filters-toggle" type="button" class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 shadow-sm dark:bg-white/10 dark:text-gray-100">
                 Show Filters
             </button>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 md:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
 
-            <!-- Sidebar Filter -->
-            <aside id="store-filters-panel" class="hidden">
+            <aside id="store-filters-panel" class="hidden md:block md:col-span-1">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-2xl font-bold">Filter</h2>
                     <button wire:click="resetFilters" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors uppercase tracking-wider">
@@ -97,7 +95,6 @@
 
                 <x-filter-group title="Primary Colour" open>
                     @foreach ($colours as $colour)
-                        <!-- displays all available colours except for the objects that have a irrelevant colour -->
                         @if ($colour != 'N/A')
                         <label wire:key="col-{{ Str::slug($colour) }}-{{ count($selectedColours) }}" class="flex items-center space-x-3 mb-2 cursor-pointer">
                             <input
@@ -115,7 +112,6 @@
 
                  <x-filter-group title="PC Part" open>
                     @foreach ($pcParts as $part)
-                        <!-- displays all available colours except for the objects that have a irrelevant colour -->
                         @if ($part != 'N/A')
                         <label wire:key="part-{{ Str::slug($part) }}-{{ count($selectedPCParts) }}" class="flex items-center space-x-3 mb-2 cursor-pointer">
                             <input
@@ -162,13 +158,10 @@
                 </x-filter-group>
             </aside>
 
-            <!-- Main Content Area -->
-            <main>
+            <main class="md:col-span-3">
 
-                <!--Top Bar: Searching & Sorting-->
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
                     <div class="relative w-full md:w-2/3 group">
-                        <!-- the search icon -->
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -178,9 +171,8 @@
                             wire:model.live="search"
                             type="text"
                             placeholder="Search products..."
-                            class="w-full pl-12 pr-11 px-4 py-2.5 leading-5 border dark:bg-white/10 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
+                            class="w-full pl-12 pr-11 px-4 py-2.5 leading-5 border dark:bg-gray-800 border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all duration-200"
                         >
-                        <!-- adds an x button that clears the search-->
                         @if($search)
                             <button
                                 wire:click="$set('search', '')"
@@ -196,7 +188,6 @@
 
                 </div>
 
-                <!-- Product Grid -->
                 @if($products->count() > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                         @foreach($products as $item)

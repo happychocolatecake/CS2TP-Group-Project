@@ -7,10 +7,26 @@
                 <div>
                     <p class="text-sm font-medium uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Users and Orders</p>
                     <h1 class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">Customer History</h1>
-                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Inspect registered users, review their orders, and update delivery status for each ordered item.</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Inspect registered users, search by email or ID, update delivery status, and issue support returns or refunds for delivered items.</p>
                 </div>
                 <span class="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 dark:bg-white/10 dark:text-gray-300">{{ $users->total() }} users</span>
             </div>
+
+            <form method="GET" action="{{ route('admin.users.index') }}" class="mt-5 flex flex-col gap-3 sm:flex-row">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ $search ?? '' }}"
+                    placeholder="Search by email, order ID, or product ID"
+                    class="w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm focus:border-gray-600 focus:outline-none dark:border-gray-700 dark:bg-slate-950 dark:text-white"
+                >
+                <div class="flex gap-2">
+                    <button type="submit" class="rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">Search</button>
+                    @if(!empty($search))
+                        <a href="{{ route('admin.users.index') }}" class="rounded-2xl border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-white/10">Clear</a>
+                    @endif
+                </div>
+            </form>
         </section>
 
         <section class="space-y-6">
@@ -63,6 +79,7 @@
                                                         <th class="py-2 pr-4">Item Price</th>
                                                         <th class="py-2 pr-4">Delivery Status</th>
                                                         <th class="py-2 pr-4">Update</th>
+                                                        <th class="py-2 pr-4">Support Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -84,6 +101,20 @@
                                                                     </select>
                                                                     <button type="submit" class="rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900">Save</button>
                                                                 </form>
+                                                            </td>
+                                                            <td class="py-3 pr-4">
+                                                                @if ($order->order_status === 'Delivered')
+                                                                    <form method="POST" action="{{ route('admin.orders.items.resolve', [$order, $item]) }}" class="space-y-2">
+                                                                        @csrf
+                                                                        <textarea name="admin_comment" rows="2" class="w-full rounded-xl border border-gray-300 px-2 py-1 text-xs dark:border-gray-700 dark:bg-slate-950 dark:text-white" placeholder="Optional support note"></textarea>
+                                                                        <div class="flex flex-wrap gap-2">
+                                                                            <button type="submit" name="resolution" value="return" class="rounded-full bg-emerald-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-emerald-700">Support Return</button>
+                                                                            <button type="submit" name="resolution" value="refund" class="rounded-full bg-amber-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-amber-700">Support Refund</button>
+                                                                        </div>
+                                                                    </form>
+                                                                @else
+                                                                    <span class="text-xs text-gray-500 dark:text-gray-400">Available once delivered.</span>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach

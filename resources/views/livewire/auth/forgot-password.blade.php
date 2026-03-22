@@ -3,6 +3,7 @@
 <div class="min-h-screen flex flex-col">
 
 <x-layout>
+    <x-video-background lightOpacity="opacity-100" darkOpacity="opacity-100" />
     <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md flex flex-col gap-6 items-center bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800">
         <x-auth-header :title="__('Forgot password')" :description="__('Enter your email to receive a password reset link')" />
@@ -40,3 +41,4 @@
 
 
 <x-footer></x-footer>
+

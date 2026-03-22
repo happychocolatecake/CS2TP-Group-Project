@@ -21,6 +21,18 @@ class OrderDetail extends Model
         'updated_at',
     ];
 
+    //we use booted here and static creating to make sure whenever a new product is created for an order
+    //it will always take the delivery_status corresponding to its parent order
+    //this is important for the seeding being synced to the admin pages
+    protected static function booted()
+    {
+        static::creating(function ($orderDetail) {
+            if ($orderDetail->order) {
+                $orderDetail->delivery_status = $orderDetail->order->order_status;
+            }
+        });
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);
