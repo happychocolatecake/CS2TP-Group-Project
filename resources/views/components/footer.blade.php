@@ -4,7 +4,7 @@
         <div class="flex flex-col sm:flex-row justify-center gap-12 sm:gap-24 sm:gap-40 text-center sm:text-left">
             <div class="px-4">
                 <h2 class="text-xl font-semibold text-white"> Happy Hardware </h2>
-                <p class="text-gray-400 text-sm mt-2"> Quality hardeware at the best prices. </p>
+                <p class="text-gray-400 text-sm mt-2"> Quality hardware at the best prices. </p>
 </div>
 
             <div class="w-auto">
