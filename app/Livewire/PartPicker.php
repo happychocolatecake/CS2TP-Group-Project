@@ -4,67 +4,47 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartPicker extends Component
 {
-    //individually giving each product part a label and linking it to the database
     public array $categories = [
-        'cpu' => [
-            'label' => 'CPU',
-            'db_name' => 'CPU'
-        ],
-        'motherboard' => [
-            'label' => 'Motherboard',
-            'db_name' => 'Motherboard'
-        ],
-        'ram' => [
-            'label' => 'Memory (RAM)',
-            'db_name' => 'RAM'
-        ],
-        'gpu' => [
-            'label' => 'Graphics Card',
-            'db_name' => 'GPU'
-        ],
-        'ssd' => [
-            'label' => 'Storage (SSD)',
-            'db_name' => 'SSD'
-        ],
-        'psu' => [
-            'label' => 'Power Supply',
-            'db_name' => 'PSU'
-        ],
-        'case' => [
-            'label' => 'PC Case',
-            'db_name' => 'Case'
-        ],
-        'fan' => [
-            'label' => 'Cooling Fan',
-            'db_name' => 'Cooling Fan'
-        ],
+        'cpu' => ['label' => 'CPU', 'db_name' => 'CPU'],
+        'motherboard' => ['label' => 'Motherboard', 'db_name' => 'Motherboard'],
+        'ram' => ['label' => 'Memory (RAM)', 'db_name' => 'RAM'],
+        'gpu' => ['label' => 'Graphics Card', 'db_name' => 'GPU'],
+        'ssd' => ['label' => 'Storage (SSD)', 'db_name' => 'SSD'],
+        'psu' => ['label' => 'Power Supply', 'db_name' => 'PSU'],
+        'case' => ['label' => 'PC Case', 'db_name' => 'Case'],
+        'fan' => ['label' => 'Cooling Fan', 'db_name' => 'Cooling Fan'],
     ];
 
     public array $selected = [];
-    //we will use an array to track which category is being selected
     public $activeCategory = null;
 
     public function selectCategory($key)
     {
-        // creates a toggle for selecting a particular category
         $this->activeCategory = ($this->activeCategory === $key) ? null : $key;
     }
 
     public function selectPart($categoryKey, $productId)
     {
-        $product = Product::find($productId);
+        $product = Product::with('specs')->find($productId);
 
-            $this->selected[$categoryKey] = [
+        // Store specs in lowercase so they are easy to search later
+        $specs = [];
+        foreach($product->specs as $spec) {
+            $specs[strtolower(trim($spec->spec_key))] = trim($spec->spec_value);
+        }
+
+        $this->selected[$categoryKey] = [
             'id' => $product->id,
             'name' => $product->product_name,
             'price' => $product->product_price,
             'image' => $product->product_image,
+            'specs' => $specs,
         ];
 
-        //after selecting a part for the category the category should close
         $this->activeCategory = null;
     }
 
@@ -78,14 +58,103 @@ class PartPicker extends Component
         return array_sum(array_column($this->selected, 'price'));
     }
 
+    // NEW: Helper function to fuzzily find a spec value by keyword
+    private function findSpecValue($specs, $keywords) {
+        foreach ($specs as $key => $value) {
+            foreach ($keywords as $keyword) {
+                if (str_contains($key, $keyword)) {
+                    return $value;
+                }
+            }
+        }
+        return null;
+    }
+
+    private function applyCompatibilityFilters(Builder $query, $category)
+    {
+        // 1. CPU & Motherboard Socket Compatibility
+        if ($category === 'cpu' && isset($this->selected['motherboard'])) {
+            $socket = $this->findSpecValue($this->selected['motherboard']['specs'], ['socket']);
+            if ($socket) {
+                $query->whereHas('specs', function($q) use ($socket) {
+                    $q->where('spec_key', 'LIKE', '%socket%')
+                    ->where('spec_value', 'LIKE', '%' . $socket . '%');
+                });
+            }
+        }
+
+        if ($category === 'motherboard' && isset($this->selected['cpu'])) {
+            $socket = $this->findSpecValue($this->selected['cpu']['specs'], ['socket']);
+            if ($socket) {
+                $query->whereHas('specs', function($q) use ($socket) {
+                    $q->where('spec_key', 'LIKE', '%socket%')
+                    ->where('spec_value', 'LIKE', '%' . $socket . '%');
+                });
+            }
+        }
+
+        // 2. RAM & Motherboard Memory Type Compatibility
+        if ($category === 'ram' && isset($this->selected['motherboard'])) {
+            $memoryString = $this->findSpecValue($this->selected['motherboard']['specs'], ['memory', 'ram', 'type']);
+
+            if ($memoryString) {
+                // Extract just "DDR4" or "DDR5" to ignore speeds like "6000MHz" or text like "Supports"
+                preg_match('/DDR\d/i', $memoryString, $matches);
+                $ddrVersion = $matches[0] ?? $memoryString;
+
+                $query->whereHas('specs', function($q) use ($ddrVersion) {
+                    $q->where(function($subQuery) {
+                        $subQuery->where('spec_key', 'LIKE', '%memory%')
+                        ->orWhere('spec_key', 'LIKE', '%ram%')
+                        ->orWhere('spec_key', 'LIKE', '%type%');
+                    })->where('spec_value', 'LIKE', '%' . $ddrVersion . '%');
+                });
+            }
+        }
+
+        if ($category === 'motherboard' && isset($this->selected['ram'])) {
+            $memoryString = $this->findSpecValue($this->selected['ram']['specs'], ['memory', 'ram', 'type']);
+
+            if ($memoryString) {
+                preg_match('/DDR\d/i', $memoryString, $matches);
+                $ddrVersion = $matches[0] ?? $memoryString;
+
+                $query->whereHas('specs', function($q) use ($ddrVersion) {
+                    $q->where(function($subQuery) {
+                        $subQuery->where('spec_key', 'LIKE', '%memory%')
+                        ->orWhere('spec_key', 'LIKE', '%ram%')
+                        ->orWhere('spec_key', 'LIKE', '%type%');
+                    })->where('spec_value', 'LIKE', '%' . $ddrVersion . '%');
+                });
+            }
+        }
+
+        // 3. Motherboard & Case Form Factor Compatibility
+        if ($category === 'case' && isset($this->selected['motherboard'])) {
+            $formFactor = $this->findSpecValue($this->selected['motherboard']['specs'], ['form', 'factor', 'size']);
+            if ($formFactor) {
+                $query->whereHas('specs', function($q) use ($formFactor) {
+                    $q->where('spec_key', 'LIKE', '%form%')
+                    ->where('spec_value', 'LIKE', '%' . $formFactor . '%');
+                });
+            }
+        }
+
+        return $query;
+    }
+
     public function render()
     {
-        //obtain products only for the selected category using an array
         $categoryProducts = [];
+
         if ($this->activeCategory) {
             $dbCategoryName = $this->categories[$this->activeCategory]['db_name'];
-            $categoryProducts = Product::where('product_part', $dbCategoryName)->get();
+
+            $query = Product::where('product_part', $dbCategoryName)->with('specs');
+            $query = $this->applyCompatibilityFilters($query, $this->activeCategory);
+            $categoryProducts = $query->get();
         }
-        return view('livewire.part-picker', [ 'availableProducts' => $categoryProducts]);
+
+        return view('livewire.part-picker', ['availableProducts' => $categoryProducts]);
     }
 }
