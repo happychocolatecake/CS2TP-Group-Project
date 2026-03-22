@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PartPicker extends Component
 {
-    // ... [Keep your existing properties, categories array, selectPart, etc.] ...
 
     public function addAllToBasket()
     {
@@ -21,37 +20,45 @@ class PartPicker extends Component
             return;
         }
 
-        // 2. Get or create the basket for the current user
-        // Note: Adapt 'user_id' if your application supports guest checkouts via session IDs
-        $basket = Basket::firstOrCreate([
-            'user_id' => Auth::id()
+        // 2. MUST CHECK AUTH: Your database requires a valid user_id to create a basket.
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            // If they aren't logged in, redirect them to login with a helpful message
+            session()->flash('error', 'Please log in to add your custom build to your basket.');
+            return redirect()->route('login');
+        }
+
+        // 3. Get or create the basket for the currently logged-in user
+        $basket = \App\Models\Basket::firstOrCreate([
+            'user_id' => \Illuminate\Support\Facades\Auth::id()
         ]);
 
-        // 3. Loop through the selected parts and add them to the basket
+        // 4. Loop through the selected parts and add them to the basket items table
         foreach ($this->selected as $categoryKey => $part) {
-            // Check if the item is already in the basket to increase quantity, or create new
-            $basketItem = BasketItem::where('basket_id', $basket->id)
+
+            $basketItem = \App\Models\BasketItem::where('basket_id', $basket->id)
             ->where('product_id', $part['id'])
             ->first();
 
             if ($basketItem) {
+                // If they already have this specific part in their basket, increment quantity
                 $basketItem->increment('quantity');
             } else {
-                BasketItem::create([
+                // Otherwise, create a new basket item
+                \App\Models\BasketItem::create([
                     'basket_id' => $basket->id,
                     'product_id' => $part['id'],
                     'quantity' => 1,
-                    // 'price' => $part['price'] // Uncomment if your BasketItem table stores price
                 ]);
             }
         }
 
-        // 4. Clear the PC builder session array so they can start fresh
+        // 5. Clear the PC builder session array so they can start a fresh build later
         $this->selected = [];
+        $this->activeCategory = null;
 
-        // 5. Redirect to basket with a success message
-        session()->flash('success', 'Your custom PC build has been added to the basket!');
-        return redirect()->to('/basket'); // Adjust this URL to wherever your basket page is
+        // 6. Redirect to the basket page with a success message
+        session()->flash('success', 'Your custom PC build has been added to your basket!');
+        return redirect()->to('/basket');
     }
     public array $categories = [
         'cpu' => ['label' => 'CPU', 'db_name' => 'CPU'],
