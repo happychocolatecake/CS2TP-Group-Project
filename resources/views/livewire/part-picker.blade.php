@@ -1,6 +1,4 @@
-<div class="relative min-h-screen w-full bg-gray-200/50 dark:bg-gray-800/50">
-
-    <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
+<div> <div class="relative min-h-screen w-full bg-gray-200/50 dark:bg-gray-800/50">
 
     <div class="relative min-h-screen w-full">
               <div class="min-h-screen py-8 sm:py-10 px-4">
