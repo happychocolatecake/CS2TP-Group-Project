@@ -32,21 +32,28 @@ class AppServiceProvider extends ServiceProvider
         //the most efficient way to keep the basket icon up to date with the header
         View::composer('*', function ($view) {
             $basketCount = 0;
+            $basketPreview = null;
+            $basketSubtotal = 0;
 
             if (Auth::check()) {
-                // Get the user's basket and sum the quantities of all items
-                $basketCount = Basket::where('user_id', Auth::id())
-                    ->with('items')
-                    ->get()
-                    ->pluck('items')
-                    ->flatten()
-                    ->sum('quantity');
-            } else {
-                // Optional: If you use sessions for guest baskets, count those here
-                // $basketCount = count(session('guest_basket', []));
+                $basketPreview = Basket::query()
+                    ->where('user_id', Auth::id())
+                    ->with(['items.product'])
+                    ->first();
+
+                if ($basketPreview) {
+                    $basketCount = $basketPreview->items->sum('quantity');
+                    $basketSubtotal = $basketPreview->items->sum(function ($item) {
+                        return (int) $item->quantity * (int) ($item->product->product_price ?? 0);
+                    });
+                }
             }
 
-            $view->with('globalBasketCount', $basketCount);
+            $view->with([
+                'globalBasketCount' => $basketCount,
+                'globalBasketPreview' => $basketPreview,
+                'globalBasketSubtotal' => $basketSubtotal,
+            ]);
         });
 
 

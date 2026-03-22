@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -34,6 +35,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/products/{product}', [AdminDashboardController::class, 'destroyProduct'])->name('products.destroy');
         Route::patch('/order-items/{orderDetail}/delivery-status', [AdminDashboardController::class, 'updateDeliveryStatus'])->name('order-items.delivery-status');
         Route::patch('/returns/{returnOrder}', [AdminDashboardController::class, 'updateReturnStatus'])->name('returns.update');
+        Route::middleware('head.admin')->group(function () {
+            Route::get('/management', [AdminManagementController::class, 'index'])->name('management.index');
+            Route::post('/management/admins', [AdminManagementController::class, 'store'])->name('management.store');
+        });
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });

@@ -45,11 +45,6 @@ class ReviewController extends Controller
             'review_image' => 'nullable|image|max:2048',
         ]);
 
-        //LATER AFTER JOT DOES THE ADMIN PAGE I WILL SEND REVIEWS THERE TO BE REVIEWED BEFORE POSTED
-        //because of evil cs2tp competitors
-        //saves the new review to the database where it is retrieved on the product page later
-        //i introuduce a new status for reviews here
-
         //double check authorisation again
         $order = Order::findOrFail($request->order_id);
         if ($order->user_id !== Auth::id() || $order->order_status !== 'Delivered') {
@@ -62,7 +57,7 @@ class ReviewController extends Controller
 
         $review = new Review();
         $review->user_id = Auth::id();
-        $review->review_status = 'Pending';
+        $review->review_status = 'Approved';
         $review->order_id = $request->order_id;
         $review->product_id = $request->product_id;
         $review->rating = $request->rating;
@@ -84,7 +79,7 @@ class ReviewController extends Controller
 
         $review->save();
 
-        return redirect()->route('profile.orders.show', $request->order_id)->with('success', 'Thank you for your review!');
+        return redirect()->route('profile.orders.show', $request->order_id)->with('success', 'Your review is now live on the product page.');
     }
 
     public function destroy(Review $review)
@@ -137,7 +132,7 @@ public function update(Request $request, Review $review)
 
     $review->rating = $request->rating;
     $review->review_text = $request->review_text;
-    $review->review_status = 'Pending';
+    $review->review_status = 'Approved';
 
     if ($request->hasFile('review_image')) {
         //deletes old image if it exists
@@ -156,6 +151,6 @@ public function update(Request $request, Review $review)
 
     $review->save();
 
-    return redirect()->route('profile.reviews')->with('status', 'Review updated and is now pending approval!');
+    return redirect()->route('profile.reviews')->with('status', 'Review updated and published on the product page.');
 }
 }
