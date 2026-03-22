@@ -8,6 +8,7 @@ use App\Models\Basket;
 use App\Models\BasketItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Session;
 
 class PartPicker extends Component
 {
@@ -71,6 +72,7 @@ class PartPicker extends Component
         'fan' => ['label' => 'Cooling Fan', 'db_name' => 'Cooling Fan'],
     ];
 
+    #[Session]
     public array $selected = [];
     public $activeCategory = null;
 
