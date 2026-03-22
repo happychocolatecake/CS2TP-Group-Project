@@ -66,6 +66,10 @@ Route::get('/build-guide', function () {
     return view('build-guide');
 })->name('build-guide');
 
+Route::get('/sitemap', function () {
+    return view('sitemap');
+})->name('sitemap');
+
 Route::get('/part-picker', function () {
     return view('partpicker-link');
 })->name('part-picker');
