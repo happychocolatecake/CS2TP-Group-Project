@@ -45,8 +45,8 @@
                         </div>
                     </div>
                     <div class="mt-8 lg:mt-0 flex justify-center">
-                        <div class="h-64 w-full bg-white rounded-lg shadow-lg flex items-center justify-center border-4 border-happy-yellow">
-                            <span class="text-gray-400 italic">Image: Happy Hardware Components</span>
+                        <div class="h-64 w-full bg-white rounded-lg shadow-lg overflow-hidden border-4 border-happy-yellow">
+                            <img src="{{ asset('images/pc_parts.jpg') }}" alt="Happy Hardware Components" class="h-full w-full object-cover">
                         </div>
                     </div>
                 </div>
