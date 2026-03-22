@@ -4,10 +4,55 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Basket;
+use App\Models\BasketItem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class PartPicker extends Component
 {
+    // ... [Keep your existing properties, categories array, selectPart, etc.] ...
+
+    public function addAllToBasket()
+    {
+        // 1. Safety check to ensure all categories are selected
+        if (count($this->selected) !== count($this->categories)) {
+            session()->flash('error', 'Please select all parts before adding to the basket.');
+            return;
+        }
+
+        // 2. Get or create the basket for the current user
+        // Note: Adapt 'user_id' if your application supports guest checkouts via session IDs
+        $basket = Basket::firstOrCreate([
+            'user_id' => Auth::id()
+        ]);
+
+        // 3. Loop through the selected parts and add them to the basket
+        foreach ($this->selected as $categoryKey => $part) {
+            // Check if the item is already in the basket to increase quantity, or create new
+            $basketItem = BasketItem::where('basket_id', $basket->id)
+            ->where('product_id', $part['id'])
+            ->first();
+
+            if ($basketItem) {
+                $basketItem->increment('quantity');
+            } else {
+                BasketItem::create([
+                    'basket_id' => $basket->id,
+                    'product_id' => $part['id'],
+                    'quantity' => 1,
+                    // 'price' => $part['price'] // Uncomment if your BasketItem table stores price
+                ]);
+            }
+        }
+
+        // 4. Clear the PC builder session array so they can start fresh
+        $this->selected = [];
+
+        // 5. Redirect to basket with a success message
+        session()->flash('success', 'Your custom PC build has been added to the basket!');
+        return redirect()->to('/basket'); // Adjust this URL to wherever your basket page is
+    }
     public array $categories = [
         'cpu' => ['label' => 'CPU', 'db_name' => 'CPU'],
         'motherboard' => ['label' => 'Motherboard', 'db_name' => 'Motherboard'],
