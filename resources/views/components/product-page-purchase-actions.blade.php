@@ -1,15 +1,14 @@
 <!--Quantity, price. add to basket-->
 <div class="purchase-block">
-    <hr class="border-black mb-6">
 
     <div class="mb-4">
-        <div class="flex justify-between items-end">
+        <div class="flex flex-col gap-8 sm:gap-10 sm:flex-row sm:justify-between sm:items-end border-t border-b border-gray-800 py-8 sm:py-10">
 
             <div class="flex items-center gap-6 text-4xl font-light select-none">
 
                 <div class="mb-4">
-                    <label class="block font-bold text-x1 mb-4">Quantity</label>
-                    <div class="flex items-center gap-6 text-4xl font-light select-none">
+                    <label class="block font-bold text-lg mb-4">Quantity</label>
+                    <div class="flex items-center gap-4 sm:gap-6 text-3xl sm:text-4xl font-light select-none">
 
                         @if($stock != 0)
                         <button type="button" id="minus_quantity"> - </button>
@@ -36,15 +35,13 @@
                 </div>
             </div>
 
-            <div class="text-6xl font-light tracking-tight">
+            <div class="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight">
                 £{{ $price }}
             </div>
         </div>
     </div>
 
-    <hr class="border-black mb-8">
-
-    <button type="submit" class="w-48 bg-gray-800 text-white py-3 px-6 rounded text-lg font-medium hover:bg-black transition duration-200 shadow-sm">
+    <button type="submit" class="w-full sm:w-56 bg-gray-800 text-white py-3 px-6 rounded text-base sm:text-lg font-medium hover:bg-black transition duration-200 shadow-sm">
         Add to basket
     </button>
 </div>

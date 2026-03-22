@@ -26,7 +26,7 @@
                 type="password"
                 name="current_password"
                 id="current_password"
-                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                class="border-gray-300 dark:bg-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                 autocomplete="current-password"
             >
             @error('current_password', 'password_update')
@@ -42,7 +42,7 @@
                 type="password"
                 name="password"
                 id="password"
-                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                class="border-gray-300 dark:bg-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                 autocomplete="new-password"
             >
             @error('password', 'password_update')
@@ -59,7 +59,7 @@
                 type="password"
                 name="password_confirmation"
                 id="password_confirmation"
-                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                class="border-gray-300 dark:bg-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                 autocomplete="new-password"
             >
         </div>
