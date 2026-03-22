@@ -8,6 +8,7 @@ use App\Models\Basket;
 use App\Models\BasketItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Session;
 
 class PartPicker extends Component
 {
@@ -71,6 +72,7 @@ class PartPicker extends Component
         'fan' => ['label' => 'Cooling Fan', 'db_name' => 'Cooling Fan'],
     ];
 
+    #[Session]
     public array $selected = [];
     public $activeCategory = null;
 
@@ -103,6 +105,18 @@ class PartPicker extends Component
     public function removePart($category)
     {
         unset($this->selected[$category]);
+    }
+
+    public function clearBuild()
+    {
+        // Empty the selected array to clear the session
+        $this->selected = [];
+
+        // Close any open dropdowns
+        $this->activeCategory = null;
+
+        // Give the user a quick confirmation message
+        session()->flash('success', 'Your build has been cleared. You can start fresh!');
     }
 
     public function getTotalProperty()
