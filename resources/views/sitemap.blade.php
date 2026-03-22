@@ -3,7 +3,7 @@
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<div class="min-h-screen pb-32 transition-colors duration-300 bg-slate-50 dark:bg-[#0f0a1a]" style="font-family: 'DM Sans', sans-serif;">
+<div class="min-h-screen pb-32 transition-colors duration-300 bg-slate-50 dark:bg-[#0f0a1a]">
 
     <div class="max-w-6xl mx-auto px-6 pt-16 md:pt-24 pb-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -118,8 +118,8 @@
             </div>
         </div>
 
-        <div class="mt-16 group relative bg-slate-900 dark:bg-[#1a1333] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 overflow-hidden border border-white/5 shadow-2xl">
-            <div class="absolute -top-24 -left-24 w-64 h-64 bg-orange-500/20 dark:bg-violet-500/20 blur-[100px]"></div>
+        <div class="mt-16 group relative bg-[#2d241e] dark:bg-[#1a1333] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 overflow-hidden border border-white/5 shadow-2xl">
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-orange-500/50 dark:bg-violet-500/20 blur-[100px]"></div>
 
             <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <div class="flex-none relative">
@@ -134,7 +134,7 @@
                 <div class="flex-1 text-center md:text-left">
                     <h3 class="text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Syne', sans-serif;">System Assistant Online</h3>
                     <p class="text-slate-400 dark:text-violet-200/50 text-base md:text-lg leading-relaxed">
-                        Need advice? <span class="text-white font-bold">Merry Mouse</span> is ready. Look for the purple star icon.
+                        Need advice? <span class="text-white font-bold">Merry Mouse</span> is ready. Look for the star icon.
                     </p>
                 </div>
 
