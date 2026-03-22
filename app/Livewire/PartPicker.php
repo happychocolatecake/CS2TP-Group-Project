@@ -107,6 +107,18 @@ class PartPicker extends Component
         unset($this->selected[$category]);
     }
 
+    public function clearBuild()
+    {
+        // Empty the selected array to clear the session
+        $this->selected = [];
+
+        // Close any open dropdowns
+        $this->activeCategory = null;
+
+        // Give the user a quick confirmation message
+        session()->flash('success', 'Your build has been cleared. You can start fresh!');
+    }
+
     public function getTotalProperty()
     {
         return array_sum(array_column($this->selected, 'price'));
