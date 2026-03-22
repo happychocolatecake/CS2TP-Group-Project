@@ -29,6 +29,7 @@
 <body class="min-h-screen bg-gray-100 text-gray-900 transition-colors duration-300 dark:bg-slate-950 dark:text-gray-100">
     @php
         $showNav = $showNav ?? auth('admin')->check();
+        $adminUser = auth('admin')->user();
         $navItems = [
             ['label' => 'Overview', 'route' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
             ['label' => 'Orders', 'route' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
@@ -37,6 +38,10 @@
             ['label' => 'Messages', 'route' => route('admin.messages.index'), 'active' => request()->routeIs('admin.messages.*')],
             ['label' => 'Returns', 'route' => route('admin.returns.index'), 'active' => request()->routeIs('admin.returns.*')],
         ];
+
+        if ($showNav && $adminUser?->isHeadAdmin()) {
+            $navItems[] = ['label' => 'Admin Management', 'route' => route('admin.management.index'), 'active' => request()->routeIs('admin.management.*')];
+        }
     @endphp
 
     <nav class="sticky top-0 z-50 bg-white text-gray-900 shadow-lg transition-colors duration-300 dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white">

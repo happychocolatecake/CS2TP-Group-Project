@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminActivity;
 use App\Models\BasketItem;
 use App\Models\Category;
 use App\Models\ContactMessage;
@@ -166,6 +167,11 @@ class DashboardController extends Controller
             'customer_seen_reply' => false,
         ]);
 
+        AdminActivity::record('message.replied', 'Replied to a customer contact message.', $message, [
+            'message_id' => $message->getKey(),
+            'subject' => $message->subject,
+        ]);
+
         return redirect()
             ->route('admin.messages.show', $message)
             ->with('success', 'Reply sent to customer message.');
@@ -215,7 +221,12 @@ class DashboardController extends Controller
 
         $data['product_createdate'] = now();
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        AdminActivity::record('product.created', 'Added a new product to the catalogue.', $product, [
+            'product_id' => $product->getKey(),
+            'product_name' => $product->product_name,
+        ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product added successfully.');
     }
@@ -227,8 +238,16 @@ class DashboardController extends Controller
                 ->with('error', 'This product is linked to existing orders and cannot be deleted.');
         }
 
+        $productName = $product->product_name;
+        $productId = $product->getKey();
+
         $this->deleteStoredProductImage($product->product_image);
         $product->delete();
+
+        AdminActivity::record('product.deleted', 'Removed a product from the catalogue.', null, [
+            'product_id' => $productId,
+            'product_name' => $productName,
+        ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product removed successfully.');
     }
@@ -240,6 +259,12 @@ class DashboardController extends Controller
         ]);
 
         $orderDetail->update([
+            'delivery_status' => $validated['delivery_status'],
+        ]);
+
+        AdminActivity::record('delivery.updated', 'Updated an order item delivery status.', $orderDetail, [
+            'order_id' => $orderDetail->order_id,
+            'product_id' => $orderDetail->product_id,
             'delivery_status' => $validated['delivery_status'],
         ]);
 
@@ -271,6 +296,11 @@ class DashboardController extends Controller
                 'delivery_status' => $mappedDeliveryStatus,
             ]);
         }
+
+        AdminActivity::record('order.status_updated', 'Updated an order status.', $order, [
+            'order_id' => $order->getKey(),
+            'order_status' => $validated['order_status'],
+        ]);
 
         return back()->with('success', 'Order status updated.');
     }
@@ -305,6 +335,11 @@ class DashboardController extends Controller
 
             $this->syncReturnOrderStatus($returnOrder->order);
         });
+
+        AdminActivity::record('return.status_updated', 'Processed a customer return request.', $returnOrder, [
+            'return_id' => $returnOrder->getKey(),
+            'return_status' => $validated['return_status'],
+        ]);
 
         return back()->with('success', 'Return request updated.');
     }
@@ -359,6 +394,13 @@ class DashboardController extends Controller
                 $this->syncReturnOrderStatus($order);
             }
         });
+
+        AdminActivity::record('support.resolved', 'Resolved a delivered order item through support.', $orderDetail, [
+            'order_id' => $order->getKey(),
+            'product_id' => $orderDetail->product_id,
+            'resolution' => $validated['resolution'],
+            'quantity' => $remainingQuantity,
+        ]);
 
         return back()->with('success', 'Support resolution saved for the selected item.');
     }

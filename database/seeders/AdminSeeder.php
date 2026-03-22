@@ -12,6 +12,7 @@ class AdminSeeder extends Seeder
     {
         $email = env('ADMIN_EMAIL', 'admin@happyhardware.local');
         $username = env('ADMIN_USERNAME', 'admin');
+        $headAdminEmail = env('HEAD_ADMIN_EMAIL', 'admin@happyhardware.local');
 
         $payload = [
             'FirstName' => env('ADMIN_FIRST_NAME', 'System'),
@@ -20,7 +21,9 @@ class AdminSeeder extends Seeder
             'admin_username' => $username,
             'admin_password' => Hash::make(env('ADMIN_PASSWORD', 'admin12345')),
             'email_verified_at' => now(),
+            'is_head_admin' => $email === $headAdminEmail,
             'remember_token' => null,
+            'updated_at' => now(),
         ];
 
         $existingAdmin = DB::table('admins')
@@ -35,6 +38,8 @@ class AdminSeeder extends Seeder
 
             return;
         }
+
+        $payload['created_at'] = now();
 
         DB::table('admins')->insert($payload);
     }
