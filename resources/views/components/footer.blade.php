@@ -1,7 +1,7 @@
 <footer class="bg-gray-800 text-white bg-gradient-to-b from-gray-800 to-gray-900 rounded-t-3xl transition-colors duration-300">
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 
-        <div class="flex flex-row justify-center gap-24 sm:gap-40">
+        <div class="flex flex-col sm:flex-row justify-center gap-12 sm:gap-24 sm:gap-40 text-center sm:text-left">
             <div class="px-4">
                 <h2 class="text-xl font-semibold text-white"> Happy Hardware </h2>
                 <p class="text-gray-400 text-sm mt-2"> Quality hardeware at the best prices. </p>
