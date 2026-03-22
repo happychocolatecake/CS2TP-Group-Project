@@ -4,10 +4,62 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Basket;
+use App\Models\BasketItem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class PartPicker extends Component
 {
+
+    public function addAllToBasket()
+    {
+        // 1. Safety check to ensure all categories are selected
+        if (count($this->selected) !== count($this->categories)) {
+            session()->flash('error', 'Please select all parts before adding to the basket.');
+            return;
+        }
+
+        // 2. MUST CHECK AUTH: Your database requires a valid user_id to create a basket.
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            // If they aren't logged in, redirect them to login with a helpful message
+            session()->flash('error', 'Please log in to add your custom build to your basket.');
+            return redirect()->route('login');
+        }
+
+        // 3. Get or create the basket for the currently logged-in user
+        $basket = \App\Models\Basket::firstOrCreate([
+            'user_id' => \Illuminate\Support\Facades\Auth::id()
+        ]);
+
+        // 4. Loop through the selected parts and add them to the basket items table
+        foreach ($this->selected as $categoryKey => $part) {
+
+            $basketItem = \App\Models\BasketItem::where('basket_id', $basket->id)
+            ->where('product_id', $part['id'])
+            ->first();
+
+            if ($basketItem) {
+                // If they already have this specific part in their basket, increment quantity
+                $basketItem->increment('quantity');
+            } else {
+                // Otherwise, create a new basket item
+                \App\Models\BasketItem::create([
+                    'basket_id' => $basket->id,
+                    'product_id' => $part['id'],
+                    'quantity' => 1,
+                ]);
+            }
+        }
+
+        // 5. Clear the PC builder session array so they can start a fresh build later
+        $this->selected = [];
+        $this->activeCategory = null;
+
+        // 6. Redirect to the basket page with a success message
+        session()->flash('success', 'Your custom PC build has been added to your basket!');
+        return redirect()->to('/basket');
+    }
     public array $categories = [
         'cpu' => ['label' => 'CPU', 'db_name' => 'CPU'],
         'motherboard' => ['label' => 'Motherboard', 'db_name' => 'Motherboard'],
