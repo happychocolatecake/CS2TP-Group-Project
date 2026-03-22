@@ -18,8 +18,8 @@
                 </h1>
             </div>
             <div class="md:text-left">
-                <p class="text-slate-500 dark:text-violet-300/60 max-w-[280px] border rounded-2xl pl-5 border-orange-500 dark:border-violet-500  leading-relaxed font-medium italic text-sm md:text-base">
-                    "The blueprint to your hardware journey. Every node organized for speed."
+                <p class="text-slate-500 dark:text-violet-300/60 max-w-[280px] border border-2 rounded-2xl pl-5 border-orange-500 dark:border-violet-500  leading-relaxed font-medium italic text-sm md:text-base">
+                    "The blueprint to your hardware journey. Every button built for speed."
                 </p>
             </div>
         </div>
