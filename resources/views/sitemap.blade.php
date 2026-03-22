@@ -40,7 +40,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <i data-lucide="home" class="w-5 h-5 text-orange-500 dark:text-violet-400"></i>
-                                <span class="font-bold text-slate-700 dark:text-slate-200">Main Dashboard</span>
+                                <span class="font-bold text-slate-700 dark:text-slate-200">Home Page</span>
                             </div>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-all"></i>
                         </div>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-3 w-full">
-                    <a href="/partpicker" class="group w-full p-5 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm hover:shadow-md">
+                    <a href="/part-picker" class="group w-full p-5 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm hover:shadow-md">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <i data-lucide="cpu" class="w-5 h-5 text-orange-500 dark:text-violet-400"></i>
@@ -95,11 +95,11 @@
 
                 <div class="grid grid-cols-1 gap-3 w-full">
                     <div class="grid grid-cols-2 gap-3">
-                        <a href="/faq" class="group p-2 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm">
+                        <a href="/faq" class="group flex flex-col items-center text-center p-2 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm">
                             <i data-lucide="help-circle" class="w-5 h-5 text-orange-500 dark:text-violet-400 mb-2"></i>
                             <div class="font-bold text-xs sm:text-sm text-slate-700 dark:text-slate-200">FAQ</div>
                         </a>
-                        <a href="/contact" class="group p-2 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm">
+                        <a href="/contact" class="group flex flex-col items-center text-center p-2 bg-white dark:bg-[#160f29] border border-slate-200 dark:border-violet-900/30 rounded-2xl hover:border-orange-400 dark:hover:border-violet-500 transition-all no-underline shadow-sm">
                             <i data-lucide="mail" class="w-5 h-5 text-orange-500 dark:text-violet-400 mb-2"></i>
                             <div class="font-bold text-xs sm:text-sm text-slate-700 dark:text-slate-200">Contact</div>
                         </a>
