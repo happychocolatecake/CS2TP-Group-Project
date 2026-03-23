@@ -130,7 +130,7 @@
                             <h3 class="mt-6 text-sm font-semibold text-gray-900 dark:text-white">Harjot Singh</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
-                                <dd class="text-sm text-gray-600 dark:text-gray-300">Backend Dev / UI</dd>
+                                <dd class="text-sm text-gray-600 dark:text-gray-300">Fullstack Dev</dd>
                             </dl>
                         </div>
                     </li>
