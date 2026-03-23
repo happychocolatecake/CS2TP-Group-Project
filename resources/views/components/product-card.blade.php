@@ -28,8 +28,15 @@
 @endphp
 
 <div class="flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-4 text-center shadow-sm transition duration-200 dark:border-gray-800 dark:bg-gray-900">
+ 
+
+
+    <div class="mb-5 flex h-44 w-full items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-slate-950">
+        <img src="{{ $image ?? '' }}" alt="{{ $title }}" class="max-h-full max-w-full object-scale-down">
+    </div>
+
     <div class="mb-5 flex w-full items-start justify-between gap-3">
-        <div class="flex flex-wrap gap-2 text-xs">
+    <div class="flex flex-wrap gap-2 text-xs">
             @if ($category)
                 <span class="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700 dark:bg-white/10 dark:text-slate-200">{{ $category }}</span>
             @endif
@@ -41,10 +48,6 @@
         @if ($stockLabel)
             <span class="rounded-full px-3 py-1 text-xs font-semibold {{ $stockClasses }}">{{ $stockLabel }}</span>
         @endif
-    </div>
-
-    <div class="mb-5 flex h-44 w-full items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-slate-950">
-        <img src="{{ $image ?? '' }}" alt="{{ $title }}" class="max-h-full max-w-full object-scale-down">
     </div>
 
     <h3 class="text-lg font-bold text-gray-900 dark:text-white sm:text-xl">{{ $title }}</h3>
