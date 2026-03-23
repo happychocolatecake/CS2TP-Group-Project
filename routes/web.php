@@ -26,8 +26,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/products', [AdminDashboardController::class, 'products'])->name('products.index');
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('users.index');
         Route::get('/messages', [AdminDashboardController::class, 'messages'])->name('messages.index');
+        Route::get('/reviews', [AdminDashboardController::class, 'websiteReviews'])->name('reviews.index');
         Route::get('/messages/{message}', [AdminDashboardController::class, 'showMessage'])->name('messages.show');
         Route::post('/messages/{message}/reply', [AdminDashboardController::class, 'replyToMessage'])->name('messages.reply');
+        Route::patch('/reviews/{websiteReview}', [AdminDashboardController::class, 'updateWebsiteReviewStatus'])->name('reviews.update');
         Route::get('/returns', [AdminDashboardController::class, 'returns'])->name('returns.index');
         Route::patch('/orders/{order}', [AdminDashboardController::class, 'updateOrderStatus'])->name('orders.update');
         Route::post('/orders/{order}/items/{orderDetail}/support-resolution', [AdminDashboardController::class, 'resolveSupportItem'])->name('orders.items.resolve');
@@ -115,8 +117,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/{order}/return-item/{product}/process', [ReturnController::class, 'processReturn'])->name('orders.return.process');
     Route::delete('/returns/{return}/cancel-pending', [ReturnController::class, 'cancelPendingReturn'])->name('orders.return.cancel');
     Route::post('/website-reviews', [WebsiteReviewController::class, 'store'])->name('website-reviews.store');
-    Route::get('/website-reviews/{websiteReview}/edit', [WebsiteReviewController::class, 'edit'])->name('website-reviews.edit');
-    Route::put('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'update'])->name('website-reviews.update');
     Route::delete('/website-reviews/{websiteReview}', [WebsiteReviewController::class, 'destroy'])->name('website-reviews.destroy');
     Route::post('/order/{order}/cancel', [ReturnController::class, 'cancel'])->name('orders.cancel');
     Route::get('/reviews/create/{order}/{product}', [ReviewController::class, 'createReview'])->name('reviews.create');

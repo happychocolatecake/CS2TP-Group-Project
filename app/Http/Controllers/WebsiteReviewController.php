@@ -22,8 +22,7 @@ class WebsiteReviewController extends Controller
 
     public function edit(WebsiteReview $websiteReview)
     {
-        if ($websiteReview->user_id !== Auth::id()) { abort(403); }
-        return view('website-reviews.edit-website-review', compact('websiteReview'));
+        abort(403, 'Website reviews cannot be edited after submission.');
     }
 
   public function store(Request $request)
@@ -48,16 +47,7 @@ class WebsiteReviewController extends Controller
 
     public function update(Request $request, WebsiteReview $websiteReview)
     {
-        if ($websiteReview->user_id !== Auth::id()) { abort(403); }
-
-        $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'review_text' => 'required|string|max:1000',
-        ]);
-
-        $websiteReview->update($request->only('rating', 'review_text'));
-
-        return redirect('/')->with('success', 'Review updated!');
+        abort(403, 'Website reviews cannot be edited after submission.');
     }
 
     public function destroy(WebsiteReview $websiteReview)

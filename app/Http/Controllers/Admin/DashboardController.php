@@ -12,6 +12,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ReturnOrder;
 use App\Models\User;
+use App\Models\WebsiteReview;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class DashboardController extends Controller
         $totalSales = (float) Order::query()->sum('total_price');
         $totalUsers = User::query()->count();
         $totalMessages = ContactMessage::query()->count();
+        $pendingWebsiteReviews = WebsiteReview::query()->where('review_status', 'Pending')->count();
         $averageOrderValue = (float) Order::query()->avg('total_price');
         $openDeliveryItems = OrderDetail::query()
             ->whereIn('delivery_status', ['Pending', 'Packed', 'Shipped', 'Out for Delivery'])
@@ -47,6 +49,7 @@ class DashboardController extends Controller
             'totalSales',
             'totalUsers',
             'totalMessages',
+            'pendingWebsiteReviews',
             'averageOrderValue',
             'openDeliveryItems',
             'salesChart',
@@ -143,6 +146,27 @@ class DashboardController extends Controller
         return view('admin.messages', compact('messages', 'filter', 'messageStats'));
     }
 
+    public function websiteReviews(Request $request): View
+    {
+        $filter = $request->string('filter')->toString() ?: 'pending';
+
+        $reviews = WebsiteReview::query()
+            ->with('user')
+            ->when($filter !== 'all', fn ($query) => $query->where('review_status', ucfirst($filter)))
+            ->latest('created_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        $reviewStats = [
+            'all' => WebsiteReview::query()->count(),
+            'pending' => WebsiteReview::query()->where('review_status', 'Pending')->count(),
+            'approved' => WebsiteReview::query()->where('review_status', 'Approved')->count(),
+            'rejected' => WebsiteReview::query()->where('review_status', 'Rejected')->count(),
+        ];
+
+        return view('admin.reviews', compact('reviews', 'filter', 'reviewStats'));
+    }
+
     public function showMessage(ContactMessage $message): View
     {
         if (! $message->admin_read_at) {
@@ -175,6 +199,25 @@ class DashboardController extends Controller
         return redirect()
             ->route('admin.messages.show', $message)
             ->with('success', 'Reply sent to customer message.');
+    }
+
+    public function updateWebsiteReviewStatus(Request $request, WebsiteReview $websiteReview): RedirectResponse
+    {
+        $validated = $request->validate([
+            'review_status' => ['required', 'in:Approved,Rejected'],
+        ]);
+
+        $websiteReview->update([
+            'review_status' => $validated['review_status'],
+        ]);
+
+        AdminActivity::record('website_review.moderated', 'Moderated a website review.', $websiteReview, [
+            'website_review_id' => $websiteReview->getKey(),
+            'review_status' => $validated['review_status'],
+            'user_id' => $websiteReview->user_id,
+        ]);
+
+        return back()->with('success', 'Website review status updated.');
     }
 
     public function returns(Request $request): View

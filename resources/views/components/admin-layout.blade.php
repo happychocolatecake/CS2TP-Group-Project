@@ -36,6 +36,7 @@
             ['label' => 'Orders', 'route' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
             ['label' => 'Products', 'route' => route('admin.products.index'), 'active' => request()->routeIs('admin.products.*')],
             ['label' => 'Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*') || request()->routeIs('admin.order-items.*')],
+            ['label' => 'Reviews', 'route' => route('admin.reviews.index'), 'active' => request()->routeIs('admin.reviews.*')],
             ['label' => 'Messages', 'route' => route('admin.messages.index'), 'active' => request()->routeIs('admin.messages.*')],
             ['label' => 'Returns', 'route' => route('admin.returns.index'), 'active' => request()->routeIs('admin.returns.*')],
         ];
