@@ -100,6 +100,92 @@
                 </div>
             </div>
 
+                        <!-- Step 3 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 bg-amber-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">3</div>
+                        <h3 class="text-xl font-bold text-slate-800">Moving In</h3>
+                    </div>
+                    <i data-lucide="arrow-right" class="text-slate-400 w-6 h-6"></i>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-600 mb-4">Now your motherboard is fully loaded, let’s give it a home.</p>
+                    <ol class="list-decimal pl-5 space-y-2 text-slate-600">
+                        <li>Gently lower the motherboard into the case.</li>
+                        <li>Line up the ports with that I/O shield you installed earlier.</li>
+                        <li>Screw the motherboard into the brass standoffs. Tighten gently—don't Hulk out!</li>
+                        <li><strong>Case Cables:</strong> Connect the tiny cables (Power SW, Reset, LED) to the motherboard pins. (Consult your manual for this puzzle!).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 4 & 5 Combined Row -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Step 4 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 bg-amber-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">4</div>
+                            <h3 class="text-xl font-bold text-slate-800">Storage</h3>
+                        </div>
+                        <i data-lucide="hard-drive" class="text-slate-400 w-6 h-6"></i>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-600"><strong>M.2 SSD:</strong> Slide the stick into the slot on the motherboard and screw it down.</p>
+                        <div class="my-4 border-t border-slate-100"></div>
+                        <p class="text-slate-600"><strong>SATA SSD/HDD:</strong> Mount the brick-style drive in a drive cage. You need two cables: one for power (from PSU) and one for data (to motherboard).</p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 bg-amber-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">5</div>
+                            <h3 class="text-xl font-bold text-slate-800">Power Supply</h3>
+                        </div>
+                        <i data-lucide="zap" class="text-slate-400 w-6 h-6"></i>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-600">Slide the PSU into the bottom (or top) slot. Usually, fan faces <strong>down</strong> towards the vent.</p>
+                        <p class="mt-2 text-slate-600">Thread your cables through to the front. You definitely need:</p>
+                        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+                            <li>Big 24-pin (Motherboard right side)</li>
+                            <li>CPU Power (Motherboard top left)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 bg-amber-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">6</div>
+                        <h3 class="text-xl font-bold text-slate-800">The Graphics Card</h3>
+                    </div>
+                    <i data-lucide="monitor" class="text-slate-400 w-6 h-6"></i>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-600 mb-4">The moment of truth for gamers.</p>
+                    <ol class="list-decimal pl-5 space-y-2 text-slate-600">
+                        <li>Find the top long PCIe slot on the motherboard.</li>
+                        <li>Remove the metal covers on the back of the case that align with it.</li>
+                        <li>Push the GPU into the slot until it <strong>CLICKS</strong>.</li>
+                        <li>Screw the metal bracket to the case so it doesn't sag.</li>
+                        <li><strong>Power Up:</strong> Plug the PCIe power cables from the PSU into the card.</li>
+                    </ol>
+                    <div class="mt-6 bg-orange-50 dark:bg-indigo-50 border border-orange-100 dark:border-indigo-100 rounded-lg p-4 flex gap-3 items-start">
+                        <i data-lucide="heart" class="text-orange-500 dark:text-indigo-500 w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                        <p class="text-sm text-orange-800 dark:text-indigo-800 font-medium">
+                            <span class="font-bold">Pro Tip:</span> Don't forget to remove the plastic covers on the GPU video ports!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <div class="bg-amber-600 rounded-[2.5rem] shadow-2xl p-8 sm:p-10 text-white text-center">
                 <i data-lucide="rocket" class="w-12 h-12 mx-auto mb-6 opacity-50"></i>
                 <h2 class="text-3xl font-black mb-4">7. Blast Off!</h2>
@@ -119,3 +205,7 @@
 </script>
 </x-layout>
 <x-footer></x-footer>
+
+
+
+

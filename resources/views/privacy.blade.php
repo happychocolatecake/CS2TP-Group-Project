@@ -4,7 +4,7 @@
         <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-40" />
     <div class="min-h-screen py-8 sm:py-12 px-4">
 
-        <main class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <main class="relative z-0 max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-white">
                 <div class="max-w-7xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:px-8">
                     <div class="text-center">

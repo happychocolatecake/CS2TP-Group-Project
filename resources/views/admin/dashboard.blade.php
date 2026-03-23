@@ -40,6 +40,11 @@
                     <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ $openDeliveryItems }}</p>
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Pending, packed, shipped, and out-for-delivery items.</p>
                 </div>
+                <a href="{{ route('admin.reviews.index') }}" class="rounded-2xl border border-gray-200 bg-gray-50 p-4 transition hover:border-gray-300 hover:bg-white dark:border-gray-800 dark:bg-slate-950/60 dark:hover:border-gray-700 dark:hover:bg-slate-900">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Pending Website Reviews</p>
+                    <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ $pendingWebsiteReviews }}</p>
+                    <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Customer website reviews waiting for approval.</p>
+                </a>
             </div>
         </section>
 
@@ -229,3 +234,4 @@
         </script>
     @endpush
 </x-admin-layout>
+

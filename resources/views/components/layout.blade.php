@@ -1,3 +1,10 @@
+@php
+    $basketPreviewItems = auth()->check() && isset($globalBasketPreview) && $globalBasketPreview
+        ? $globalBasketPreview->items->take(4)
+        : collect();
+    $showBasketPreview = auth()->check() && ! request()->routeIs('basket.view');
+@endphp
+
 <nav class="sticky top-0 z-50 bg-white text-gray-900 shadow-lg transition-colors duration-300 dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white">
         <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6">
             <div class="flex justify-between items-center gap-3">
@@ -65,15 +72,34 @@
                             </svg>
                         </a>
 
-                        <a href="/basket" class="relative rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10">
+                        <div class="group relative hidden lg:block">
+                            <a href="/basket" class="relative block rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                </svg>
+                                <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                    {{ $globalBasketCount }}
+                                </span>
+                            </a>
+
+                            @if ($showBasketPreview)
+                                <div data-basket-preview-panel class="invisible absolute right-0 top-full z-50 mt-3 w-[25rem] translate-y-2 rounded-3xl border border-gray-200 bg-white p-4 text-gray-900 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    @include('partials.basket-preview-panel', [
+                                        'basketPreview' => $globalBasketPreview,
+                                        'basketCount' => $globalBasketCount,
+                                        'basketSubtotal' => $globalBasketSubtotal,
+                                    ])
+                                </div>
+                            @endif
+                        </div>
+
+                        <a href="/basket" class="relative rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10 lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                             </svg>
-                            @if($globalBasketCount > 0)
-                                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                                    {{ $globalBasketCount }}
-                                </span>
-                            @endif
+                            <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                {{ $globalBasketCount }}
+                            </span>
                         </a>
                     </div>
 
@@ -219,6 +245,65 @@
         });
 
         observer.observe(document.documentElement, { attributes: true });
+
+        document.addEventListener('submit', function (event) {
+            var form = event.target;
+            if (!(form instanceof HTMLFormElement) || form.dataset.basketAsync !== 'true') {
+                return;
+            }
+
+            event.preventDefault();
+
+            var actionUrl = form.getAttribute('action');
+            var method = (form.getAttribute('method') || 'POST').toUpperCase();
+            if (!actionUrl) {
+                return;
+            }
+
+            fetch(actionUrl, {
+                method: method,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: new FormData(form),
+                credentials: 'same-origin',
+            })
+                .then(function (response) {
+                    return response.json().then(function (payload) {
+                        if (!response.ok) {
+                            throw payload;
+                        }
+
+                        return payload;
+                    });
+                })
+                .then(function (payload) {
+                    document.querySelectorAll('[data-basket-count-badge]').forEach(function (badge) {
+                        if (payload.basketCount > 0) {
+                            badge.textContent = payload.basketCount;
+                            badge.classList.remove('hidden');
+                        } else {
+                            badge.classList.add('hidden');
+                        }
+                    });
+
+                    var previewPanel = document.querySelector('[data-basket-preview-panel]');
+                    if (previewPanel && typeof payload.basketPreviewHtml === 'string') {
+                        previewPanel.innerHTML = payload.basketPreviewHtml;
+                    }
+
+                    var basketPage = document.querySelector('[data-basket-page]');
+                    if (basketPage && typeof payload.basketPageHtml === 'string') {
+                        basketPage.innerHTML = payload.basketPageHtml;
+                    }
+                })
+                .catch(function (payload) {
+                    if (payload && payload.message) {
+                        window.alert(payload.message);
+                    }
+                });
+        });
     })();
 
 

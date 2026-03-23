@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\AdminActivity;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,11 +53,23 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
+        AdminActivity::record('auth.login', 'Signed in to the admin dashboard.', $admin, [
+            'ip' => $request->ip(),
+        ], $admin, $admin);
+
         return redirect()->intended(route('admin.dashboard'));
     }
 
     public function logout(Request $request): RedirectResponse
     {
+        $admin = Auth::guard('admin')->user();
+
+        if ($admin instanceof Admin) {
+            AdminActivity::record('auth.logout', 'Signed out of the admin dashboard.', $admin, [
+                'ip' => $request->ip(),
+            ], $admin, $admin);
+        }
+
         Auth::guard('admin')->logout();
 
         $request->session()->invalidate();

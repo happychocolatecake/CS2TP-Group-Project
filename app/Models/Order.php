@@ -33,12 +33,17 @@ class Order extends Model
 
     public function isReturnable(): bool
     {
-        return $this->order_status === 'Delivered';
+        return in_array($this->order_status, ['Delivered', 'Partially Returned', 'Pending Partial Return'], true);
+    }
+
+    public function isReviewable(): bool
+    {
+        return in_array($this->order_status, ['Delivered', 'Pending Partial Return', 'Pending Full Return', 'Partially Returned', 'Fully Returned'], true);
     }
 
     public function isCancellable(): bool
     {
-        return in_array($this->order_status, ['Placed', 'Packed'], true);
+        return in_array($this->order_status, ['Pending', 'Placed', 'Packed'], true);
     }
 
     public function getColourStatus()

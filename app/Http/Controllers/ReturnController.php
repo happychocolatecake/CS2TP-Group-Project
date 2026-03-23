@@ -44,7 +44,7 @@ class ReturnController extends Controller
             abort(403);
         }
 
-        if (! $order->isReturnable()) {
+        if (!$order->isReturnable()) {
             return redirect()->route('profile.orders.show', $orderId)->with('error', 'Only delivered orders can be returned.');
         }
 

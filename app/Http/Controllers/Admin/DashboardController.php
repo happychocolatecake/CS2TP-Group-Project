@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminActivity;
 use App\Models\BasketItem;
 use App\Models\Category;
 use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ProductSpec;
 use App\Models\ReturnOrder;
 use App\Models\User;
+use App\Models\WebsiteReview;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +30,7 @@ class DashboardController extends Controller
         $totalSales = (float) Order::query()->sum('total_price');
         $totalUsers = User::query()->count();
         $totalMessages = ContactMessage::query()->count();
+        $pendingWebsiteReviews = WebsiteReview::query()->where('review_status', 'Pending')->count();
         $averageOrderValue = (float) Order::query()->avg('total_price');
         $openDeliveryItems = OrderDetail::query()
             ->whereIn('delivery_status', ['Pending', 'Packed', 'Shipped', 'Out for Delivery'])
@@ -46,6 +50,7 @@ class DashboardController extends Controller
             'totalSales',
             'totalUsers',
             'totalMessages',
+            'pendingWebsiteReviews',
             'averageOrderValue',
             'openDeliveryItems',
             'salesChart',
@@ -59,7 +64,7 @@ class DashboardController extends Controller
 
     public function products(): View
     {
-        $products = Product::with('category')->latest('id')->paginate(12);
+        $products = Product::with('category', 'specs')->latest('id')->paginate(12);
         $categories = Category::orderBy('category_name')->get();
 
         return view('admin.products', compact('products', 'categories'));
@@ -142,6 +147,27 @@ class DashboardController extends Controller
         return view('admin.messages', compact('messages', 'filter', 'messageStats'));
     }
 
+    public function websiteReviews(Request $request): View
+    {
+        $filter = $request->string('filter')->toString() ?: 'pending';
+
+        $reviews = WebsiteReview::query()
+            ->with('user')
+            ->when($filter !== 'all', fn ($query) => $query->where('review_status', ucfirst($filter)))
+            ->latest('created_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        $reviewStats = [
+            'all' => WebsiteReview::query()->count(),
+            'pending' => WebsiteReview::query()->where('review_status', 'Pending')->count(),
+            'approved' => WebsiteReview::query()->where('review_status', 'Approved')->count(),
+            'rejected' => WebsiteReview::query()->where('review_status', 'Rejected')->count(),
+        ];
+
+        return view('admin.reviews', compact('reviews', 'filter', 'reviewStats'));
+    }
+
     public function showMessage(ContactMessage $message): View
     {
         if (! $message->admin_read_at) {
@@ -166,9 +192,33 @@ class DashboardController extends Controller
             'customer_seen_reply' => false,
         ]);
 
+        AdminActivity::record('message.replied', 'Replied to a customer contact message.', $message, [
+            'message_id' => $message->getKey(),
+            'subject' => $message->subject,
+        ]);
+
         return redirect()
             ->route('admin.messages.show', $message)
             ->with('success', 'Reply sent to customer message.');
+    }
+
+    public function updateWebsiteReviewStatus(Request $request, WebsiteReview $websiteReview): RedirectResponse
+    {
+        $validated = $request->validate([
+            'review_status' => ['required', 'in:Approved,Rejected'],
+        ]);
+
+        $websiteReview->update([
+            'review_status' => $validated['review_status'],
+        ]);
+
+        AdminActivity::record('website_review.moderated', 'Moderated a website review.', $websiteReview, [
+            'website_review_id' => $websiteReview->getKey(),
+            'review_status' => $validated['review_status'],
+            'user_id' => $websiteReview->user_id,
+        ]);
+
+        return back()->with('success', 'Website review status updated.');
     }
 
     public function returns(Request $request): View
@@ -206,6 +256,9 @@ class DashboardController extends Controller
             'product_stock' => ['required', 'integer', 'min:0'],
             'product_colour' => ['required', 'string', 'max:50'],
             'category_id' => ['required', 'exists:product_category,id'],
+            'specs' => ['nullable', 'array'],
+            'specs.*.key' => ['required_with:specs', 'string', 'max:255'],
+            'specs.*.value' => ['required_with:specs', 'string', 'max:255'],
         ]);
 
         if ($request->hasFile('product_image')) {
@@ -215,7 +268,24 @@ class DashboardController extends Controller
 
         $data['product_createdate'] = now();
 
-        Product::create($data);
+        $product = Product::create(collect($data)->except(['specs'])->toArray());
+
+        if ($request->has('specs') && is_array($request->specs)) {
+            foreach ($request->specs as $spec) {
+                if (!empty($spec['key']) && !empty($spec['value'])) {
+                    ProductSpec::create([
+                        'product_id' => $product->id,
+                        'spec_key' => trim($spec['key']),
+                        'spec_value' => trim($spec['value']),
+                    ]);
+                }
+            }
+        }
+
+        AdminActivity::record('product.created', 'Added a new product to the catalogue.', $product, [
+            'product_id' => $product->getKey(),
+            'product_name' => $product->product_name,
+        ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product added successfully.');
     }
@@ -227,8 +297,16 @@ class DashboardController extends Controller
                 ->with('error', 'This product is linked to existing orders and cannot be deleted.');
         }
 
+        $productName = $product->product_name;
+        $productId = $product->getKey();
+
         $this->deleteStoredProductImage($product->product_image);
         $product->delete();
+
+        AdminActivity::record('product.deleted', 'Removed a product from the catalogue.', null, [
+            'product_id' => $productId,
+            'product_name' => $productName,
+        ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product removed successfully.');
     }
@@ -240,6 +318,12 @@ class DashboardController extends Controller
         ]);
 
         $orderDetail->update([
+            'delivery_status' => $validated['delivery_status'],
+        ]);
+
+        AdminActivity::record('delivery.updated', 'Updated an order item delivery status.', $orderDetail, [
+            'order_id' => $orderDetail->order_id,
+            'product_id' => $orderDetail->product_id,
             'delivery_status' => $validated['delivery_status'],
         ]);
 
@@ -271,6 +355,11 @@ class DashboardController extends Controller
                 'delivery_status' => $mappedDeliveryStatus,
             ]);
         }
+
+        AdminActivity::record('order.status_updated', 'Updated an order status.', $order, [
+            'order_id' => $order->getKey(),
+            'order_status' => $validated['order_status'],
+        ]);
 
         return back()->with('success', 'Order status updated.');
     }
@@ -305,6 +394,11 @@ class DashboardController extends Controller
 
             $this->syncReturnOrderStatus($returnOrder->order);
         });
+
+        AdminActivity::record('return.status_updated', 'Processed a customer return request.', $returnOrder, [
+            'return_id' => $returnOrder->getKey(),
+            'return_status' => $validated['return_status'],
+        ]);
 
         return back()->with('success', 'Return request updated.');
     }
@@ -360,17 +454,24 @@ class DashboardController extends Controller
             }
         });
 
+        AdminActivity::record('support.resolved', 'Resolved a delivered order item through support.', $orderDetail, [
+            'order_id' => $order->getKey(),
+            'product_id' => $orderDetail->product_id,
+            'resolution' => $validated['resolution'],
+            'quantity' => $remainingQuantity,
+        ]);
+
         return back()->with('success', 'Support resolution saved for the selected item.');
     }
 
     private function deliveryStatuses(): array
     {
-        return ['Pending', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
+        return ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
     }
 
     private function orderStatuses(): array
     {
-        return ['Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled', 'Refunded'];
+        return ['Placed', 'Shipped', 'Delivered', 'Cancelled'];
     }
 
     private function syncReturnOrderStatus(Order $order): void

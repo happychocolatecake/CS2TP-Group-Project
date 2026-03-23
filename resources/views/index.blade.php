@@ -1,33 +1,58 @@
 <x-header></x-header>
 
 <x-layout>
-    <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-10 md:mb-12">
+   <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 dark:bg-gray-800 mb-10 md:mb-12 rounded-3xl overflow-hidden shadow-xl">
+    <div class="relative h-64 overflow-hidden sm:h-80 md:h-auto">
+        <img id="hero-pc-img" src="/images/orangepc.png" alt="Cool PC" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-200/30 dark:to-gray-800/30 md:block hidden"></div>
+    </div>
 
+    <div class="p-8 sm:p-10 md:p-14 flex flex-col justify-center gap-6">
 
-        <div class="h-56 overflow-hidden sm:h-72 md:h-auto">
-            <img src="/images/hero_pc.jpg" alt="Cool PC" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+        <div>
+            <span class="inline-block text-xs font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 mb-3">Happy Hardware</span>
+            <h1 class="text-3xl sm:text-4xl font-black leading-tight text-gray-900 dark:text-white">
+                Your Dream Build.<br>
+                <span class="text-gray-600 dark:text-gray-300">Without the Guesswork.</span>
+            </h1>
         </div>
 
-        <div class="p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed max-w-sm">
+            We offer the best prices on CPUs, GPUs and pre-builts. Better service, better gaming.
+        </p>
 
-            <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">
-                "Your Dream Build. Without the Guesswork."
-            </h1>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <a href="/store"
+               class="inline-flex items-center justify-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/></svg>
+                Shop Now
+            </a>
+            <a href="/build-guide"
+               class="inline-flex items-center justify-center gap-2 border-2 border-gray-900 dark:border-gray-400 text-gray-900 dark:text-gray-300 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-900 dark:hover:bg-gray-700 hover:text-white transition-all duration-200 hover:scale-105 active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                Build Guide
+            </a>
+        </div>
 
-            <p class="text-gray-600 mb-6 sm:mb-8">
-                    We offer the best prices on CPUs, GPUs and pre-builts. Better service, better gaming.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded text-center hover:bg-gray-700">
-                    Shop Now
-                </a>
-                <a href="/build-guide" class="bg-gray-900 text-white px-6 py-3 rounded text-center hover:bg-gray-600">
-                    Build Guide
-                </a>
+        <div class="flex items-center gap-6 pt-2 border-t border-gray-300 dark:border-gray-700">
+            <div class="text-center">
+                <p class="text-lg font-black text-gray-900 dark:text-white">500+</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Products</p>
+            </div>
+            <div class="w-px h-8 bg-gray-300 dark:bg-gray-700"></div>
+            <div class="text-center">
+                <p class="text-lg font-black text-gray-900 dark:text-white">2 Year</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Warranty</p>
+            </div>
+            <div class="w-px h-8 bg-gray-300 dark:bg-gray-700"></div>
+            <div class="text-center">
+                <p class="text-lg font-black text-gray-900 dark:text-white">Free</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">UK Shipping</p>
             </div>
         </div>
+
     </div>
+</div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
 
@@ -135,7 +160,6 @@
                                 </div>
                             </div>
                             <div class="flex gap-4 text-sm">
-                                <a href="{{ route('website-reviews.edit', $userReview) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
                                 <form action="{{ route('website-reviews.destroy', $userReview->id) }}" method="POST" onsubmit="return confirm('Delete this review?')">
                                     @csrf @method('DELETE')
                                     <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
@@ -273,4 +297,17 @@
 
 <x-footer></x-footer>
 
+<script>
+    //script that changes the image of the website based on light mode and dark mode
+    function updateHeroImage() {
+        var img = document.getElementById('hero-pc-img');
+        if (!img) return;
+        img.src = document.documentElement.classList.contains('dark') ? '/images/hero_pc.png' : '/images/orangepc.png';
+    }
+    updateHeroImage();
 
+    //mutations check for changes in the website
+    new MutationObserver(updateHeroImage).observe(
+        document.documentElement, { attributes: true, attributeFilter: ['class'] }
+    );
+</script>

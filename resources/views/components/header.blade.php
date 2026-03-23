@@ -32,7 +32,7 @@
             darkMode: 'class',
         };
     </script>
-    <style>
+        <style>
         .dark body { background-color: #0f172a; color: #e5e7eb; }
         .dark .bg-white { background-color: #111827 !important; }
         .dark .bg-gray-50 { background-color: #1f2937 !important; }
@@ -69,6 +69,7 @@
         .dark .from-orange-500 { --tw-gradient-from: #8b5cf6 !important; }
         .dark .to-amber-600 { --tw-gradient-to: #6d28d9 !important; }
     </style>
+    @include('partials.theme-overrides')
     @livewireStyles
     <link rel="icon" href="{{ asset('mouse.jpeg') }}">
 </head>

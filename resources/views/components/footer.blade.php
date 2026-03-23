@@ -13,12 +13,12 @@
                 </h3>
                 <ul role="list" class="mt-4 space-y-4">
                     <li>
-                        <a href="faq" class="text-base text-gray-300 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                        <a href="{{ route('faq') }}" class="text-base text-gray-300 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                             FAQ
                         </a>
                     </li>
                     <li>
-                        <a href="build-guide" class="text-base text-gray-300 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                        <a href="{{ route('build-guide') }}" class="text-base text-gray-300 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                             How-to Guides
                         </a>
                     </li>
@@ -31,12 +31,12 @@
                 </h3>
                 <ul role="list" class="mt-4 space-y-4">
                     <li>
-                        <a href="privacy" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                        <a href="{{ route('privacy') }}" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                             Privacy Policy
                         </a>
                     </li>
                     <li>
-                        <a href="/sitemap" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
+                        <a href="{{ route('sitemap') }}" class="text-base text-gray-400 hover:text-white transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                             Sitemap
                         </a>
                     </li>
