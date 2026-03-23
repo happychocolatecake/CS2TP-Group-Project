@@ -450,12 +450,12 @@ class DashboardController extends Controller
 
     private function deliveryStatuses(): array
     {
-        return ['Pending', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
+        return ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
     }
 
     private function orderStatuses(): array
     {
-        return ['Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled', 'Refunded'];
+        return ['Placed', 'Shipped', 'Delivered', 'Cancelled'];
     }
 
     private function syncReturnOrderStatus(Order $order): void

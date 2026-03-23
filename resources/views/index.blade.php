@@ -3,7 +3,7 @@
 <x-layout>
    <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 dark:bg-gray-800 mb-10 md:mb-12 rounded-3xl overflow-hidden shadow-xl">
     <div class="relative h-64 overflow-hidden sm:h-80 md:h-auto">
-        <img id="hero-pc-img" src="/images/hero_pc.jpg" alt="Cool PC" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+        <img id="hero-pc-img" src="/images/orangepc.png" alt="Cool PC" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-200/30 dark:to-gray-800/30 md:block hidden"></div>
     </div>
 

@@ -1,5 +1,4 @@
 <div class="relative min-h-screen w-full overflow-hidden bg-slate-100/80 dark:bg-slate-950/80">
-    <x-video-background lightOpacity="opacity-10" darkOpacity="opacity-20" />
     <style>
         .store-range {
             pointer-events: none;
