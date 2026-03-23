@@ -7,7 +7,7 @@
     <div class= "relative z-10 text-gray-800 font-sans flex flex-col min-h-screen">
     <main class="grow pt-8 sm:pt-12 md:pt-16">
 
-        <div class="bg-gray-50">
+        <div class="bg-gray-200/50 dark:bg-[#1f2937]/50">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h1 class="text-3xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">

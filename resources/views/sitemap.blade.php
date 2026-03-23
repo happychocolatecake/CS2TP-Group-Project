@@ -8,11 +8,6 @@
     <div class="max-w-6xl mx-auto px-6 pt-16 md:pt-24 pb-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-violet-900/30 text-[10px] font-black tracking-[0.2em] uppercase text-orange-600 dark:text-violet-400 border border-orange-200 dark:border-violet-800/50">
-                        Navigation
-                    </span>
-                </div>
                 <h1 class="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white" style="font-family: 'Syne', sans-serif;">
                     Sitemap
                 </h1>
@@ -132,7 +127,7 @@
                 </div>
 
                 <div class="flex-1 text-center md:text-left">
-                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Syne', sans-serif;">System Assistant Online</h3>
+                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Syne', sans-serif;">System Assistant Chatbot</h3>
                     <p class="text-slate-400 dark:text-violet-200/50 text-base md:text-lg leading-relaxed">
                         Need advice? <span class="text-white font-bold">Merry Mouse</span> is ready. Look for the star icon.
                     </p>
