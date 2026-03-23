@@ -24,19 +24,17 @@
         <div class="flex flex-col sm:flex-row gap-3">
             <a href="/store"
                class="inline-flex items-center justify-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/></svg>
                 Shop Now
             </a>
             <a href="/build-guide"
                class="inline-flex items-center justify-center gap-2 border-2 border-gray-900 dark:border-gray-400 text-gray-900 dark:text-gray-300 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-900 dark:hover:bg-gray-700 hover:text-white transition-all duration-200 hover:scale-105 active:scale-95">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
                 Build Guide
             </a>
         </div>
 
         <div class="flex items-center gap-6 pt-2 border-t border-gray-300 dark:border-gray-700">
             <div class="text-center">
-                <p class="text-lg font-black text-gray-900 dark:text-white">500+</p>
+                <p class="text-lg font-black text-gray-900 dark:text-white">45+</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Products</p>
             </div>
             <div class="w-px h-8 bg-gray-300 dark:bg-gray-700"></div>

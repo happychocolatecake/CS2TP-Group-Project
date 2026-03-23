@@ -54,11 +54,11 @@ This project is managed using the **Kanban (Agile)** methodology, chosen for its
 | Username | Name | Role |
 | :--- | :--- | :--- |
 |aishajama1| Aisha Jama | Frontend Development  |
-|happychocolatecake| Aishah Hussain | Backend Development  |
+|happychocolatecake| Aishah Hussain | Fullstack & DB Lead  |
 |Samdoses| Samuel D'Souza | Frontend Development / UI  |
 |ZainKhan-19| Zain Khan | Frontend Development  |
 |mnm-hbtl| Mohamoud Mohamoud | Backend Development  |
-|Jot17| Harjot Singh | Backend Development / UI  |
+|Jot17| Harjot Singh | Fullstack Dev |
 |TomThackham| Thomas Thackham | Frontend Development  |
 |yusuf19-saif| Yusuf Saif | Backend Development  |
 
