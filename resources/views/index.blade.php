@@ -135,7 +135,6 @@
                                 </div>
                             </div>
                             <div class="flex gap-4 text-sm">
-                                <a href="{{ route('website-reviews.edit', $userReview) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
                                 <form action="{{ route('website-reviews.destroy', $userReview->id) }}" method="POST" onsubmit="return confirm('Delete this review?')">
                                     @csrf @method('DELETE')
                                     <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
