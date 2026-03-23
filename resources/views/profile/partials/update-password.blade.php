@@ -1,9 +1,9 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-medium text-gray-900 dark:text-white">
             {{ __('Change Password') }}
         </h2>
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
             {{ __('Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>
@@ -19,7 +19,7 @@
         @method('put')
 
         <div>
-            <label for="current_password" class="block font-medium text-sm text-gray-700">
+            <label for="current_password" class="block font-medium text-sm text-gray-700 dark:text-gray-200">
                 Current Password
             </label>
             <input
@@ -35,7 +35,7 @@
         </div>
 
         <div>
-            <label for="password" class="block font-medium text-sm text-gray-700">
+            <label for="password" class="block font-medium text-sm text-gray-700 dark:text-gray-200">
                 New Password
             </label>
             <input
@@ -52,7 +52,7 @@
 
         {{-- 3. Confirm Password --}}
         <div>
-            <label for="password_confirmation" class="block font-medium text-sm text-gray-700">
+            <label for="password_confirmation" class="block font-medium text-sm text-gray-700 dark:text-gray-200">
                 Confirm Password
             </label>
             <input

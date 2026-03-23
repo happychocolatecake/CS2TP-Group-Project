@@ -24,6 +24,7 @@
     <script>
         tailwind.config = { darkMode: 'class' };
     </script>
+    @include('partials.theme-overrides')
     <link rel="icon" href="{{ asset('mouse.jpeg') }}">
 </head>
 <body class="min-h-screen bg-gray-100 text-gray-900 transition-colors duration-300 dark:bg-slate-950 dark:text-gray-100">
