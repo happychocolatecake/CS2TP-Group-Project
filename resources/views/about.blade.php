@@ -61,7 +61,12 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+                            </svg>
+
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Aisha Jama</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -72,7 +77,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
+
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Aishah Hussain</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -83,7 +92,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+                            </svg>
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Samuel D'Souza</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -94,7 +107,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+                            </svg>
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Zain Khan</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -105,7 +122,11 @@
 
                      <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
+
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Harjot Singh</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -116,7 +137,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+                            </svg>
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Thomas Thackham</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -127,7 +152,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
+
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Mohamoud Mohamoud</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
@@ -138,7 +167,11 @@
 
                     <li class="col-span-1 flex flex-col text-center bg-gray-50 rounded-lg shadow divide-y divide-gray-200">
                         <div class="flex-1 flex flex-col p-8">
-                            <div class="w-24 h-24 mx-auto bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
+
+                            </div>
                             <h3 class="mt-6 text-gray-900 text-sm font-medium">Yusuf Saif</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
