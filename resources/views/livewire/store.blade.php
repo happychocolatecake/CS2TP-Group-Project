@@ -131,7 +131,6 @@
                         <div class="flex items-center justify-between gap-3">
                             <div>
                                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Filters</h2>
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Tighten the result set quickly.</p>
                             </div>
                             <button wire:click="resetFilters" type="button" class="text-xs font-semibold uppercase tracking-wide text-indigo-600 transition hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200">
                                 Reset
