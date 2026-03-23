@@ -85,7 +85,7 @@
                             <h3 class="mt-6 text-sm font-semibold text-gray-900 dark:text-white">Aishah Hussain</h3>
                             <dl class="mt-1 flex-grow flex flex-col justify-between">
                                 <dt class="sr-only">Role</dt>
-                                <dd class="text-sm text-gray-600 dark:text-gray-300">Backend Development & DB</dd>
+                                <dd class="text-sm text-gray-600 dark:text-gray-300">Fullstack,Backend,Frontend,Develop,Owner,Shareholder,Employee,CEO,Senior Enginner,Doctor & DB</dd>
                             </dl>
                         </div>
                     </li>
