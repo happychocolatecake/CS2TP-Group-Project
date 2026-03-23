@@ -7,16 +7,6 @@
         color-scheme: dark;
     }
 
-    html:not(.dark) body {
-        background-color: #fff7ed !important;
-        color: #1f2937;
-    }
-
-    html:not(.dark) ::selection {
-        background: #fb923c;
-        color: #ffffff;
-    }
-
     .dark body {
         background-color: #0f172a;
         color: #e5e7eb;
@@ -119,26 +109,4 @@
     .dark .from-orange-500\/20 { --tw-gradient-from: rgba(139, 92, 246, 0.2) !important; }
     .dark .from-orange-500 { --tw-gradient-from: #8b5cf6 !important; }
     .dark .to-amber-600 { --tw-gradient-to: #6d28d9 !important; }
-
-    .brand-light-button {
-        background: linear-gradient(135deg, #f97316, #fb923c);
-        color: #ffffff;
-        box-shadow: 0 10px 24px rgba(249, 115, 22, 0.22);
-    }
-
-    .brand-light-button:hover {
-        background: linear-gradient(135deg, #ea580c, #f97316);
-    }
-
-    .brand-light-outline {
-        border-color: #fdba74;
-        color: #c2410c;
-        background-color: rgba(255, 255, 255, 0.88);
-    }
-
-    .brand-light-outline:hover {
-        background-color: #fff7ed;
-        border-color: #fb923c;
-        color: #9a3412;
-    }
 </style>

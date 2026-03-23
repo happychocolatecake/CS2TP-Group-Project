@@ -1,7 +1,7 @@
 <x-header></x-header>
 
 <x-layout>
-    <div class="mb-10 grid grid-cols-1 overflow-hidden rounded-[2rem] border border-orange-100 bg-gradient-to-r from-orange-50 via-white to-amber-50 shadow-sm shadow-orange-100/60 md:mb-12 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 dark:shadow-none">
+    <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 mb-10 md:mb-12">
 
 
         <div class="h-56 overflow-hidden sm:h-72 md:h-auto">
@@ -19,10 +19,10 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <a href="/store" class="rounded-full bg-orange-500 px-6 py-3 text-center font-semibold text-white shadow-lg shadow-orange-200/60 transition hover:bg-orange-600">
+                <a href="/store" class="bg-gray-900 text-white px-6 py-3 rounded text-center hover:bg-gray-700">
                     Shop Now
                 </a>
-                <a href="/build-guide" class="rounded-full border border-orange-200 bg-white px-6 py-3 text-center font-semibold text-orange-700 transition hover:bg-orange-50">
+                <a href="/build-guide" class="bg-gray-900 text-white px-6 py-3 rounded text-center hover:bg-gray-600">
                     Build Guide
                 </a>
             </div>
@@ -35,40 +35,40 @@
 
             <a href="/store?selectedCategories[0]=1" class="block group">
                 <div class="transform transition duration-300 hover:translate-y-2 hover:shadow-lg">
-                    <div class="mb-3 flex h-48 items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-amber-100 transition group-hover:-translate-y-1 group-hover:border-orange-200 group-hover:shadow-lg group-hover:shadow-orange-100/70">
-                        <span class="font-bold text-xl text-orange-700">Components</span>
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Components</span>
                     </div>
                 </div>
-                <h3 class="text-lg font-semibold text-orange-950">Shop Individual Parts</h3>
+                <h3 class="text-lg font-semibold">Shop Individual Parts</h3>
             </a>
 
             <a href="/store?selectedCategories[0]=2" class="block group">
                 <div class="transform transition duration-300 hover:translate-y-1 hover:shadow-lg">
-                    <div class="mb-3 flex h-48 items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-amber-100 transition group-hover:-translate-y-1 group-hover:border-orange-200 group-hover:shadow-lg group-hover:shadow-orange-100/70">
-                        <span class="font-bold text-xl text-orange-700">Pre-Built</span>
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Pre-Built</span>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-semibold text-orange-950">Ready to Game</h3>
+                <h3 class="text-lg font-semibold">Ready to Game</h3>
             </a>
 
             <a href="/store?selectedCategories[0]=3" class="block group">
                 <div class="transform transition duration-300 hover:translate-y-2 hover:shadow-lg">
-                    <div class="mb-3 flex h-48 items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-amber-100 transition group-hover:-translate-y-1 group-hover:border-orange-200 group-hover:shadow-lg group-hover:shadow-orange-100/70">
-                        <span class="font-bold text-xl text-orange-700">Bundles</span>
+                    <div class="h-48 bg-gray-300 rounded-lg mb-3 flex items-center justify-center group-hover:bg-gray-400 transition">
+                        <span class="text-gray-500 font-bold text-xl">Bundles</span>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-semibold text-orange-950">Save with Bundles</h3>
+                <h3 class="text-lg font-semibold">Save with Bundles</h3>
             </a>
         </div>
 
     </div>
 
-    <div class="mb-16 rounded-[2rem] bg-gradient-to-b from-white to-orange-50 py-12">
+    <div class="bg-gray-100 py-12 mb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <h2 class="mb-10 text-center text-3xl font-bold text-orange-950">Best Sellers</h2>
+            <h2 class="text-3xl font-bold text-center mb-10">Best Sellers</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    <div class="rounded-[2rem] bg-white py-16 ring-1 ring-orange-100/80">
+    <div class="bg-gray-50 py-16">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center w-full justify-center">
                 <div class="hidden md:block -mt-12">
@@ -121,10 +121,10 @@
 
             @auth
                 @if($userReview)
-                    <div class="mx-auto mb-12 max-w-3xl rounded-2xl border-2 border-orange-100 bg-orange-50/70 p-5 shadow-sm sm:p-6">
+                    <div class="max-w-3xl mx-auto mb-12 bg-white p-5 sm:p-6 rounded-2xl border-2 border-indigo-100 shadow-sm">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                             <div class="flex items-center gap-3">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 font-bold text-white">
+                                <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
                                     {{ substr($userReview->user->first_name, 0, 1) }}
                                 </div>
                                 <div>
@@ -135,6 +135,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-4 text-sm">
+                                <a href="{{ route('website-reviews.edit', $userReview) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
                                 <form action="{{ route('website-reviews.destroy', $userReview->id) }}" method="POST" onsubmit="return confirm('Delete this review?')">
                                     @csrf @method('DELETE')
                                     <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
@@ -147,12 +148,11 @@
                             @endfor
                         </div>
                         <p class="text-gray-700 italic">"{{ $userReview->review_text }}"</p>
-                        <p class="mt-3 text-xs text-gray-500">Once submitted, website reviews cannot be edited.</p>
                     </div>
                 @else
                     <div class="text-center mb-12">
                         <button onclick="document.getElementById('websiteReviewPopup').classList.remove('hidden')"
-                                class="rounded-full bg-orange-500 px-8 py-3 font-bold text-white shadow-lg shadow-orange-200/60 transition hover:bg-orange-600">
+                                class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-lg">
                             Write a Website Review
                         </button>
                     </div>
@@ -162,7 +162,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             @foreach($websiteReviews as $review)
-                <div class="flex flex-col justify-between rounded-2xl border border-orange-100 bg-white p-8 shadow-sm shadow-orange-100/50 transition-transform hover:scale-[1.02] hover:shadow-lg hover:shadow-orange-100/70">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between transition-transform hover:scale-[1.02]">
                     <div>
                         <div class="flex text-yellow-400 mb-4">
                             @for($i=1; $i<=5; $i++)
@@ -173,7 +173,7 @@
                     </div>
 
                     <div class="flex items-center gap-3 border-t pt-6">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 font-semibold text-orange-700">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-semibold text-gray-500">
                             {{ substr($review->user->first_name, 0, 1) }}
                         </div>
                         <div>
@@ -200,46 +200,46 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
         <div class="flex flex-col item-center">
-            <div class="mb-4 flex items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-6 shadow-sm shadow-orange-100/50">
+            <div class="bg-gray-200 p-6 rounded-2xl mb-4 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
                 </svg>
 
             </div>
-            <p class="rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm text-orange-900 shadow-sm shadow-orange-100/40">Purchase Bundles, chosen by our experts</p>
+            <p class="bg-gray-200 p-2 px-4 rounded text-sm">Purchase Bundles, chosen by our experts</p>
         </div>
 
         <div class="flex flex-col item-center">
-            <div class="mb-4 flex items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-6 shadow-sm shadow-orange-100/50">
+            <div class="bg-gray-200 p-6 rounded-2xl mb-4 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
 
             </div>
-            <p class="rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm text-orange-900 shadow-sm shadow-orange-100/40">Configure and check for compactibility to build your dream PC</p>
+            <p class="bg-gray-200 p-2 px-4 rounded text-sm">Configure and check for compactibility to build your dream PC</p>
         </div>
 
         <div class="flex flex-col item-center">
-            <div class="mb-4 flex items-center justify-center rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-6 shadow-sm shadow-orange-100/50">
+            <div class="bg-gray-200 p-6 rounded-2xl mb-4 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
                 </svg>
 
             </div>
-            <p class="rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm text-orange-900 shadow-sm shadow-orange-100/40">To learn the essentials of building a PC, read our guides.</p>
+            <p class="bg-gray-200 p-2 px-4 rounded text-sm">To learn the essentials of building a PC, read our guides.</p>
         </div>
 
         </div>
 
         <div class="mt-12">
-            <a href="/build-guide" class="rounded-full bg-orange-500 px-8 py-3 text-white shadow-lg shadow-orange-200/60 transition hover:bg-orange-600 dark:bg-gray-800">
+            <a href="/build-guide" class="bg-gray-900 dark:bg-gray-800 text-white px-8 py-3 rounded hover:bg-gray-700 transition">
                 Start Now
             </a>
         </div>
     </div>
 
-    <div id="websiteReviewPopup" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
-        <div class="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-orange-100 bg-white p-6 shadow-2xl shadow-orange-100/70 sm:p-8">
+    <div id="websiteReviewPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 p-4 flex items-center justify-center z-50">
+        <div class="bg-white p-6 sm:p-8 rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold mb-4">Write a Review</h2>
 
             <form action="{{ route('website-reviews.store') }}" method="POST">
@@ -262,7 +262,7 @@
 
                 <div class="flex flex-col-reverse sm:flex-row justify-end gap-3">
                     <button type="button" onclick="document.getElementById('websiteReviewPopup').classList.add('hidden')" class="px-4 py-2 text-gray-500">Cancel</button>
-                    <button type="submit" class="rounded-lg bg-orange-500 px-6 py-2 font-bold text-white transition hover:bg-orange-600">Submit Review</button>
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold">Submit Review</button>
                 </div>
             </form>
         </div>
@@ -272,6 +272,5 @@
 </x-layout>
 
 <x-footer></x-footer>
-
 
 

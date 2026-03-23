@@ -5,7 +5,7 @@
     $showBasketPreview = auth()->check() && ! request()->routeIs('basket.view');
 @endphp
 
-<nav class="sticky top-0 z-50 border-b border-orange-100 bg-white/95 text-gray-900 shadow-lg shadow-orange-100/60 backdrop-blur transition-colors duration-300 dark:border-transparent dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white dark:shadow-black/20">
+<nav class="sticky top-0 z-50 bg-white text-gray-900 shadow-lg transition-colors duration-300 dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white">
         <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6">
             <div class="flex justify-between items-center gap-3">
 
@@ -15,20 +15,20 @@
                         <img id="main-logo" src="{{ asset('images/logo-removebg-preview.png') }}" alt="Happy Hardware" class="h-12 w-auto drop-shadow-lg sm:h-14 md:h-16" >
                     </a>
 
-                    <div id="main-nav-links" class="relative hidden items-center space-x-1 rounded-full bg-orange-50 px-2 py-1 ring-1 ring-orange-100 md:flex dark:bg-white/5 dark:ring-0">
-                        <span id="main-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 shadow-sm shadow-orange-200/60 transition-all duration-300 ease-out dark:bg-white/10 dark:shadow-none"></span>
-                        <a href="/" data-nav-link data-active="{{ request()->routeIs('home') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('home') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">Home</a>
-                        <a href="/store" data-nav-link data-active="{{ request()->is('store*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('store*') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">Store</a>
-                        <a href="/build-guide" data-nav-link data-active="{{ request()->is('build-guide*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('build-guide*') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">Build Guide</a>
-                        <a href="{{ route('part-picker') }}" data-nav-link data-active="{{ request()->is('part-picker*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('part-picker*') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">Part Picker</a>
-                        <a href="/about" data-nav-link data-active="{{ request()->is('about*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('about*') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">About</a>
-                        <a href="/contact" data-nav-link data-active="{{ request()->is('contact*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('contact*') ? 'text-white dark:text-white' : 'text-orange-900 hover:text-orange-700 dark:text-gray-300 dark:hover:text-white' }}">Contact</a>
+                    <div id="main-nav-links" class="relative hidden md:flex items-center rounded-full bg-gray-100 px-2 py-1 space-x-1 dark:bg-white/5">
+                        <span id="main-nav-active-pill" class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-gray-200 transition-all duration-300 ease-out dark:bg-white/10"></span>
+                        <a href="/" data-nav-link data-active="{{ request()->routeIs('home') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('home') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Home</a>
+                        <a href="/store" data-nav-link data-active="{{ request()->is('store*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('store*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Store</a>
+                        <a href="/build-guide" data-nav-link data-active="{{ request()->is('build-guide*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('build-guide*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Build Guide</a>
+                        <a href="{{ route('part-picker') }}" data-nav-link data-active="{{ request()->is('part-picker*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('part-picker*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Part Picker</a>
+                        <a href="/about" data-nav-link data-active="{{ request()->is('about*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('about*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">About</a>
+                        <a href="/contact" data-nav-link data-active="{{ request()->is('contact*') ? 'true' : 'false' }}" class="relative z-10 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 {{ request()->is('contact*') ? 'text-gray-900 dark:text-white' : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white' }}">Contact</a>
                     </div>
                 </div>
 
                 {{-- Right Side --}}
                 <div class="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-                    <button id="mobile-menu-toggle" type="button" class="rounded-full border border-orange-200 p-2 text-orange-900 transition-all duration-200 hover:bg-orange-50 md:hidden dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white/10 focus:outline-none" aria-label="Toggle navigation menu">
+                    <button id="mobile-menu-toggle" type="button" class="md:hidden rounded-full border border-gray-300 p-2 text-gray-700 hover:bg-gray-100 transition-all duration-200 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white/10 focus:outline-none" aria-label="Toggle navigation menu">
                         <svg id="mobile-menu-open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
                         </svg>
@@ -37,7 +37,7 @@
                         </svg>
                     </button>
 
-                    <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="flex items-center justify-center rounded-full border border-orange-200 p-2 text-xs font-semibold text-orange-900 transition-all duration-200 hover:bg-orange-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white/10 focus:outline-none">
+                    <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="rounded-full border border-gray-300 p-2 flex items-center justify-center text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-all duration-200 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white/10 focus:outline-none">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden dark:block size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
@@ -51,12 +51,12 @@
                     </button>
 
                     @guest
-                        <a href="/login" class="brand-light-button hidden rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 hover:shadow-lg sm:inline-flex dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">Sign In</a>
-                        <a href="/register" class="brand-light-outline hidden rounded-full border px-5 py-2 text-sm font-medium transition-all duration-300 lg:inline-flex dark:border-white/20 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:hover:border-white/40">Register</a>
+                        <a href="/login" class="hidden sm:inline-flex rounded-full px-5 py-2 text-sm font-semibold bg-gray-900 text-white hover:bg-purple-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg dark:bg-white dark:text-gray-900">Sign In</a>
+                        <a href="/register" class="hidden lg:inline-flex rounded-full px-5 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-300 dark:border-white/20 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:hover:border-white/40">Register</a>
                     @endguest
 
                     @auth
-                        <span class="hidden text-sm font-medium text-orange-900 lg:inline dark:text-gray-300">Welcome, {{ auth()->user()->first_name ?? 'User' }}</span>
+                        <span class="hidden lg:inline text-sm font-medium text-gray-700 dark:text-gray-300">Welcome, {{ auth()->user()->first_name ?? 'User' }}</span>
                         <form method="POST" action="{{ route('logout') }}" class="hidden sm:block">
                             @csrf
                             <button type="submit" class="rounded-full px-5 py-2 text-sm font-medium border border-red-400/40 text-red-600 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 dark:border-red-500/30 dark:text-red-300">
@@ -66,15 +66,15 @@
                     @endauth
 
                     <div class="ml-1 sm:ml-2 flex items-center space-x-1 sm:space-x-2 border-l border-gray-300 pl-2 sm:pl-4 dark:border-white/10">
-                        <a href="/profile" class="rounded-full p-2 transition-all duration-200 hover:bg-orange-50 dark:hover:bg-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-orange-800 transition-colors duration-200 hover:text-orange-600 dark:text-gray-400 dark:hover:text-white">
+                        <a href="/profile" class="rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </a>
 
                         <div class="group relative hidden lg:block">
-                            <a href="/basket" class="relative block rounded-full p-2 transition-all duration-200 hover:bg-orange-50 dark:hover:bg-white/10">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-orange-800 transition-colors duration-200 hover:text-orange-600 dark:text-gray-400 dark:hover:text-white">
+                            <a href="/basket" class="relative block rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
                                 <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
@@ -83,7 +83,7 @@
                             </a>
 
                             @if ($showBasketPreview)
-                                <div data-basket-preview-panel class="invisible absolute right-0 top-full z-50 mt-3 w-[25rem] translate-y-2 rounded-3xl border border-orange-100 bg-white p-4 text-gray-900 opacity-0 shadow-2xl shadow-orange-100/60 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:shadow-black/20">
+                                <div data-basket-preview-panel class="invisible absolute right-0 top-full z-50 mt-3 w-[25rem] translate-y-2 rounded-3xl border border-gray-200 bg-white p-4 text-gray-900 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white">
                                     @include('partials.basket-preview-panel', [
                                         'basketPreview' => $globalBasketPreview,
                                         'basketCount' => $globalBasketCount,
@@ -93,8 +93,8 @@
                             @endif
                         </div>
 
-                        <a href="/basket" class="relative rounded-full p-2 transition-all duration-200 hover:bg-orange-50 dark:hover:bg-white/10 lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-orange-800 transition-colors duration-200 hover:text-orange-600 dark:text-gray-400 dark:hover:text-white">
+                        <a href="/basket" class="relative rounded-full p-2 hover:bg-gray-100 transition-all duration-200 dark:hover:bg-white/10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                             </svg>
                             <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
@@ -106,20 +106,20 @@
                 </div>
             </div>
 
-            <div id="mobile-menu-panel" class="mt-3 hidden space-y-3 border-t border-orange-100 pt-3 md:hidden dark:border-white/10">
+            <div id="mobile-menu-panel" class="hidden border-t border-gray-200 pt-3 mt-3 space-y-3 md:hidden dark:border-white/10">
                 <div class="grid grid-cols-2 gap-2">
-                    <a href="/" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">Home</a>
-                    <a href="/store" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">Store</a>
-                    <a href="/build-guide" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">Build Guide</a>
-                    <a href="{{ route('part-picker') }}" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">Part Picker</a>
-                    <a href="/about" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">About</a>
-                    <a href="/contact" class="rounded-lg bg-orange-50 px-3 py-2 text-sm font-medium text-orange-900 dark:bg-white/10 dark:text-gray-100">Contact</a>
+                    <a href="/" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">Home</a>
+                    <a href="/store" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">Store</a>
+                    <a href="/build-guide" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">Build Guide</a>
+                    <a href="{{ route('part-picker') }}" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">Part Picker</a>
+                    <a href="/about" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">About</a>
+                    <a href="/contact" class="rounded-lg px-3 py-2 text-sm font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-gray-100">Contact</a>
                 </div>
 
                 @guest
                     <div class="flex flex-col gap-2">
-                        <a href="/login" class="brand-light-button rounded-lg px-4 py-2 text-center text-sm font-semibold dark:bg-white dark:text-gray-900">Sign In</a>
-                        <a href="/register" class="brand-light-outline rounded-lg border px-4 py-2 text-center text-sm font-medium dark:border-white/20 dark:bg-transparent dark:text-gray-300">Register</a>
+                        <a href="/login" class="rounded-lg px-4 py-2 text-center text-sm font-semibold bg-gray-900 text-white dark:bg-white dark:text-gray-900">Sign In</a>
+                        <a href="/register" class="rounded-lg px-4 py-2 text-center text-sm font-medium border border-gray-300 text-gray-700 dark:border-white/20 dark:text-gray-300">Register</a>
                     </div>
                 @endguest
 
