@@ -42,11 +42,6 @@
                 <p class="text-lg font-black text-gray-900 dark:text-white">2 Year</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Warranty</p>
             </div>
-            <div class="w-px h-8 bg-gray-300 dark:bg-gray-700"></div>
-            <div class="text-center">
-                <p class="text-lg font-black text-gray-900 dark:text-white">Free</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">UK Shipping</p>
-            </div>
         </div>
 
     </div>
