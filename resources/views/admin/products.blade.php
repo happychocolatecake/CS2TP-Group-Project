@@ -23,6 +23,7 @@
                                 <th class="py-3 pr-4">Category</th>
                                 <th class="py-3 pr-4">Price</th>
                                 <th class="py-3 pr-4">Stock</th>
+                                <th class="py-3 pr-4">Specs</th>
                                 <th class="py-3 pr-4">Action</th>
                             </tr>
                         </thead>
@@ -41,6 +42,7 @@
                                     <td class="py-3 pr-4 text-gray-600 dark:text-gray-300">{{ $product->category->category_name ?? 'Uncategorised' }}</td>
                                     <td class="py-3 pr-4 text-gray-600 dark:text-gray-300">&pound;{{ number_format($product->product_price, 2) }}</td>
                                     <td class="py-3 pr-4 text-gray-600 dark:text-gray-300">{{ $product->product_stock }}</td>
+                                    <td class="py-3 pr-4 text-gray-600 dark:text-gray-300">{{ $product->specs->count() }}</td>
                                     <td class="py-3 pr-4">
                                         <form method="POST" action="{{ route('admin.products.destroy', $product) }}" onsubmit="return confirm('Remove this product?')">
                                             @csrf
@@ -137,6 +139,13 @@
                         <textarea name="product_description" rows="4" required class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-950 dark:text-white">{{ old('product_description') }}</textarea>
                     </div>
 
+                    <div id="specs-container">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Specifications</label>
+                        <div id="specs-list" class="mt-2 space-y-2">
+                        </div>
+                        <button type="button" id="add-spec-btn" class="mt-2 rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300 dark:bg-white/10 dark:text-gray-300">Add Specification</button>
+                    </div>
+
                     <button type="submit" class="w-full rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900">Add Product</button>
                 </form>
             </section>
@@ -165,6 +174,34 @@
                 });
 
                 categorySelect.dispatchEvent(new Event('change'));
+
+                const specsContainer = document.getElementById('specs-list');
+                const addSpecBtn = document.getElementById('add-spec-btn');
+                let specIndex = 0;
+
+                addSpecBtn.addEventListener('click', function() {
+                    addSpecRow();
+                });
+
+                function addSpecRow(key = '', value = '') {
+                    const row = document.createElement('div');
+                    row.className = 'flex gap-2 items-center';
+                    row.innerHTML = `
+                        <input type="text" name="specs[${specIndex}][key]" value="${key}" placeholder="Spec name (e.g., Core Count)"
+                               class="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-950 dark:text-white" required>
+                        <input type="text" name="specs[${specIndex}][value]" value="${value}" placeholder="Spec value (e.g., 8)"
+                               class="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-950 dark:text-white" required>
+                        <button type="button" class="remove-spec-btn rounded-full bg-red-600 px-2 py-1 text-xs font-medium text-white hover:bg-red-500">×</button>
+                    `;
+                    specsContainer.appendChild(row);
+                    specIndex++;
+
+                    row.querySelector('.remove-spec-btn').addEventListener('click', function() {
+                        row.remove();
+                    });
+                }
+
+                addSpecRow();
             });
         </script>
     @endpush

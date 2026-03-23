@@ -10,6 +10,7 @@ use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ProductSpec;
 use App\Models\ReturnOrder;
 use App\Models\User;
 use App\Models\WebsiteReview;
@@ -63,7 +64,7 @@ class DashboardController extends Controller
 
     public function products(): View
     {
-        $products = Product::with('category')->latest('id')->paginate(12);
+        $products = Product::with('category', 'specs')->latest('id')->paginate(12);
         $categories = Category::orderBy('category_name')->get();
 
         return view('admin.products', compact('products', 'categories'));
@@ -255,6 +256,9 @@ class DashboardController extends Controller
             'product_stock' => ['required', 'integer', 'min:0'],
             'product_colour' => ['required', 'string', 'max:50'],
             'category_id' => ['required', 'exists:product_category,id'],
+            'specs' => ['nullable', 'array'],
+            'specs.*.key' => ['required_with:specs', 'string', 'max:255'],
+            'specs.*.value' => ['required_with:specs', 'string', 'max:255'],
         ]);
 
         if ($request->hasFile('product_image')) {
@@ -264,7 +268,19 @@ class DashboardController extends Controller
 
         $data['product_createdate'] = now();
 
-        $product = Product::create($data);
+        $product = Product::create(collect($data)->except(['specs'])->toArray());
+
+        if ($request->has('specs') && is_array($request->specs)) {
+            foreach ($request->specs as $spec) {
+                if (!empty($spec['key']) && !empty($spec['value'])) {
+                    ProductSpec::create([
+                        'product_id' => $product->id,
+                        'spec_key' => trim($spec['key']),
+                        'spec_value' => trim($spec['value']),
+                    ]);
+                }
+            }
+        }
 
         AdminActivity::record('product.created', 'Added a new product to the catalogue.', $product, [
             'product_id' => $product->getKey(),
