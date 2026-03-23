@@ -77,103 +77,18 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
-                                @if($globalBasketCount > 0)
-                                    <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                                        {{ $globalBasketCount }}
-                                    </span>
-                                @endif
+                                <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                    {{ $globalBasketCount }}
+                                </span>
                             </a>
 
                             @if ($showBasketPreview)
-                                <div class="invisible absolute right-0 top-full z-50 mt-3 w-[25rem] translate-y-2 rounded-3xl border border-gray-200 bg-white p-4 text-gray-900 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                                    <div class="flex items-center justify-between gap-3 border-b border-gray-200 pb-3 dark:border-gray-800">
-                                        <div>
-                                            <h3 class="text-sm font-semibold">Your Basket</h3>
-                                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ $globalBasketCount }} item{{ $globalBasketCount === 1 ? '' : 's' }}</p>
-                                        </div>
-                                        <a href="{{ route('basket.view') }}" class="text-sm font-semibold text-indigo-600 transition hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200">
-                                            Open Basket
-                                        </a>
-                                    </div>
-
-                                    @if ($basketPreviewItems->isEmpty())
-                                        <div class="py-6 text-center">
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Your basket is empty.</p>
-                                            <a href="{{ route('store.index') }}" class="mt-4 inline-flex rounded-full bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
-                                                Shop now
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="mt-4 max-h-[24rem] space-y-3 overflow-y-auto pr-1">
-                                            @foreach ($basketPreviewItems as $item)
-                                                <article class="rounded-2xl border border-gray-200 p-3 dark:border-gray-800">
-                                                    <div class="flex items-start gap-3">
-                                                        <a href="{{ route('product.show', $item->product->id) }}" class="shrink-0">
-                                                            <img src="{{ $item->product->product_image }}" alt="{{ $item->product->product_name }}" class="h-16 w-16 rounded-xl object-cover">
-                                                        </a>
-
-                                                        <div class="min-w-0 flex-1">
-                                                            <a href="{{ route('product.show', $item->product->id) }}" class="block truncate text-sm font-semibold text-gray-900 transition hover:text-indigo-600 dark:text-white dark:hover:text-indigo-300">
-                                                                {{ $item->product->product_name }}
-                                                            </a>
-                                                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ $item->product->product_model ?: 'No model listed' }}</p>
-                                                            <p class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">&pound;{{ number_format($item->product->product_price * $item->quantity, 2) }}</p>
-
-                                                            <div class="mt-3 flex items-center justify-between gap-3">
-                                                                <div class="flex items-center gap-2 overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700">
-                                                                    <form method="POST" action="{{ route('basket.update') }}">
-                                                                        @csrf
-                                                                        <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
-                                                                        <input type="hidden" name="action" value="decrement">
-                                                                        <button type="submit" class="bg-gray-50 px-3 py-1 text-sm transition hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700">-</button>
-                                                                    </form>
-
-                                                                    <span class="min-w-[26px] text-center text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $item->quantity }}</span>
-
-                                                                    <form method="POST" action="{{ route('basket.update') }}">
-                                                                        @csrf
-                                                                        <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
-                                                                        <input type="hidden" name="action" value="increment">
-                                                                        <button type="submit" @disabled($item->quantity >= $item->product->product_stock) class="bg-gray-50 px-3 py-1 text-sm transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800 dark:hover:bg-gray-700">+</button>
-                                                                    </form>
-                                                                </div>
-
-                                                                <form method="POST" action="{{ route('basket.remove') }}">
-                                                                    @csrf
-                                                                    <input type="hidden" name="basket_item_id" value="{{ $item->id }}">
-                                                                    <button type="submit" class="text-xs font-semibold text-red-500 transition hover:text-red-700 dark:text-red-300 dark:hover:text-red-200">
-                                                                        Remove
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            @endforeach
-                                        </div>
-
-                                        @if (($globalBasketPreview?->items->count() ?? 0) > $basketPreviewItems->count())
-                                            <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                                                Showing {{ $basketPreviewItems->count() }} of {{ $globalBasketPreview->items->count() }} basket items.
-                                            </p>
-                                        @endif
-
-                                        <div class="mt-4 border-t border-gray-200 pt-4 dark:border-gray-800">
-                                            <div class="flex items-center justify-between text-sm font-semibold">
-                                                <span class="text-gray-600 dark:text-gray-300">Subtotal</span>
-                                                <span class="text-gray-900 dark:text-white">&pound;{{ number_format($globalBasketSubtotal, 2) }}</span>
-                                            </div>
-
-                                            <div class="mt-4 flex gap-3">
-                                                <a href="{{ route('basket.view') }}" class="flex-1 rounded-full border border-gray-300 px-4 py-2 text-center text-sm font-semibold text-gray-700 transition hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-white/5">
-                                                    Manage Basket
-                                                </a>
-                                                <a href="{{ route('checkout.index') }}" class="flex-1 rounded-full bg-gray-900 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
-                                                    Checkout
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @endif
+                                <div data-basket-preview-panel class="invisible absolute right-0 top-full z-50 mt-3 w-[25rem] translate-y-2 rounded-3xl border border-gray-200 bg-white p-4 text-gray-900 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    @include('partials.basket-preview-panel', [
+                                        'basketPreview' => $globalBasketPreview,
+                                        'basketCount' => $globalBasketCount,
+                                        'basketSubtotal' => $globalBasketSubtotal,
+                                    ])
                                 </div>
                             @endif
                         </div>
@@ -182,11 +97,9 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-600 hover:text-gray-900 transition-colors duration-200 dark:text-gray-400 dark:hover:text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                             </svg>
-                            @if($globalBasketCount > 0)
-                                <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                                    {{ $globalBasketCount }}
-                                </span>
-                            @endif
+                            <span data-basket-count-badge class="absolute -top-1 -right-1 {{ $globalBasketCount > 0 ? 'flex' : 'hidden' }} h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                {{ $globalBasketCount }}
+                            </span>
                         </a>
                     </div>
 
@@ -332,6 +245,65 @@
         });
 
         observer.observe(document.documentElement, { attributes: true });
+
+        document.addEventListener('submit', function (event) {
+            var form = event.target;
+            if (!(form instanceof HTMLFormElement) || form.dataset.basketAsync !== 'true') {
+                return;
+            }
+
+            event.preventDefault();
+
+            var actionUrl = form.getAttribute('action');
+            var method = (form.getAttribute('method') || 'POST').toUpperCase();
+            if (!actionUrl) {
+                return;
+            }
+
+            fetch(actionUrl, {
+                method: method,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: new FormData(form),
+                credentials: 'same-origin',
+            })
+                .then(function (response) {
+                    return response.json().then(function (payload) {
+                        if (!response.ok) {
+                            throw payload;
+                        }
+
+                        return payload;
+                    });
+                })
+                .then(function (payload) {
+                    document.querySelectorAll('[data-basket-count-badge]').forEach(function (badge) {
+                        if (payload.basketCount > 0) {
+                            badge.textContent = payload.basketCount;
+                            badge.classList.remove('hidden');
+                        } else {
+                            badge.classList.add('hidden');
+                        }
+                    });
+
+                    var previewPanel = document.querySelector('[data-basket-preview-panel]');
+                    if (previewPanel && typeof payload.basketPreviewHtml === 'string') {
+                        previewPanel.innerHTML = payload.basketPreviewHtml;
+                    }
+
+                    var basketPage = document.querySelector('[data-basket-page]');
+                    if (basketPage && typeof payload.basketPageHtml === 'string') {
+                        basketPage.innerHTML = payload.basketPageHtml;
+                    }
+                })
+                .catch(function (payload) {
+                    if (payload && payload.message) {
+                        window.alert(payload.message);
+                    }
+                });
+        });
     })();
 
 

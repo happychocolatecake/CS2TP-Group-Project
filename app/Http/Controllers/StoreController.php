@@ -8,6 +8,7 @@ use App\Models\BasketItem;
 use App\Models\Product;
 use App\Models\WebsiteReview;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class StoreController extends Controller
 {
@@ -31,7 +32,16 @@ class StoreController extends Controller
             'basket_item_id' => 'required|integer|exists:basket_items,id',
         ]);
 
-        BasketItem::destroy($request->input('basket_item_id'));
+        $basketItem = BasketItem::query()
+            ->whereKey($request->input('basket_item_id'))
+            ->whereHas('basket', fn ($query) => $query->where('user_id', Auth::id()))
+            ->firstOrFail();
+
+        $basketItem->delete();
+
+        if ($request->expectsJson()) {
+            return $this->basketJsonResponse('Item removed from basket.');
+        }
 
         return redirect()->back()->with('success', 'Item removed from basket.');
     }
@@ -44,7 +54,11 @@ class StoreController extends Controller
                 'action' => 'required|in:increment,decrement',
             ]);
 
-            $basketItem = BasketItem::findOrFail($request->input('basket_item_id'));
+            $basketItem = BasketItem::query()
+                ->whereKey($request->input('basket_item_id'))
+                ->whereHas('basket', fn ($query) => $query->where('user_id', Auth::id()))
+                ->with('product')
+                ->firstOrFail();
 
             if ($request->input('action') === 'increment') {
                 //checks if quantity wanted does not exceed the stock limit
@@ -53,6 +67,10 @@ class StoreController extends Controller
                 }
                 else {
                     //if the quantity now exceeds stock limit
+                    if ($request->expectsJson()) {
+                        return $this->basketJsonResponse('There are only '.$basketItem->product->product_stock.' available '. $basketItem->product->product_name . 's', true, 422);
+                    }
+
                     return redirect()->back()->with('error', 'There are only '.$basketItem->product->product_stock.' available '. $basketItem->product->product_name . 's');
 
                 }
@@ -64,6 +82,10 @@ class StoreController extends Controller
                 } else {
                     $basketItem->delete();
                 }
+            }
+
+            if ($request->expectsJson()) {
+                return $this->basketJsonResponse();
             }
 
             return redirect()->back();
@@ -167,5 +189,33 @@ class StoreController extends Controller
     public function show($id) {
         $product = Product::findOrFail($id);
         return view('product-page', compact('product'));
+    }
+
+    private function basketJsonResponse(?string $message = null, bool $error = false, int $status = 200): JsonResponse
+    {
+        $basket = Basket::query()
+            ->where('user_id', Auth::id())
+            ->with(['items.product'])
+            ->first();
+
+        $basketCount = $basket?->items->sum('quantity') ?? 0;
+        $basketSubtotal = $basket?->items->sum(function ($item) {
+            return (int) $item->quantity * (int) ($item->product->product_price ?? 0);
+        }) ?? 0;
+
+        return response()->json([
+            'message' => $message,
+            'error' => $error,
+            'basketCount' => $basketCount,
+            'basketSubtotal' => $basketSubtotal,
+            'basketPreviewHtml' => view('partials.basket-preview-panel', [
+                'basketPreview' => $basket,
+                'basketCount' => $basketCount,
+                'basketSubtotal' => $basketSubtotal,
+            ])->render(),
+            'basketPageHtml' => view('partials.basket-page-content', [
+                'basket' => $basket,
+            ])->render(),
+        ], $status);
     }
 }
