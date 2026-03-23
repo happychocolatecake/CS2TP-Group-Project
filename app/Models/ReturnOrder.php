@@ -49,6 +49,14 @@ class ReturnOrder extends Model
             ->sum('return_quantity');
     }
 
+    public static function getRejectedQty($orderId, $productId)
+    {
+        return self::where('order_id', $orderId)
+            ->where('product_id', $productId)
+            ->where('return_status', 'Rejected')
+            ->sum('return_quantity');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

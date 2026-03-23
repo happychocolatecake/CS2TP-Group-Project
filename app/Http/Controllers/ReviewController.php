@@ -19,7 +19,7 @@ class ReviewController extends Controller
             abort(403, 'This is not your order.'); //send forbidden message 403
         }
 
-        if ($order->order_status !== 'Delivered') {
+        if (!$order->isReviewable()) {
             return redirect()->back()->with('error', 'You can only review delivered items.');
         }
 
@@ -47,7 +47,7 @@ class ReviewController extends Controller
 
         //double check authorisation again
         $order = Order::findOrFail($request->order_id);
-        if ($order->user_id !== Auth::id() || $order->order_status !== 'Delivered') {
+        if ($order->user_id !== Auth::id() || !$order->isReviewable()) {
             return redirect()->back()->withErrors(['security' => 'Unauthorised review attempt.']);
         }
 
@@ -89,6 +89,7 @@ class ReviewController extends Controller
             abort(403, 'This is not your review.');
         }
 
+        //we dont really need this
         //deletes the review image from the database (as well as the github) as the review is deleted
         //later i will properly implement this as i still need the images for the seeder
         /*
@@ -99,6 +100,7 @@ class ReviewController extends Controller
             }
         }*/
         //i can delete it from the database because that doesnt affect the github files
+
         $review->delete();
 
         return redirect()->route('profile.reviews')->with('status', 'Review deleted successfully.');
