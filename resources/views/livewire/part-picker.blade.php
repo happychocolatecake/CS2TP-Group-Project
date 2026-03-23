@@ -108,105 +108,95 @@
 
                         @foreach($categories as $key => $data)
 
-                            <div class="p-5 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800">
-
-                                <div>
-                                    @if($activeCategory === $key)
-
-                                    <div class="w-full bg grey-50 dark:bg-gray-900 border-t border-b border-grey-200 dark:border-gray-700 max-h-96 overflow-y-auto">
-
-                                        @forelse($availableProducts as $product)
-
-                                            <div class="w-full flex items-center justify-between p-4 border-b last:border-0 border-gray-200 dark:border-gray-700 hover:bg-blue-50 transition cursor-pointer"
-                                                wire:click="selectPart('{{ $key }}', {{ $product->id }})">
-
-                                                <img src="{{ $product->product_image }}"
-                                                    class="w-16 h-16 object-cover rounded shrink-0 border bg-white">
-
-                                                <div class="ml-4 flex-1 min-w-0">
-
-                                                    <div class="text-sm font-bold text-gray-900">
-                                                        {{ $product->product_name }}
-                                                    </div>
-
-                                                    <div class="text-xs text-gray-500 mt-1 flex gap-2 flex-wrap">
-                                                        @foreach($product->specs->take(3) as $spec)
-                                                            <span class="bg-gray-200 px-2 py-0.5 rounded text-gray-700">
-                                                                {{ ucfirst(str_replace('_', ' ', $spec->spec_key)) }}:
-                                                                {{ $spec->spec_value }}
-                                                            </span>
-                                                        @endforeach
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="text-right">
-
-                                                    <div class="font-bold text-gray-900">
-                                                        £{{ number_format($product->product_price, 2) }}
-                                                    </div>
-
-                                                    <div class="text-blue-600 text-xs font-bold mt-1">
-                                                        Select part
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        @empty
-
-                                            <div class="p-6 text-center text-gray-500 text-sm">
-                                                No compatible parts found.
-                                            </div>
-
-                                        @endforelse
-
-                                    </div>
-                                    @endif
-                                    <div class="font-semibold text-gray-900 dark:text-gray-100">
-                                        {{ $data['label'] }}
-                                    </div>
-
-                                    @if(isset($selected[$key]))
-                                        <div class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                                            {{ $selected[$key]['name'] }}
-                                            <span class="ml-2 font-medium text-gray-900 dark:text-gray-100">
-                                                £{{ number_format($selected[$key]['price'], 2) }}
-                                            </span>
+                           <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                                <div class="flex justify-between items-center gap-4">
+                                    <div>
+                                        <div class="font-semibold text-gray-900 dark:text-gray-100">
+                                            {{ $data['label'] }}
                                         </div>
-                                    @else
-                                        <div class="text-sm text-gray-400 dark:text-gray-500 mt-1">
-                                            No part selected
-                                        </div>
-                                    @endif
+
+                                        @if(isset($selected[$key]))
+                                            <div class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                                                {{ $selected[$key]['name'] }}
+                                                <span class="ml-2 font-medium text-gray-900 dark:text-gray-100">
+                                                    £{{ number_format($selected[$key]['price'], 2) }}
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class="text-sm text-gray-400 dark:text-gray-500 mt-1">
+                                                No part selected
+                                            </div>
+                                        @endif
                                     </div>
 
-                                <div class="flex gap-3">
-
-                                    <button
-                                        wire:click="selectCategory('{{ $key }}')"
-                                        class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600">
-                                        {{ isset($selected[$key]) ? 'Change' : 'Choose' }}
-                                    </button>
-
-                                    @if(isset($selected[$key]))
+                                    <div class="flex gap-3">
                                         <button
-                                            wire:click="removePart('{{ $key }}')"
-                                            class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-200">
-                                            Remove
+                                            wire:click="selectCategory('{{ $key }}')"
+                                            class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600">
+                                            {{ isset($selected[$key]) ? 'Change' : 'Choose' }}
                                         </button>
-                                    @endif
 
+                                        @if(isset($selected[$key]))
+                                            <button
+                                                wire:click="removePart('{{ $key }}')"
+                                                class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-200">
+                                                Remove
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
-
                             </div>
 
+                            @if($activeCategory === $key)
+                                <div class="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-5 py-5">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                                        @forelse($availableProducts as $product)
+                                            <div
+                                                wire:click="selectPart('{{ $key }}', {{ $product->id }})"
+                                                class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer">
+
+                                                <div class="flex items-start gap-3">
+                                                    <img src="{{ $product->product_image }}"
+                                                        class="w-16 h-16 object-cover rounded border bg-white">
+
+                                                    <div class="flex-1 min-w-0">
+                                                        <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                                                            {{ $product->product_name }}
+                                                        </div>
+                                                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 flex flex-wrap gap-1">
+                                                            @foreach($product->specs->take(3) as $spec)
+                                                                <span class="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200 rounded-lg">
+                                                                    {{ ucfirst(str_replace('_', ' ', $spec->spec_key)) }}: {{ $spec->spec_value }}
+                                                                </span>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-3 flex items-center justify-between">
+                                                    <span class="text-sm font-bold text-gray-900 dark:text-gray-100">
+                                                        £{{ number_format($product->product_price, 2) }}
+                                                    </span>
+                                                    <span class="text-xs font-semibold text-blue-600 dark:text-blue-400">
+                                                        Select part
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-span-full text-center text-sm text-gray-500 dark:text-gray-400">
+                                                No compatible parts found.
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
 
                     </div>
 
                 </div>
+
+
 
                 <!-- RIGHT SIDEBAR -->
                 <div class="lg:col-span-1">
