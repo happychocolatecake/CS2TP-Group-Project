@@ -29,8 +29,6 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 RUN apt-get update && apt-get install -y nodejs npm
 RUN npm install && npm run build
 
-RUN php artisan config:clear && php artisan cache:clear
-
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 RUN chmod +x /var/www/html/entrypoint.sh
