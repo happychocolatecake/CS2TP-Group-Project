@@ -5,6 +5,6 @@ php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 
-php artisan migrate --force
+php artisan migrate --force --seed
 
 apache2-foreground
