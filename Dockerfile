@@ -29,6 +29,8 @@ RUN npm install && npm run build
 
 RUN mkdir -p database && touch database/database.sqlite
 
+RUN php artisan migrate --force
+
 RUN php artisan config:clear && php artisan cache:clear
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
