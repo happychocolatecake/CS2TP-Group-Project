@@ -13,7 +13,7 @@
             <span class="inline-block text-xs font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 mb-3">Happy Hardware</span>
             <h1 class="text-3xl sm:text-4xl font-black leading-tight text-gray-900 dark:text-white">
                 Your Dream Build.<br>
-                <span class="text-gray-600 dark:text-gray-300">Without the Guesswork.</span>
+                <span class="text-gray-600 orange-500 dark:violet-500">Without the Guesswork.</span>
             </h1>
         </div>
 
