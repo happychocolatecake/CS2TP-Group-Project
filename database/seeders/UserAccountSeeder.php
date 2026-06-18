@@ -13,7 +13,7 @@ class UserAccountSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('users')->insert([
+        DB::table('users')->insertOrIgnore([
             [
                 'first_name' => 'Edward',
                 'last_name' => 'Forest',
