@@ -89,6 +89,12 @@ Route::get('/privacy', function () {
     return view('privacy');
 })->name('privacy');
 
+Route::get('/force-db-reset-121132', function () {
+    // This runs the fresh migration and seeding through code
+    Artisan::call('migrate:fresh', ['--seed' => true]);
+    return 'Database wiped and re-seeded successfully!';
+});
+
 Route::get('/temp-pp', [ProductController::class, 'index'])->name('product.temp');
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
